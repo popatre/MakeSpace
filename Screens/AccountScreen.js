@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
+import ProfileCard from "../Components/ProfileCard";
 
 const AccountScreen = ({ navigation }) => {
   return (
     <View>
-      <Text>AccountScreen</Text>
+      <ProfileCard />
       <Button
         title="My Listings"
         onPress={() => {
