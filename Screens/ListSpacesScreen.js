@@ -1,47 +1,21 @@
 import React, { useState } from "react";
 import {
   View,
-  Text,
-  TextInput,
+  TouchableOpacity,
   Button,
   StyleSheet,
   FlatList,
+  Touchable,
 } from "react-native";
 import RNPickerSelect from "react-native-picker-select";
 import ListingCard from "../Components/ListingCard";
+import SingleListScreen from "./SingleListScreen";
+import spaces from "../TempData";
 
-const ListSpacesScreen = () => {
+const ListSpacesScreen = ({ navigation }) => {
   const [distance, setDistance] = useState("");
   const [sort, setSort] = useState("");
-  const [listing, setListing] = useState([
-    {
-      title: "Big Moon",
-      location: "M21 5XH",
-      price: 20,
-      rating: 4.7,
-      size: "large",
-      image_url:
-        "https://image.shutterstock.com/image-photo/nicely-trimmed-front-yard-green-260nw-533390473.jpg",
-    },
-    {
-      title: "Medium Moon",
-      location: "M21 5XH",
-      price: 20,
-      rating: 4.7,
-      size: "large",
-      image_url:
-        "https://upload.wikimedia.org/wikipedia/commons/0/02/Typical_suburban_backyard.jpg",
-    },
-    {
-      title: "Small Moon",
-      location: "M21 5XH",
-      price: 20,
-      rating: 4.7,
-      size: "large",
-      image_url:
-        "https://upload.wikimedia.org/wikipedia/commons/0/02/Typical_suburban_backyard.jpg",
-    },
-  ]);
+  const [listing, setListing] = useState(spaces);
 
   return (
     <View>
@@ -81,14 +55,20 @@ const ListSpacesScreen = () => {
         <FlatList
           data={listing}
           renderItem={({ item }) => (
-            <ListingCard
-              title={item.title}
-              location={item.location}
-              price={item.price}
-              rating={item.rating}
-              size={item.size}
-              image_url={item.image_url}
-            />
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("SingleList", item);
+              }}
+            >
+              <ListingCard
+                title={item.title}
+                location={item.location.city}
+                price={item.price}
+                rating={item.spaceRating}
+                size={item.size}
+                images={item.images}
+              />
+            </TouchableOpacity>
           )}
         />
       </View>

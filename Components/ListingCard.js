@@ -1,15 +1,11 @@
 import React from "react";
-import { View, Image, Text, FlatList, StyleSheet } from "react-native";
+import { View, Image, Text, StyleSheet } from "react-native";
 
-const ListingCard = ({ title, location, price, rating, size, image_url }) => {
-  console.log(image_url);
+const ListingCard = ({ title, location, price, rating, size, images }) => {
   return (
     <View style={styles.listContainer}>
       <View>
-        <Image
-          style={{ width: 200, height: 200 }}
-          source={{ uri: image_url }}
-        />
+        <Image style={{ width: 200, height: 200 }} source={{ uri: images }} />
       </View>
       <View>
         <Text>Title: {title}</Text>
@@ -26,6 +22,8 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     justifyContent: "center",
+    marginTop: 10,
+    marginHorizontal: 20,
   },
 });
 
