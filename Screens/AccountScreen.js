@@ -18,6 +18,7 @@ const AccountScreen = ({ navigation }) => {
           navigation.navigate("MyBookings");
         }}
       />
+      <Button title="Sign Out" />
     </View>
   );
 };
