@@ -44,6 +44,15 @@ const UserListingsScreen = ({ navigation }) => {
     <View>
       <Text>UserListings</Text>
       <View>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("PostListing");
+          }}
+        >
+          <Text>Add a listing</Text>
+        </TouchableOpacity>
+      </View>
+      <View>
         <FlatList
           keyExtractor={(item) => item._id["$oid"]}
           data={userListings}

@@ -21,7 +21,12 @@ const HomeScreen = ({ navigation }) => {
         />
       </View>
       <View>
-        <Button title="Make a space" />
+        <Button
+          title="Make a space"
+          onPress={() => {
+            navigation.navigate("PostListing");
+          }}
+        />
       </View>
     </View>
   );

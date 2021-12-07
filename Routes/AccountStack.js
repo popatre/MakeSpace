@@ -3,6 +3,7 @@ import HomeScreen from "../Screens/HomeScreen";
 import React from "react";
 import AccountScreen from "../Screens/AccountScreen";
 import UserListingsScreen from "../Screens/UserListingsScreen";
+import PostListingScreen from "../Screens/PostListingScreen";
 import SingleListScreen from "../Screens/SingleListScreen";
 import UserBookingsScreen from "../Screens/UserBookingsScreen";
 
@@ -13,6 +14,7 @@ export default function AccountStack() {
     <Stack.Navigator>
       <Stack.Screen name="Account" component={AccountScreen} />
       <Stack.Screen name="MyListings" component={UserListingsScreen} />
+      <Stack.Screen name="PostListing" component={PostListingScreen} />
       <Stack.Screen name="SingleList" component={SingleListScreen} />
       <Stack.Screen name="MyBookings" component={UserBookingsScreen} />
     </Stack.Navigator>
