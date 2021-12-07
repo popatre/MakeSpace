@@ -53,6 +53,7 @@ const ListSpacesScreen = ({ navigation }) => {
       </View>
       <View>
         <FlatList
+          keyExtractor={(item) => item._id["$oid"]}
           data={listing}
           renderItem={({ item }) => (
             <TouchableOpacity

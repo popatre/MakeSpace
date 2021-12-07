@@ -17,7 +17,6 @@ import {
 } from "@expo/vector-icons";
 
 const SingleListScreen = ({ route }) => {
-  console.log(route);
   const {
     images,
     title,
