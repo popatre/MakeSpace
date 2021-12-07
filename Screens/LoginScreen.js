@@ -13,9 +13,11 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
+import { withFormik } from "formik";
+import * as yup from "yup";
 import { useNavigation } from "@react-navigation/native";
 // import { auth } from "../firebase";
-const LoginScreen = ({ navigation }) => {
+export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   //     const navigation = useNavigation();
@@ -65,7 +67,7 @@ const LoginScreen = ({ navigation }) => {
         <TouchableOpacity
           style={styles.button}
           onPress={() => {
-            navigation.navigate("Home");
+            navigation.replace("Home");
           }}
         >
           <Text style={styles.buttonText}>Login</Text>
@@ -73,8 +75,8 @@ const LoginScreen = ({ navigation }) => {
       </View>
     </KeyboardAvoidingView>
   );
-};
-export default LoginScreen;
+}
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -111,3 +113,12 @@ const styles = StyleSheet.create({
   buttonOutlineText: { color: "#0782F9", fontWeight: "700", fontSize: 16 },
   buttonText: { color: "white", fontWeight: "700", fontSize: 16 },
 });
+
+// export default withFormik({
+//   mapPropsToValues: () => ({ email: "", password: "" }),
+//   validationSchema: (props) =>
+//     yup.object().shape({
+//       email: yup.string().email().required(),
+//       password: yup.string().min(16).required,
+//     }),
+// })(LoginScreen);

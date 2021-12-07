@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { withFormik } from "formik";
 // import {
 //     getAuth,
 //     createUserWithEmailAndPassword,
@@ -67,26 +68,27 @@ const SignUpScreen = ({ navigation }) => {
           value={email}
           onChangeText={(text) => setEmail(text)}
           style={styles.input}
-          secureTextEntry
         ></TextInput>
         <TextInput
           placeholder="Password"
           value={password}
           onChangeText={(text) => setPassword(text)}
           style={styles.input}
+          secureTextEntry
         ></TextInput>
         <TextInput
           placeholder="Confirm Password"
           value={ConfirmPassword}
           onChangeText={(text) => setConfirmPassword(text)}
           style={styles.input}
+          secureTextEntry
         ></TextInput>
       </View>
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={styles.button}
           onPress={() => {
-            navigation.navigate("Login");
+            navigation.replace("Login");
           }}
         >
           <Text style={styles.buttonText}>Sign Up</Text>
