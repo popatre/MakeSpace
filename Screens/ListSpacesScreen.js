@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import {
     View,
@@ -15,12 +15,20 @@ import ListingCard from "../Components/ListingCard";
 import SingleListScreen from "./SingleListScreen";
 import spaces from "../TempData";
 import FilterModal from "../Components/FilterModal";
+import { getAllListings } from "../utils/apiRequests";
 
 const ListSpacesScreen = ({ navigation }) => {
     const [distance, setDistance] = useState("");
     const [sort, setSort] = useState("");
-    const [listing, setListing] = useState(spaces);
+    const [listing, setListing] = useState([]);
     const [modalOpen, setModalOpen] = useState(false);
+
+    useEffect(() => {
+        getAllListings().then((res) => {
+            console.log(res);
+            setListing(res);
+        });
+    }, []);
 
     return (
         <View>
@@ -75,7 +83,7 @@ const ListSpacesScreen = ({ navigation }) => {
                                 price={item.price}
                                 rating={item.spaceRating}
                                 size={item.size}
-                                images={item.images}
+                                // images={item.images}
                             />
                         </TouchableOpacity>
                     )}
