@@ -54,7 +54,12 @@ const ListSpacesScreen = ({ navigation }) => {
         <Button title="Filter" onPress={() => setModalOpen(true)} />
       </View>
       <View>
-        <Button title="View on map" />
+        <Button
+          title="View on map"
+          onPress={() => {
+            navigation.navigate("SpacesOnMap");
+          }}
+        />
         <RNPickerSelect
           placeholder={{
             label: "Sort by",
