@@ -15,7 +15,11 @@ import * as ImagePicker from "expo-image-picker";
 import { useState } from "react";
 const ListingSchema = yup.object({
   title: yup.string().required().min(5),
-  location: yup.string().required().min(6),
+  location: yup.object().shape({
+    postcode: yup.string().required().min(6),
+    postcode: yup.string().required().min(6),
+  }),
+
   description: yup.string().required().min(20),
   price: yup
     .string()
@@ -54,7 +58,10 @@ export default function PostingForm() {
           validationSchema={ListingSchema}
           initialValues={{
             title: "",
-            location: "",
+            location: {
+              city: "",
+              postcode: "",
+            },
             size: "",
             price: "",
             description: "",
@@ -88,12 +95,22 @@ export default function PostingForm() {
                 {props.touched.title && props.errors.title}
               </Text>
               <TextInput
-                multiline
                 style={styles.input}
-                placeholder="location"
-                onChangeText={props.handleChange("location")}
-                value={props.values.location}
-                onBlur={props.handleBlur("location")}
+                placeholder="city"
+                onChangeText={props.handleChange("location.city")}
+                value={props.values.location.city}
+                onBlur={props.handleBlur("location.city")}
+              />
+              {/* <Text style={styles.errorText}>
+                {props.touched.location["postcode"] &&
+                  props.errors.location["postcode"]}
+              </Text> */}
+              <TextInput
+                style={styles.input}
+                placeholder="postcode"
+                onChangeText={props.handleChange("location.postcode")}
+                value={props.values.location.postcode}
+                onBlur={props.handleBlur("location.postcode")}
               />
               <View>
                 <RadioButton.Group
@@ -108,9 +125,6 @@ export default function PostingForm() {
                   <RadioButton.Item label="Large" value="large" />
                 </RadioButton.Group>
               </View>
-              <Text style={styles.errorText}>
-                {props.touched.location && props.errors.location}
-              </Text>
               <TextInput
                 style={styles.input}
                 placeholder="Price £"
