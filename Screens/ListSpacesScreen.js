@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+
 import {
   View,
   TouchableOpacity,
@@ -6,16 +7,28 @@ import {
   StyleSheet,
   FlatList,
   Touchable,
+  Modal,
+  Text,
 } from "react-native";
 import RNPickerSelect from "react-native-picker-select";
 import ListingCard from "../Components/ListingCard";
 import SingleListScreen from "./SingleListScreen";
 import spaces from "../TempData";
+import FilterModal from "../Components/FilterModal";
+import { getAllListings } from "../utils/apiRequests";
 
 const ListSpacesScreen = ({ navigation }) => {
   const [distance, setDistance] = useState("");
   const [sort, setSort] = useState("");
-  const [listing, setListing] = useState(spaces);
+  const [listing, setListing] = useState([]);
+  const [modalOpen, setModalOpen] = useState(false);
+
+  useEffect(() => {
+    getAllListings().then((res) => {
+      console.log(res);
+      setListing(res);
+    });
+  }, []);
 
   return (
     <View>
@@ -35,15 +48,13 @@ const ListSpacesScreen = ({ navigation }) => {
             { label: "100 miles", value: "100", key: 100 },
           ]}
         />
-        <Button title="Filter" />
+        <Modal visible={modalOpen} animationType="slide">
+          <FilterModal setModalOpen={setModalOpen} />
+        </Modal>
+        <Button title="Filter" onPress={() => setModalOpen(true)} />
       </View>
       <View>
-        <Button
-          title="View on map"
-          onPress={() => {
-            navigation.navigate("SpacesOnMap");
-          }}
-        />
+        <Button title="View on map" />
         <RNPickerSelect
           placeholder={{
             label: "Sort by",
@@ -72,7 +83,7 @@ const ListSpacesScreen = ({ navigation }) => {
                 price={item.price}
                 rating={item.spaceRating}
                 size={item.size}
-                images={item.images}
+                // images={item.images}
               />
             </TouchableOpacity>
           )}
@@ -83,3 +94,8 @@ const ListSpacesScreen = ({ navigation }) => {
 };
 
 export default ListSpacesScreen;
+
+const styles = StyleSheet.create({
+  modalFilter: { flex: 1, justifyContent: "center", alignItems: "center" },
+  modalClose: { marginTop: 40, alignItems: "center" },
+});

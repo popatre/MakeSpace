@@ -1,12 +1,12 @@
 import React from "react";
 import { StyleSheet, Text, View, Image, Alert } from "react-native";
-import MapView, {
-  PROVIDER_GOOGLE,
-  Marker,
-  Callout,
-  Polygon,
-  Circle,
-} from "react-native-maps";
+// import MapView, {
+//   PROVIDER_GOOGLE,
+//   Marker,
+//   Callout,
+//   Polygon,
+//   Circle,
+// } from "react-native-maps";
 
 export default function ListingMap() {
   const places = [
@@ -29,7 +29,8 @@ export default function ListingMap() {
 
   return (
     <View>
-      <MapView
+      <Text>ListingMap</Text>
+      {/* <MapView
         provider={PROVIDER_GOOGLE}
         style={styles.map}
         region={{
@@ -113,7 +114,7 @@ export default function ListingMap() {
             />
           </Marker>
         ))}
-      </MapView>
+      </MapView> */}
     </View>
   );
 }
