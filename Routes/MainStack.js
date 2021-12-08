@@ -5,6 +5,7 @@ import SignUpScreen from "../Screens/SignUpScreen";
 import HomeScreen from "../Screens/HomeScreen";
 import PostListingScreen from "../Screens/PostListingScreen";
 import ListSpacesScreen from "../Screens/ListSpacesScreen";
+import AllListingsMapScreen from "../Screens/AllListingsMapScreen";
 import SingleListScreen from "../Screens/SingleListScreen";
 import React from "react";
 
@@ -23,6 +24,7 @@ export default function MainStack() {
       <Stack.Screen name="Home" component={HomeScreen} />
       <Stack.Screen name="PostListing" component={PostListingScreen} />
       <Stack.Screen name="Spaces" component={ListSpacesScreen} />
+      <Stack.Screen name="SpacesOnMap" component={AllListingsMapScreen} />
       <Stack.Screen name="SingleList" component={SingleListScreen} />
     </Stack.Navigator>
   );
