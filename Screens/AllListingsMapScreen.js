@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
-import ListingMap from "../Components/ListingMap";
+import ListingMapTest from "../Components/ListingMapTest";
+import { getLocation } from "../utils/apiRequests";
 
-const AllListingsMapScreen = () => {
+const AllListingsMapScreen = ({ route }) => {
   return (
     <View>
       <Text>MapForAllListings</Text>
-      <ListingMap />
+      {/* <ListingMapTest location={location} /> */}
     </View>
   );
 };

@@ -23,7 +23,7 @@ export const postListing = (newListing) => {
 
 export const getLocation = (postcode) => {
   return postcodesApi.get(`/${postcode}`).then((res) => {
-    // console.log(res.data.result, "<<<<<<<<<<returning location data");
-    return res.data.result;
+    //console.log(JSON.stringify(res.data), "<<<<<<<<<<returning location data");
+    return JSON.stringify(res.data.result);
   });
 };

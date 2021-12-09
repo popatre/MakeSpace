@@ -25,7 +25,7 @@ const ListSpacesScreen = ({ navigation }) => {
 
   useEffect(() => {
     getAllListings().then((res) => {
-      console.log(res);
+      // console.log(res);
       setListing(res);
     });
   }, []);
@@ -57,7 +57,7 @@ const ListSpacesScreen = ({ navigation }) => {
         <Button
           title="View on map"
           onPress={() => {
-            navigation.navigate("SpacesOnMap");
+            navigation.navigate("SpacesOnMap", listing);
           }}
         />
         <RNPickerSelect
@@ -74,7 +74,7 @@ const ListSpacesScreen = ({ navigation }) => {
       </View>
       <View>
         <FlatList
-          keyExtractor={(item) => item._id["$oid"]}
+          keyExtractor={(item) => item._id}
           data={listing}
           renderItem={({ item }) => (
             <TouchableOpacity
