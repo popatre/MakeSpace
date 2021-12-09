@@ -13,11 +13,16 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import * as ImagePicker from "expo-image-picker";
 import { useState } from "react";
+import { postListing } from "../utils/apiRequests";
 const ListingSchema = yup.object({
   title: yup.string().required().min(5),
   location: yup.object().shape({
     postcode: yup.string().required().min(6),
     postcode: yup.string().required().min(6),
+  }),
+  contactDetails: yup.object().shape({
+    phoneNumber: yup.string().required().min(11),
+    emailAddress: yup.string().required().min(8),
   }),
 
   description: yup.string().required().min(20),
@@ -65,6 +70,11 @@ export default function PostingForm() {
             size: "",
             price: "",
             description: "",
+            contactDetails: {
+              phoneNumber: "",
+              emailAddress: "",
+            },
+
             amenities: {
               parking: false,
               power: false,
@@ -78,7 +88,7 @@ export default function PostingForm() {
             // image_uri: "",
           }}
           onSubmit={(values, actions) => {
-            console.log(values);
+            postListing(values);
             actions.resetForm();
           }}
         >
@@ -146,6 +156,27 @@ export default function PostingForm() {
               <Text style={styles.errorText}>
                 {props.touched.description && props.errors.description}
               </Text>
+
+              <TextInput
+                style={styles.input}
+                placeholder="phone number"
+                onChangeText={props.handleChange("contactDetails.phoneNumber")}
+                value={props.values.contactDetails.phoneNumber}
+                onBlur={props.handleBlur("contactDetails.phoneNumber")}
+              />
+              {/* <Text style={styles.errorText}>
+  {props.touched.contactDetails.phoneNumber &&
+    props.errors.contactDetails.phoneNumber}
+</Text> */}
+
+              <TextInput
+                style={styles.input}
+                placeholder="email"
+                onChangeText={props.handleChange("contactDetails.emailAddress")}
+                value={props.values.contactDetails.emailAddress}
+                onBlur={props.handleBlur("contactDetails.emailAddress")}
+              />
+
               {image && (
                 <Image
                   value={props.values.image_uri}
