@@ -22,7 +22,7 @@ const ListingSchema = yup.object({
   }),
   contactDetails: yup.object().shape({
     phoneNumber: yup.string().required().min(11),
-    emailAddress: yup.string().required().min(8),
+    emailAddress: yup.string().email().required(),
   }),
 
   description: yup.string().required().min(20),
