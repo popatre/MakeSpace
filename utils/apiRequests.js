@@ -8,10 +8,13 @@ const postcodesApi = axios.create({
   baseURL: "https://api.postcodes.io/postcodes/",
 });
 
-export const getAllListings = () => {
-  return makespaceApi.get("/listings").then((res) => {
-    return res.data.listings;
-  });
+export const getAllListings = (sort) => {
+  return makespaceApi
+    .get("/listings", { params: { sortby: sort } })
+    .then((res) => {
+      console.log(res.data.listings, "<<<res.data");
+      return res.data.listings;
+    });
 };
 
 export const postListing = (newListing) => {

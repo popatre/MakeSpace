@@ -24,11 +24,11 @@ const ListSpacesScreen = ({ navigation }) => {
   const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
-    getAllListings().then((res) => {
+    getAllListings(sort).then((res) => {
       // console.log(res);
       setListing(res);
     });
-  }, []);
+  }, [sort]);
 
   return (
     <View>
@@ -66,9 +66,12 @@ const ListSpacesScreen = ({ navigation }) => {
             value: null,
           }}
           onValueChange={(value) => setSort(value)}
+          onPress={() => {}}
           items={[
             { label: "price", value: "price", key: "price" },
             { label: "size", value: "size", key: "size" },
+            { label: "rating", value: "placeRating", key: "placeRating" },
+            { label: "title", value: "title", key: "title" },
           ]}
         />
       </View>
