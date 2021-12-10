@@ -37,3 +37,10 @@ export const postUser = (newUser) => {
         return res.data;
     });
 };
+
+export const getAllUsers = () => {
+    return makespaceApi.get("/users").then((res) => {
+        console.log(res.data);
+        return res.data.users;
+    });
+};

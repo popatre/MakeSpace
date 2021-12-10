@@ -13,7 +13,7 @@ import {
     TouchableOpacity,
 } from "react-native";
 
-import { postUser } from "../utils/apiRequests";
+import { postUser, getAllUsers } from "../utils/apiRequests";
 
 import { auth } from "../firebase";
 const SignUpScreen = ({ navigation }) => {
@@ -22,6 +22,8 @@ const SignUpScreen = ({ navigation }) => {
     const [ConfirmPassword, setConfirmPassword] = useState("");
     const [displayName, setDisplayName] = useState("");
     const [username, setUsername] = useState("");
+    const [passwordError, setPasswordError] = useState("");
+    const [usernameError, setUsernameError] = useState("");
     //     const navigation = useNavigation();
     //     useEffect(() => {
     //         const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -33,19 +35,32 @@ const SignUpScreen = ({ navigation }) => {
     //     }, []);
 
     const handleSignUp = () => {
-        createUserWithEmailAndPassword(auth, email, password)
-            .then((userCred) => {
-                const uid = userCred.user.uid;
-                postUser({
-                    _id: uid,
-                    username: username,
-                    displayName: displayName,
-                    emailAddress: email,
-                }).then(() => {
-                    navigation.replace("Home");
-                });
-            })
-            .catch((error) => alert(error.message));
+        getAllUsers().then((users) => {
+            if (users.includes(username)) {
+                setUsernameError("Sorry, this username is already in use");
+            } else {
+                if (password !== ConfirmPassword) {
+                    setPasswordError("Both passwords must match");
+                } else {
+                    setPasswordError("");
+                    setUsernameError("");
+                    createUserWithEmailAndPassword(auth, email, password)
+                        .then((userCred) => {
+                            console.log(userCred.user);
+                            const uid = userCred.user.uid;
+                            postUser({
+                                _id: uid,
+                                username: username,
+                                displayName: displayName,
+                                emailAddress: email,
+                            }).then(() => {
+                                navigation.replace("Home");
+                            });
+                        })
+                        .catch((error) => alert(error.message));
+                }
+            }
+        });
     };
 
     return (
@@ -54,9 +69,13 @@ const SignUpScreen = ({ navigation }) => {
                 <TextInput
                     placeholder="Username"
                     value={username}
-                    onChangeText={(text) => setUsername(text)}
+                    onChangeText={(text) => {
+                        setUsername(text);
+                        setUsernameError("");
+                    }}
                     style={styles.input}
                 ></TextInput>
+                <Text>{usernameError}</Text>
                 <TextInput
                     placeholder="Display Name"
                     value={displayName}
@@ -79,10 +98,14 @@ const SignUpScreen = ({ navigation }) => {
                 <TextInput
                     placeholder="Confirm Password"
                     value={ConfirmPassword}
-                    onChangeText={(text) => setConfirmPassword(text)}
+                    onChangeText={(text) => {
+                        setConfirmPassword(text);
+                        setPasswordError("");
+                    }}
                     style={styles.input}
                     secureTextEntry
                 ></TextInput>
+                <Text>{passwordError}</Text>
             </View>
             <View style={styles.buttonContainer}>
                 <TouchableOpacity style={styles.button} onPress={handleSignUp}>
