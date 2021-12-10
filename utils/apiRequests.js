@@ -77,6 +77,13 @@ export const postUser = (newUser) => {
 export const getAllUsers = () => {
     return makespaceApi.get("/users").then((res) => {
         console.log(res.data);
-        return res.data.users;
+        return res.data;
+    });
+};
+
+export const getUserById = (userId) => {
+    return makespaceApi.get(`/users/${userId}`).then((res) => {
+        console.log(res.data);
+        return res.data;
     });
 };
