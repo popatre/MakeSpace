@@ -11,15 +11,33 @@ import {
 import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-const FilterModal = ({ setModalOpen }) => {
-    const [accessibleChecked, setAccessibleChecked] = useState(false);
-    const [wcChecked, setWcChecked] = useState(false);
-    const [indoorChecked, setIndoorChecked] = useState(false);
-    const [outdoorChecked, setOutdoorChecked] = useState(false);
-    const [powerChecked, setPowerChecked] = useState(false);
-    const [parkingChecked, setParkingChecked] = useState(false);
-    const [kitchenChecked, setKitchenChecked] = useState(false);
-    const [twentyFourChecked, setTwentyFourChecked] = useState(false);
+const FilterModal = ({
+    setModalOpen,
+    accessibleChecked,
+    setAccessibleChecked,
+    indoorChecked,
+    setIndoorChecked,
+    setWcChecked,
+    wcChecked,
+    outdoorChecked,
+    setOutdoorChecked,
+    powerChecked,
+    setPowerChecked,
+    parkingChecked,
+    setParkingChecked,
+    kitchenChecked,
+    setKitchenChecked,
+    twentyFourChecked,
+    setTwentyFourChecked,
+}) => {
+    // const [accessibleChecked, setAccessibleChecked] = useState(false);
+    // const [wcChecked, setWcChecked] = useState(false);
+    // const [indoorChecked, setIndoorChecked] = useState(false);
+    // const [outdoorChecked, setOutdoorChecked] = useState(false);
+    // const [powerChecked, setPowerChecked] = useState(false);
+    // const [parkingChecked, setParkingChecked] = useState(false);
+    // const [kitchenChecked, setKitchenChecked] = useState(false);
+    // const [twentyFourChecked, setTwentyFourChecked] = useState(false);
     return (
         <View>
             <View style={styles.modalClose}>
