@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
 import SingleListingMap from "../Components/ListingMapTest";
-import ListingMap from "../Components/ListingMap";
 import { getLocation } from "../utils/apiRequests";
 
 const SingleListingMapScreen = ({ route }) => {

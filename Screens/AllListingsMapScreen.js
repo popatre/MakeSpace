@@ -21,15 +21,6 @@ const AllListingsMapScreen = ({ route }) => {
       });
     });
   }, []);
-  console.log(location, "<<<<F<<<<<<location ling 25");
-
-  // const arr = ["M1 4NT", "M28 7XH", "M1 5WW", "M1 7ED", "M1 6LT"];
-  // arr.map((postcode) => {
-  //   getLocation(postcode).then((res) => {
-  //     console.log(res, "<<<<<<<<<<<<res");
-  //     return res;
-  //   });
-  // });
 
   return (
     <View>

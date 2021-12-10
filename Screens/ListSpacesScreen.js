@@ -25,7 +25,6 @@ const ListSpacesScreen = ({ navigation }) => {
 
   useEffect(() => {
     getAllListings(sort).then((res) => {
-      // console.log(res);
       setListing(res);
     });
   }, [sort]);

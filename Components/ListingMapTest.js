@@ -4,12 +4,10 @@ import MapView, {
   PROVIDER_GOOGLE,
   Marker,
   Callout,
-  Polygon,
   Circle,
 } from "react-native-maps";
 
 export default function SingleListingMap({ location }) {
-  // console.log(location, "<<<<<<llllloooocccattiionnnn");
   const showWelcomeMessage = () => {
     Alert.alert("Welcome to Northcoders", "The course is fantastic", [
       {
@@ -59,8 +57,8 @@ export default function SingleListingMap({ location }) {
             }}
           />
         </Marker>
+
         {location.map((marker) => {
-          // console.log(marker, "<<<<<<<<<<<obj");
           return (
             <Marker
               key={marker.id}
