@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+
 import {
   View,
   Text,
   TextInput,
   Button,
   StyleSheet,
+  Modal,
   ScrollView,
   Image,
 } from "react-native";
@@ -15,8 +17,12 @@ import {
   FontAwesome5,
   Entypo,
 } from "@expo/vector-icons";
+import ReviewModal from "../Components/ReviewModal";
 
 const SingleListScreen = ({ route, navigation }) => {
+  const [openContact, setOpenContact] = useState(false);
+  const [openReviewModal, setOpenReviewModal] = useState(false);
+
   const {
     images,
     title,
@@ -75,42 +81,42 @@ const SingleListScreen = ({ route, navigation }) => {
           </View>
           <View style={{ flexDirection: "row" }}>
             <MaterialCommunityIcons
-              name="hours-24"
+              name='hours-24'
               size={24}
               color={amenities["24HourAccess"] ? "#32CD32" : "#DCDCDC"}
             />
             <MaterialIcons
-              name="wc"
+              name='wc'
               size={24}
               color={amenities.WC ? "#32CD32" : "#DCDCDC"}
             />
             <FontAwesome
-              name="wheelchair"
+              name='wheelchair'
               size={24}
               color={amenities.accessible ? "#32CD32" : "#DCDCDC"}
             />
             <FontAwesome5
-              name="house-user"
+              name='house-user'
               size={24}
               color={amenities.indoor ? "#32CD32" : "#DCDCDC"}
             />
             <FontAwesome5
-              name="tree"
+              name='tree'
               size={24}
               color={amenities.outdoor ? "#32CD32" : "#DCDCDC"}
             />
             <FontAwesome5
-              name="parking"
+              name='parking'
               size={24}
               color={amenities.parking ? "#32CD32" : "#DCDCDC"}
             />
             <Entypo
-              name="power-plug"
+              name='power-plug'
               size={24}
               color={amenities.power ? "#32CD32" : "#DCDCDC"}
             />
             <MaterialCommunityIcons
-              name="microwave"
+              name='microwave'
               size={24}
               color={amenities.kitchen ? "#32CD32" : "#DCDCDC"}
             />
@@ -121,7 +127,7 @@ const SingleListScreen = ({ route, navigation }) => {
         </View>
         <View>
           <Button
-            title="View on map"
+            title='View on map'
             onPress={() => {
               navigation.navigate("SingleSpaceOnMap", locationObj);
             }}
@@ -134,12 +140,43 @@ const SingleListScreen = ({ route, navigation }) => {
             justifyContent: "space-around",
           }}
         >
-          <Button title="Reviews" />
-          <Button title="Contact details" />
+          <Button title='Reviews' />
+          <Modal visible={openReviewModal} animationType='slide'>
+            <ReviewModal setOpenReviewModal={setOpenReviewModal} />
+          </Modal>
+          <Button
+            title='Write a review'
+            onPress={() => setOpenReviewModal(true)}
+          />
+
+          <Button
+            title='Contact details'
+            onPress={() => setOpenContact(!openContact)}
+          />
         </View>
+        {!!openContact ? (
+          <View
+            style={{
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <Text style={styles.text}>
+              {route.params.contactDetails.emailAddress}
+            </Text>
+            <Text style={styles.text}>
+              {route.params.contactDetails.phoneNumber}
+            </Text>
+          </View>
+        ) : null}
       </View>
     </ScrollView>
   );
 };
 
+const styles = StyleSheet.create({
+  text: {
+    fontSize: 20,
+  },
+});
 export default SingleListScreen;
