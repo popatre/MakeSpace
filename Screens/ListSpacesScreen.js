@@ -45,7 +45,10 @@ const ListSpacesScreen = ({ navigation }) => {
             outdoorChecked,
             parkingChecked,
             kitchenChecked,
-            _24HourAccessChecked
+            _24HourAccessChecked,
+            smallChecked,
+            mediumChecked,
+            largeChecked
         ).then((res) => {
             // console.log(res);
             setListing(res);
@@ -60,9 +63,12 @@ const ListSpacesScreen = ({ navigation }) => {
         parkingChecked,
         kitchenChecked,
         _24HourAccessChecked,
+        smallChecked,
+        mediumChecked,
+        largeChecked,
     ]);
 
-    console.log(wcChecked);
+    // console.log(smallChecked);
 
     return (
         <View>

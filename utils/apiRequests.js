@@ -17,24 +17,36 @@ export const getAllListings = (
     outdoor,
     parking,
     kitchen,
-    _24HourAccess
+    _24HourAccess,
+    small,
+    medium,
+    large
 ) => {
+    const params = {
+        sortby: sort,
+        "amenities.WC": WC,
+        "amenities.power": power,
+        "amenities.accessible": accessible,
+        "amenities.indoor": indoor,
+        "amenities.outdoor": outdoor,
+        "amenities.parking": parking,
+        "amenities.kitchen": kitchen,
+        "amenities._24HourAccess": _24HourAccess,
+        size: [],
+    };
+    if (small) params.size.push(small);
+
+    if (medium) params.size.push(medium);
+
+    if (large) params.size.push(large);
+
     return makespaceApi
         .get("/listings", {
-            params: {
-                sortby: sort,
-                "amenities.WC": WC,
-                "amenities.power": power,
-                "amenities.accessible": accessible,
-                "amenities.indoor": indoor,
-                "amenities.outdoor": outdoor,
-                "amenities.parking": parking,
-                "amenities.kitchen": kitchen,
-                "amenities._24HourAccess": _24HourAccess,
-            },
+            params,
         })
         .then((res) => {
-            console.log(res.data.listings, "<<<res.data");
+            console.log();
+            // console.log(res.data.listings, "<<<res.data");
             return res.data.listings;
         });
 };

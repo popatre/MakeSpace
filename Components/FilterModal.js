@@ -66,7 +66,7 @@ const FilterModal = ({
                         selected={!smallChecked ? false : true}
                         onPress={() => {
                             !smallChecked
-                                ? setSmallChecked(true)
+                                ? setSmallChecked("S")
                                 : setSmallChecked(undefined);
                         }}
                     >
@@ -81,7 +81,7 @@ const FilterModal = ({
                         selected={!mediumChecked ? false : true}
                         onPress={() => {
                             !mediumChecked
-                                ? setMediumChecked(true)
+                                ? setMediumChecked("M")
                                 : setMediumChecked(undefined);
                         }}
                     >
@@ -96,7 +96,7 @@ const FilterModal = ({
                         selected={!largeChecked ? false : true}
                         onPress={() => {
                             !largeChecked
-                                ? setLargeChecked(true)
+                                ? setLargeChecked("L")
                                 : setLargeChecked(undefined);
                         }}
                     >
