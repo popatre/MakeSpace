@@ -20,7 +20,8 @@ export const getAllListings = (
     _24HourAccess,
     small,
     medium,
-    large
+    large,
+    order
 ) => {
     const params = {
         sortby: sort,
@@ -33,6 +34,7 @@ export const getAllListings = (
         "amenities.kitchen": kitchen,
         "amenities._24HourAccess": _24HourAccess,
         size: [],
+        order,
     };
     if (small) params.size.push(small);
 

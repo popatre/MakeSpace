@@ -34,6 +34,7 @@ const ListSpacesScreen = ({ navigation }) => {
     const [smallChecked, setSmallChecked] = useState(undefined);
     const [mediumChecked, setMediumChecked] = useState(undefined);
     const [largeChecked, setLargeChecked] = useState(undefined);
+    const [order, setOrder] = useState("desc");
 
     useEffect(() => {
         getAllListings(
@@ -48,7 +49,8 @@ const ListSpacesScreen = ({ navigation }) => {
             _24HourAccessChecked,
             smallChecked,
             mediumChecked,
-            largeChecked
+            largeChecked,
+            order
         ).then((res) => {
             // console.log(res);
             setListing(res);
@@ -66,6 +68,7 @@ const ListSpacesScreen = ({ navigation }) => {
         smallChecked,
         mediumChecked,
         largeChecked,
+        order,
     ]);
 
     // console.log(smallChecked);
@@ -124,22 +127,32 @@ const ListSpacesScreen = ({ navigation }) => {
                         navigation.navigate("SpacesOnMap", listing);
                     }}
                 />
+                <Text>Sort By: </Text>
                 <RNPickerSelect
                     placeholder={{
-                        label: "Sort by",
-                        value: null,
+                        label: "Space Rating",
+                        value: "spaceRating",
                     }}
                     onValueChange={(value) => setSort(value)}
                     onPress={() => {}}
                     items={[
-                        { label: "price", value: "price", key: "price" },
-                        { label: "size", value: "size", key: "size" },
-                        {
-                            label: "rating",
-                            value: "placeRating",
-                            key: "placeRating",
-                        },
-                        { label: "title", value: "title", key: "title" },
+                        { label: "Price", value: "price", key: "price" },
+
+                        { label: "Title", value: "title", key: "title" },
+                    ]}
+                />
+                <Text>Order: </Text>
+                <RNPickerSelect
+                    placeholder={{
+                        label: `Descending`,
+                        value: "desc",
+                    }}
+                    onValueChange={(value) => setOrder(value)}
+                    onPress={() => {}}
+                    items={[
+                        { label: "Ascending", value: "asc", key: "asc" },
+
+                        // { label: "Descending", value: "desc", key: "desc" },
                     ]}
                 />
             </View>

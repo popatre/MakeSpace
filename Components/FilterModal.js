@@ -288,7 +288,7 @@ const styles = StyleSheet.create({
     modalFilter: {
         flexDirection: "row",
 
-        marginTop: 70,
+        marginTop: 50,
         justifyContent: "space-around",
         alignItems: "center",
         height: 30,
@@ -297,7 +297,7 @@ const styles = StyleSheet.create({
     container: {
         justifyContent: "center",
         alignItems: "center",
-        marginTop: 30,
+        marginTop: 10,
     },
     filterTitle: {
         fontSize: 23,
