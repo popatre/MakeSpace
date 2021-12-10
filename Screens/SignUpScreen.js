@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-
+import React, { useState, useEffect, useContext } from "react";
+import { UserContext } from "../context/User";
 import {
     createUserWithEmailAndPassword,
     onAuthStateChanged,
@@ -24,15 +24,7 @@ const SignUpScreen = ({ navigation }) => {
     const [username, setUsername] = useState("");
     const [passwordError, setPasswordError] = useState("");
     const [usernameError, setUsernameError] = useState("");
-    //     const navigation = useNavigation();
-    //     useEffect(() => {
-    //         const unsubscribe = onAuthStateChanged(auth, (user) => {
-    //             if (user) {
-    //                 navigation.navigate("home");
-    //             }
-    //         });
-    //         return unsubscribe;
-    //     }, []);
+    const { setUser } = useContext(UserContext);
 
     const handleSignUp = () => {
         getAllUsers().then((users) => {
@@ -54,6 +46,7 @@ const SignUpScreen = ({ navigation }) => {
                                 displayName: displayName,
                                 emailAddress: email,
                             }).then(() => {
+                                setUser(username);
                                 navigation.replace("Home");
                             });
                         })

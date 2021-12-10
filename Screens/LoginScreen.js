@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { UserContext } from "../context/User";
+import { getUserById } from "../utils/apiRequests";
 import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
@@ -18,24 +20,22 @@ import { auth } from "../firebase";
 export default function LoginScreen({ navigation }) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    //     const navigation = useNavigation();
+    const { setUser } = useContext(UserContext);
+
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
+                const uid = user.uid;
+                getUserById(uid).then((user) => {
+                    setUser(user.username);
+                });
+
                 navigation.navigate("Home");
             }
         });
         return unsubscribe;
     }, []);
 
-    // const handleSignUp = () => {
-    //     createUserWithEmailAndPassword(auth, email, password)
-    //         .then((userCred) => {
-    //             const user = userCred.user;
-    //             console.log("registered with ", user);
-    //         })
-    //         .catch((error) => alert(error.message));
-    // };
     const handleLogin = () => {
         signInWithEmailAndPassword(auth, email, password)
             .then((userCred) => {

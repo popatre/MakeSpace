@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { UserContext } from "../context/User";
 import {
     View,
     Text,
@@ -13,12 +14,14 @@ import { onAuthStateChanged } from "firebase/auth";
 import { getUserById } from "../utils/apiRequests";
 
 const ProfileCard = () => {
-    const [user, setUser] = useState({});
+    const [userDetails, setUserDetails] = useState({});
+    const { user } = useContext(UserContext);
+
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             const uid = user.uid;
             getUserById(uid).then((user) => {
-                setUser(user);
+                setUserDetails(user);
             });
         });
         return unsubscribe;
@@ -34,9 +37,9 @@ const ProfileCard = () => {
                 />
             </View>
             <View>
-                <Text>Display Name:{user.displayName} </Text>
-                <Text>Username: {user.username}</Text>
-                <Text>Email: {user.emailAddress}</Text>
+                <Text>Display Name:{userDetails.displayName} </Text>
+                <Text>Username: {userDetails.username}</Text>
+                <Text>Email: {userDetails.emailAddress}</Text>
                 <TouchableOpacity>
                     <Text style={{ color: "blue" }}>Change password</Text>
                 </TouchableOpacity>
