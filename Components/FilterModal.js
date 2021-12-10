@@ -27,17 +27,9 @@ const FilterModal = ({
     setParkingChecked,
     kitchenChecked,
     setKitchenChecked,
-    twentyFourChecked,
-    setTwentyFourChecked,
+    _24HourAccessChecked,
+    set_24HourAccessChecked,
 }) => {
-    // const [accessibleChecked, setAccessibleChecked] = useState(false);
-    // const [wcChecked, setWcChecked] = useState(false);
-    // const [indoorChecked, setIndoorChecked] = useState(false);
-    // const [outdoorChecked, setOutdoorChecked] = useState(false);
-    // const [powerChecked, setPowerChecked] = useState(false);
-    // const [parkingChecked, setParkingChecked] = useState(false);
-    // const [kitchenChecked, setKitchenChecked] = useState(false);
-    // const [twentyFourChecked, setTwentyFourChecked] = useState(false);
     return (
         <View>
             <View style={styles.modalClose}>
@@ -60,7 +52,7 @@ const FilterModal = ({
                             ? null
                             : { backgroundColor: "#5cb85c" }
                     }
-                    selected={accessibleChecked}
+                    selected={!accessibleChecked ? false : true}
                     avatar={
                         <FontAwesome
                             name="wheelchair"
@@ -68,15 +60,23 @@ const FilterModal = ({
                             color="black"
                         />
                     }
-                    onPress={() => setAccessibleChecked(!accessibleChecked)}
+                    onPress={() => {
+                        !accessibleChecked
+                            ? setAccessibleChecked(true)
+                            : setAccessibleChecked(undefined);
+                    }}
                 >
                     Accessible
                 </Chip>
                 <Chip
                     style={!wcChecked ? null : { backgroundColor: "#5cb85c" }}
-                    selected={wcChecked}
+                    selected={!wcChecked ? false : true}
                     avatar={<MaterialIcons name="wc" size={19} color="black" />}
-                    onPress={() => setWcChecked(!wcChecked)}
+                    onPress={() => {
+                        !wcChecked
+                            ? setWcChecked(true)
+                            : setWcChecked(undefined);
+                    }}
                 >
                     WC
                 </Chip>
@@ -84,7 +84,7 @@ const FilterModal = ({
                     style={
                         !indoorChecked ? null : { backgroundColor: "#5cb85c" }
                     }
-                    selected={indoorChecked}
+                    selected={!indoorChecked ? false : true}
                     avatar={
                         <MaterialCommunityIcons
                             name="warehouse"
@@ -92,7 +92,11 @@ const FilterModal = ({
                             color="black"
                         />
                     }
-                    onPress={() => setIndoorChecked(!indoorChecked)}
+                    onPress={() => {
+                        !indoorChecked
+                            ? setIndoorChecked(true)
+                            : setIndoorChecked(undefined);
+                    }}
                 >
                     Indoor
                 </Chip>
@@ -102,11 +106,15 @@ const FilterModal = ({
                     style={
                         !outdoorChecked ? null : { backgroundColor: "#5cb85c" }
                     }
-                    selected={outdoorChecked}
+                    selected={!outdoorChecked ? false : true}
                     avatar={
                         <FontAwesome5 name="tree" size={18} color="black" />
                     }
-                    onPress={() => setOutdoorChecked(!outdoorChecked)}
+                    onPress={() => {
+                        !outdoorChecked
+                            ? setOutdoorChecked(true)
+                            : setOutdoorChecked(undefined);
+                    }}
                 >
                     Outdoor
                 </Chip>
@@ -114,11 +122,15 @@ const FilterModal = ({
                     style={
                         !powerChecked ? null : { backgroundColor: "#5cb85c" }
                     }
-                    selected={powerChecked}
+                    selected={!powerChecked ? false : true}
                     avatar={
                         <Entypo name="power-plug" size={18} color="black" />
                     }
-                    onPress={() => setPowerChecked(!powerChecked)}
+                    onPress={() => {
+                        !powerChecked
+                            ? setPowerChecked(true)
+                            : setPowerChecked(undefined);
+                    }}
                 >
                     Power
                 </Chip>
@@ -126,11 +138,15 @@ const FilterModal = ({
                     style={
                         !parkingChecked ? null : { backgroundColor: "#5cb85c" }
                     }
-                    selected={parkingChecked}
+                    selected={!parkingChecked ? false : true}
                     avatar={
                         <FontAwesome5 name="parking" size={18} color="black" />
                     }
-                    onPress={() => setParkingChecked(!parkingChecked)}
+                    onPress={() => {
+                        !parkingChecked
+                            ? setParkingChecked(true)
+                            : setParkingChecked(undefined);
+                    }}
                 >
                     Parking
                 </Chip>
@@ -140,7 +156,7 @@ const FilterModal = ({
                     style={
                         !kitchenChecked ? null : { backgroundColor: "#5cb85c" }
                     }
-                    selected={kitchenChecked}
+                    selected={!kitchenChecked ? false : true}
                     avatar={
                         <MaterialCommunityIcons
                             name="microwave"
@@ -148,17 +164,21 @@ const FilterModal = ({
                             color="black"
                         />
                     }
-                    onPress={() => setKitchenChecked(!kitchenChecked)}
+                    onPress={() => {
+                        !kitchenChecked
+                            ? setKitchenChecked(true)
+                            : setKitchenChecked(undefined);
+                    }}
                 >
                     Kitchen Facilities
                 </Chip>
                 <Chip
                     style={
-                        !twentyFourChecked
+                        !_24HourAccessChecked
                             ? null
                             : { backgroundColor: "#5cb85c" }
                     }
-                    selected={twentyFourChecked}
+                    selected={!_24HourAccessChecked ? false : true}
                     avatar={
                         <MaterialCommunityIcons
                             name="hours-24"
@@ -166,7 +186,11 @@ const FilterModal = ({
                             color="black"
                         />
                     }
-                    onPress={() => setTwentyFourChecked(!twentyFourChecked)}
+                    onPress={() => {
+                        !_24HourAccessChecked
+                            ? set_24HourAccessChecked(true)
+                            : set_24HourAccessChecked(undefined);
+                    }}
                 >
                     24 Hour Access
                 </Chip>

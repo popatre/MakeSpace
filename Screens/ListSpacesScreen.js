@@ -19,25 +19,47 @@ import { getAllListings } from "../utils/apiRequests";
 
 const ListSpacesScreen = ({ navigation }) => {
     const [distance, setDistance] = useState("");
-    const [sort, setSort] = useState("");
+    const [sort, setSort] = useState(undefined);
     const [listing, setListing] = useState([]);
     const [modalOpen, setModalOpen] = useState(false);
 
-    const [accessibleChecked, setAccessibleChecked] = useState(false);
-    const [wcChecked, setWcChecked] = useState(false);
-    const [indoorChecked, setIndoorChecked] = useState(false);
-    const [outdoorChecked, setOutdoorChecked] = useState(false);
-    const [powerChecked, setPowerChecked] = useState(false);
-    const [parkingChecked, setParkingChecked] = useState(false);
-    const [kitchenChecked, setKitchenChecked] = useState(false);
-    const [twentyFourChecked, setTwentyFourChecked] = useState(false);
+    const [accessibleChecked, setAccessibleChecked] = useState(undefined);
+    const [wcChecked, setWcChecked] = useState(undefined);
+    const [indoorChecked, setIndoorChecked] = useState(undefined);
+    const [outdoorChecked, setOutdoorChecked] = useState(undefined);
+    const [powerChecked, setPowerChecked] = useState(undefined);
+    const [parkingChecked, setParkingChecked] = useState(undefined);
+    const [kitchenChecked, setKitchenChecked] = useState(undefined);
+    const [_24HourAccessChecked, set_24HourAccessChecked] = useState(undefined);
 
     useEffect(() => {
-        getAllListings(sort).then((res) => {
+        getAllListings(
+            sort,
+            wcChecked,
+            powerChecked,
+            accessibleChecked,
+            indoorChecked,
+            outdoorChecked,
+            parkingChecked,
+            kitchenChecked,
+            _24HourAccessChecked
+        ).then((res) => {
             // console.log(res);
             setListing(res);
         });
-    }, [sort]);
+    }, [
+        sort,
+        wcChecked,
+        powerChecked,
+        accessibleChecked,
+        indoorChecked,
+        outdoorChecked,
+        parkingChecked,
+        kitchenChecked,
+        _24HourAccessChecked,
+    ]);
+
+    console.log(wcChecked);
 
     return (
         <View>
@@ -74,8 +96,8 @@ const ListSpacesScreen = ({ navigation }) => {
                         setParkingChecked={setParkingChecked}
                         kitchenChecked={kitchenChecked}
                         setKitchenChecked={setKitchenChecked}
-                        twentyFourChecked={twentyFourChecked}
-                        setTwentyFourChecked={setTwentyFourChecked}
+                        _24HourAccessChecked={_24HourAccessChecked}
+                        set_24HourAccessChecked={set_24HourAccessChecked}
                     />
                 </Modal>
                 <Button title="Filter" onPress={() => setModalOpen(true)} />

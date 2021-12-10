@@ -8,9 +8,31 @@ const postcodesApi = axios.create({
     baseURL: "https://api.postcodes.io/postcodes/",
 });
 
-export const getAllListings = (sort) => {
+export const getAllListings = (
+    sort,
+    WC,
+    power,
+    accessible,
+    indoor,
+    outdoor,
+    parking,
+    kitchen,
+    _24HourAccess
+) => {
     return makespaceApi
-        .get("/listings", { params: { sortby: sort } })
+        .get("/listings", {
+            params: {
+                sortby: sort,
+                "amenities.WC": WC,
+                "amenities.power": power,
+                "amenities.accessible": accessible,
+                "amenities.indoor": indoor,
+                "amenities.outdoor": outdoor,
+                "amenities.parking": parking,
+                "amenities.kitchen": kitchen,
+                "amenities._24HourAccess": _24HourAccess,
+            },
+        })
         .then((res) => {
             console.log(res.data.listings, "<<<res.data");
             return res.data.listings;
