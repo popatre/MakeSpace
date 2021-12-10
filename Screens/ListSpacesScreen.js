@@ -31,6 +31,9 @@ const ListSpacesScreen = ({ navigation }) => {
     const [parkingChecked, setParkingChecked] = useState(undefined);
     const [kitchenChecked, setKitchenChecked] = useState(undefined);
     const [_24HourAccessChecked, set_24HourAccessChecked] = useState(undefined);
+    const [smallChecked, setSmallChecked] = useState(undefined);
+    const [mediumChecked, setMediumChecked] = useState(undefined);
+    const [largeChecked, setLargeChecked] = useState(undefined);
 
     useEffect(() => {
         getAllListings(
@@ -98,6 +101,12 @@ const ListSpacesScreen = ({ navigation }) => {
                         setKitchenChecked={setKitchenChecked}
                         _24HourAccessChecked={_24HourAccessChecked}
                         set_24HourAccessChecked={set_24HourAccessChecked}
+                        setSmallChecked={setSmallChecked}
+                        smallChecked={smallChecked}
+                        setMediumChecked={setMediumChecked}
+                        mediumChecked={mediumChecked}
+                        setLargeChecked={setLargeChecked}
+                        largeChecked={largeChecked}
                     />
                 </Modal>
                 <Button title="Filter" onPress={() => setModalOpen(true)} />
