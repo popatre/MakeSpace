@@ -74,7 +74,7 @@ const ListSpacesScreen = ({ navigation }) => {
     // console.log(smallChecked);
 
     return (
-        <View>
+        <View style={styles.mainContainer}>
             <View style={styles.splitRow}>
                 <RNPickerSelect
                     style={{ ...pickerSelectStyles }}
@@ -171,7 +171,7 @@ const ListSpacesScreen = ({ navigation }) => {
                     ]}
                 />
             </View>
-            <View>
+            <View style={styles.listContainer}>
                 <FlatList
                     keyExtractor={(item) => item._id}
                     data={listing}
@@ -236,6 +236,8 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     sortLabel: { fontSize: 16, marginBottom: 20 },
+    listContainer: { flex: 1 },
+    mainContainer: { flex: 1 },
 });
 
 const pickerSelectStyles = StyleSheet.create({
