@@ -188,6 +188,7 @@ const ListSpacesScreen = ({ navigation }) => {
                                 rating={item.spaceRating}
                                 size={item.size}
                                 // images={item.images}
+                                images="https://cdn.britannica.com/42/91642-050-332E5C66/Keukenhof-Gardens-Lisse-Netherlands.jpg"
                             />
                         </TouchableOpacity>
                     )}
@@ -234,7 +235,7 @@ const styles = StyleSheet.create({
         // backgroundColor: "white",
         alignItems: "center",
     },
-    sortLabel: { fontSize: 18, marginBottom: 20 },
+    sortLabel: { fontSize: 16, marginBottom: 20 },
 });
 
 const pickerSelectStyles = StyleSheet.create({
@@ -253,7 +254,7 @@ const pickerSelectStyles = StyleSheet.create({
 });
 const pickerSelectStyles2 = StyleSheet.create({
     inputIOS: {
-        fontSize: 14,
+        fontSize: 12,
         paddingTop: 8,
         paddingHorizontal: 5,
         paddingBottom: 8,
@@ -262,5 +263,7 @@ const pickerSelectStyles2 = StyleSheet.create({
         borderRadius: 4,
         backgroundColor: "white",
         color: "black",
+        width: 90,
+        textAlign: "center",
     },
 });
