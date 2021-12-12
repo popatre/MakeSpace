@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import { FontAwesome5 } from "@expo/vector-icons";
 import {
     View,
     TouchableOpacity,
@@ -75,8 +75,9 @@ const ListSpacesScreen = ({ navigation }) => {
 
     return (
         <View>
-            <View>
+            <View style={styles.splitRow}>
                 <RNPickerSelect
+                    style={{ ...pickerSelectStyles }}
                     placeholder={{
                         label: "Distance",
                         value: null,
@@ -118,17 +119,30 @@ const ListSpacesScreen = ({ navigation }) => {
                         largeChecked={largeChecked}
                     />
                 </Modal>
-                <Button title="Filter" onPress={() => setModalOpen(true)} />
+                <TouchableOpacity
+                    onPress={() => setModalOpen(true)}
+                    style={styles.button}
+                >
+                    <Text style={styles.buttonText}>Filter</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => navigation.navigate("SpacesOnMap", listing)}
+                    style={styles.mapButton}
+                >
+                    <Text style={styles.buttonText}>
+                        <FontAwesome5
+                            name="map-marked-alt"
+                            size={20}
+                            color="white"
+                        />
+                    </Text>
+                </TouchableOpacity>
             </View>
-            <View>
-                <Button
-                    title="View on map"
-                    onPress={() => {
-                        navigation.navigate("SpacesOnMap", listing);
-                    }}
-                />
-                <Text>Sort By: </Text>
+            <View style={styles.mapRow}></View>
+            <View style={styles.sortRow}>
+                <Text style={styles.sortLabel}>Sort By: </Text>
                 <RNPickerSelect
+                    style={{ ...pickerSelectStyles2 }}
                     placeholder={{
                         label: "Space Rating",
                         value: "spaceRating",
@@ -141,8 +155,9 @@ const ListSpacesScreen = ({ navigation }) => {
                         { label: "Title", value: "title", key: "title" },
                     ]}
                 />
-                <Text>Order: </Text>
+                <Text style={styles.sortLabel}>Order: </Text>
                 <RNPickerSelect
+                    style={{ ...pickerSelectStyles2 }}
                     placeholder={{
                         label: `Descending`,
                         value: "desc",
@@ -187,4 +202,65 @@ export default ListSpacesScreen;
 const styles = StyleSheet.create({
     modalFilter: { flex: 1, justifyContent: "center", alignItems: "center" },
     modalClose: { marginTop: 40, alignItems: "center" },
+    splitRow: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-around",
+    },
+    modalLabel: { width: "100%", borderWidth: 2 },
+    buttonText: { color: "white", fontWeight: "700", fontSize: 13 },
+    button: {
+        backgroundColor: "#0782F9",
+        width: "29%",
+        padding: 7,
+        borderRadius: 10,
+        alignItems: "center",
+        marginTop: 10,
+        marginBottom: 20,
+    },
+    // mapRow: { justifyContent: "center", alignItems: "center" },
+    mapButton: {
+        backgroundColor: "#0782F9",
+        width: "20%",
+        padding: 4,
+        borderRadius: 10,
+        alignItems: "center",
+        marginTop: 10,
+        marginBottom: 20,
+    },
+    sortRow: {
+        flexDirection: "row",
+        justifyContent: "space-around",
+        // backgroundColor: "white",
+        alignItems: "center",
+    },
+    sortLabel: { fontSize: 18, marginBottom: 20 },
+});
+
+const pickerSelectStyles = StyleSheet.create({
+    inputIOS: {
+        fontSize: 13,
+        padding: 7,
+        borderWidth: 1,
+        borderColor: "gray",
+        borderRadius: 10,
+        backgroundColor: "white",
+        color: "black",
+        width: "100%",
+        marginTop: 10,
+        marginBottom: 20,
+    },
+});
+const pickerSelectStyles2 = StyleSheet.create({
+    inputIOS: {
+        fontSize: 14,
+        paddingTop: 8,
+        paddingHorizontal: 5,
+        paddingBottom: 8,
+        borderWidth: 1,
+        borderColor: "gray",
+        borderRadius: 4,
+        backgroundColor: "white",
+        color: "black",
+    },
 });

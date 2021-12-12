@@ -28,7 +28,11 @@ export default function MainStack() {
                 options={{ headerShown: false }}
             />
             <Stack.Screen name="PostListing" component={PostListingScreen} />
-            <Stack.Screen name="Spaces" component={ListSpacesScreen} />
+            <Stack.Screen
+                name="Spaces"
+                component={ListSpacesScreen}
+                options={{ title: "" }}
+            />
             <Stack.Screen name="SpacesOnMap" component={AllListingsMapScreen} />
             <Stack.Screen name="SingleList" component={SingleListScreen} />
             <Stack.Screen

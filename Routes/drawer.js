@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Button, View } from "react-native";
+import { Button, View, Image, StyleSheet } from "react-native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import MainStack from "./MainStack";
 import AccountStack from "./AccountStack";
@@ -12,12 +12,33 @@ export default function Nav() {
             <Drawer.Screen
                 name="Home"
                 component={MainStack}
-                options={{ headerTitle: () => <Header /> }}
+                options={{
+                    headerStyle: { backgroundColor: "#f0ad4e" },
+                    headerTitle: () => <Header />,
+                    headerBackground: () => (
+                        <Image
+                            style={StyleSheet.absoluteFill}
+                            source={{
+                                uri: "https://png.pngitem.com/pimgs/s/56-564988_top-backgrounds-textured-png-transparent-png.png",
+                            }}
+                        />
+                    ),
+                }}
             />
             <Drawer.Screen
                 name="Account"
                 component={AccountStack}
-                options={{ headerTitle: () => <Header /> }}
+                options={{
+                    headerTitle: () => <Header />,
+                    headerBackground: () => (
+                        <Image
+                            style={StyleSheet.absoluteFill}
+                            source={{
+                                uri: "https://png.pngitem.com/pimgs/s/56-564988_top-backgrounds-textured-png-transparent-png.png",
+                            }}
+                        />
+                    ),
+                }}
             />
         </Drawer.Navigator>
     );
