@@ -8,16 +8,6 @@ import MapView, {
 } from "react-native-maps";
 
 export default function SingleListingMap({ location }) {
-  const showWelcomeMessage = () => {
-    Alert.alert("Welcome to Northcoders", "The course is fantastic", [
-      {
-        text: "Cancel",
-        style: "cancel",
-      },
-      { text: "OK" },
-    ]);
-  };
-
   return (
     <View>
       <Text>ListingMap</Text>

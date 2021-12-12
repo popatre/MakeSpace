@@ -12,6 +12,9 @@ const AllListingsMapScreen = ({ route }) => {
         const newObj = {
           id: obj._id,
           name: obj.title,
+          price: obj.price,
+          size: obj.size,
+          spaceRating: obj.spaceRating,
           latitude: res.latitude,
           longitude: res.longitude,
         };
