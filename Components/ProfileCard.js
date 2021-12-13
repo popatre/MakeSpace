@@ -13,27 +13,40 @@ import {
 import { AntDesign } from "@expo/vector-icons";
 
 import { auth } from "../firebase";
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged, updatePassword } from "firebase/auth";
 import { getUserById, patchUser } from "../utils/apiRequests";
 
 const ProfileCard = () => {
     const [userDetails, setUserDetails] = useState({});
-    const [modalOpen, setModalOpen] = useState(false);
+    const [displayNameModalOpen, setDisplayNameModalOpen] = useState(false);
+    const [passwordModalOpen, setPasswordModalOpen] = useState(false);
     const [displayName, setDisplayName] = useState("");
+    const [passwordChange, setPasswordChange] = useState("");
     const { user } = useContext(UserContext);
     const handlePress = () => {
-        setModalOpen(true);
+        setDisplayNameModalOpen(true);
     };
-    const handleSubmit = () => {
+    const handleDisplayNameSubmit = () => {
         onAuthStateChanged(auth, (user) => {
             const uid = user.uid;
             const update = { displayName };
             patchUser(update, uid).then((user) => {
                 setUserDetails(user);
-                setModalOpen(false);
+                setDisplayNameModalOpen(false);
                 setDisplayName("");
             });
         });
+    };
+
+    const userFirebase = auth.currentUser;
+    const handlePasswordSubmit = () => {
+        updatePassword(userFirebase, passwordChange)
+            .then(() => {
+                // console.log("success! New password is.." + passwordChange);
+                setPasswordModalOpen(false);
+                setPasswordChange("");
+            })
+            .catch((error) => {});
     };
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -57,13 +70,13 @@ const ProfileCard = () => {
             <View>
                 <Text>Display Name:{userDetails.displayName} </Text>
                 <Button onPress={handlePress} title="edit display name" />
-                <Modal visible={modalOpen} animationType="slide">
+                <Modal visible={displayNameModalOpen} animationType="slide">
                     <AntDesign
                         style={{ marginTop: 20 }}
                         name="close"
                         size={24}
                         color="black"
-                        onPress={() => setModalOpen(false)}
+                        onPress={() => setDisplayNameModalOpen(false)}
                     />
                     <Text>Type in your new display name</Text>
                     <TextInput
@@ -71,15 +84,36 @@ const ProfileCard = () => {
                         value={displayName}
                         onChangeText={(text) => setDisplayName(text)}
                     ></TextInput>
-                    <Button title="submit" onPress={handleSubmit} />
+                    <Button title="submit" onPress={handleDisplayNameSubmit} />
                 </Modal>
                 <Text>Username: {userDetails.username}</Text>
                 {user === userDetails.username ? (
                     <Text>Email: {userDetails.emailAddress}</Text>
                 ) : null}
                 <TouchableOpacity>
-                    <Text style={{ color: "blue" }}>Change password</Text>
+                    <Text
+                        onPress={() => setPasswordModalOpen(true)}
+                        style={{ color: "blue" }}
+                    >
+                        Change password
+                    </Text>
                 </TouchableOpacity>
+                <Modal visible={passwordModalOpen} animationType="slide">
+                    <AntDesign
+                        style={{ marginTop: 20 }}
+                        name="close"
+                        size={24}
+                        color="black"
+                        onPress={() => setPasswordModalOpen(false)}
+                    />
+                    <Text>Type in your new password</Text>
+                    <TextInput
+                        style={styles.inputBox}
+                        value={passwordChange}
+                        onChangeText={(text) => setPasswordChange(text)}
+                    ></TextInput>
+                    <Button title="submit" onPress={handlePasswordSubmit} />
+                </Modal>
             </View>
         </View>
     );
@@ -87,6 +121,7 @@ const ProfileCard = () => {
 
 const styles = StyleSheet.create({
     inputBox: { borderWidth: 1 },
+    editText: { fontSize: 12 },
 });
 
 export default ProfileCard;
