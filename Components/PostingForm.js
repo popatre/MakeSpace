@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
     StyleSheet,
     Text,
@@ -13,7 +13,6 @@ import { RadioButton, Checkbox } from "react-native-paper";
 import { Formik } from "formik";
 import * as yup from "yup";
 import * as ImagePicker from "expo-image-picker";
-import { useState } from "react";
 import { postListing } from "../utils/apiRequests";
 const ListingSchema = yup.object({
     title: yup.string().required().min(5),
@@ -35,7 +34,9 @@ const ListingSchema = yup.object({
         }),
 });
 export default function PostingForm() {
-    const [image, setImage] = useState(null);
+    const [image, setImage] = useState(
+        "https://toppng.com/uploads/preview/add-camera-icon-icon-add-11553485583calilemiyg.png"
+    );
     const [value, setValue] = useState("small");
     const [checked, setChecked] = useState(false);
     const [parkingChecked, setParkingChecked] = useState(false);
@@ -46,6 +47,7 @@ export default function PostingForm() {
     const [WCChecked, setWCChecked] = useState(false);
     const [kitchenChecked, setKitchenChecked] = useState(false);
     const [twentyFourChecked, setTwentyFourChecked] = useState(false);
+    const [imageSelected, setImageSelected] = useState(false);
 
     const pickImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
@@ -54,6 +56,7 @@ export default function PostingForm() {
         });
         if (!result.cancelled) {
             setImage(result.uri);
+            setImageSelected(true);
             console.log(result);
         }
     };
@@ -207,24 +210,29 @@ export default function PostingForm() {
                                     "contactDetails.emailAddress"
                                 )}
                             />
-
-                            {image && (
-                                <Image
-                                    value={props.values.image_uri}
-                                    source={{ uri: image }}
-                                    style={{ width: 200, height: 200 }}
-                                />
-                            )}
-                            <View style={styles.imageButton}>
-                                <TouchableOpacity>
-                                    <Text
-                                        style={styles.buttonText}
-                                        onPress={pickImage}
-                                    >
-                                        Select an image
-                                    </Text>
+                            <View style={styles.imageContainer}>
+                                <TouchableOpacity onPress={pickImage}>
+                                    {image && (
+                                        <Image
+                                            value={props.values.image_uri}
+                                            source={{ uri: image }}
+                                            style={styles.image}
+                                        />
+                                    )}
                                 </TouchableOpacity>
                             </View>
+                            {imageSelected && (
+                                <View style={styles.imageButton}>
+                                    <TouchableOpacity>
+                                        <Text
+                                            style={styles.buttonText}
+                                            onPress={pickImage}
+                                        >
+                                            Upload image
+                                        </Text>
+                                    </TouchableOpacity>
+                                </View>
+                            )}
                             <Checkbox.Item
                                 label="Parking"
                                 status={
@@ -328,7 +336,7 @@ export default function PostingForm() {
                                 onPress={props.handleSubmit}
                             >
                                 <Text style={styles.buttonText}>
-                                    Make a Space
+                                    Make your Space
                                 </Text>
                             </TouchableOpacity>
                         </View>
@@ -387,5 +395,14 @@ const styles = StyleSheet.create({
         alignItems: "center",
         marginTop: 30,
         marginBottom: 50,
+    },
+    image: {
+        width: 190,
+        height: 190,
+    },
+    imageContainer: {
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: 20,
     },
 });
