@@ -1,37 +1,34 @@
 import React, { useState, useEffect } from "react";
 
 import {
-
-    View,
-    Text,
-    TextInput,
-    Button,
-    StyleSheet,
-    ScrollView,
-    Image,
-    TouchableOpacity,
-
+  View,
+  Text,
+  Modal,
+  Button,
+  StyleSheet,
+  ScrollView,
+  Image,
+  TouchableOpacity,
 } from "react-native";
 import {
-    MaterialCommunityIcons,
-    MaterialIcons,
-    FontAwesome,
-    FontAwesome5,
-    Entypo,
+  MaterialCommunityIcons,
+  MaterialIcons,
+  FontAwesome,
+  FontAwesome5,
+  Entypo,
 } from "@expo/vector-icons";
 import ReviewModal from "../Components/ReviewModal";
 import { getSingleListingById } from "../utils/apiRequests";
 
 const SingleListScreen = ({ route, navigation }) => {
-
   const [openContact, setOpenContact] = useState(false);
   const [openReviewModal, setOpenReviewModal] = useState(false);
   const [listing, setListing] = useState({});
   const id = route.params;
 
- const handleOwnerRequest = () => {
-        navigation.navigate("UserProfile", { owner: listing.owner });
-    };
+  const handleOwnerRequest = () => {
+    navigation.navigate("UserProfile", { owner: listing.owner });
+  };
 
   useEffect(() => {
     getSingleListingById(id).then((res) => {
@@ -75,11 +72,9 @@ const SingleListScreen = ({ route, navigation }) => {
           </View>
           <View>
             <View>
-               
-                        <TouchableOpacity onPress={handleOwnerRequest}>
-                            <Text>Owner :{listing.owner}</Text>
-                        </TouchableOpacity>
-                    
+              <TouchableOpacity onPress={handleOwnerRequest}>
+                <Text>Owner :{listing.owner}</Text>
+              </TouchableOpacity>
             </View>
           </View>
           <View>
@@ -188,7 +183,6 @@ const SingleListScreen = ({ route, navigation }) => {
       </ScrollView>
     );
   }
-
 };
 
 const styles = StyleSheet.create({
