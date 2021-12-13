@@ -24,11 +24,10 @@ const ListSpacesScreen = ({ navigation }) => {
   const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
-    getAllListings().then((res) => {
-      console.log(res);
+    getAllListings(sort).then((res) => {
       setListing(res);
     });
-  }, []);
+  }, [sort]);
 
   return (
     <View>
@@ -57,7 +56,7 @@ const ListSpacesScreen = ({ navigation }) => {
         <Button
           title="View on map"
           onPress={() => {
-            navigation.navigate("SpacesOnMap");
+            navigation.navigate("SpacesOnMap", listing);
           }}
         />
         <RNPickerSelect
@@ -66,20 +65,23 @@ const ListSpacesScreen = ({ navigation }) => {
             value: null,
           }}
           onValueChange={(value) => setSort(value)}
+          onPress={() => {}}
           items={[
             { label: "price", value: "price", key: "price" },
             { label: "size", value: "size", key: "size" },
+            { label: "rating", value: "placeRating", key: "placeRating" },
+            { label: "title", value: "title", key: "title" },
           ]}
         />
       </View>
       <View>
         <FlatList
-          keyExtractor={(item) => item._id["$oid"]}
+          keyExtractor={(item) => item._id}
           data={listing}
           renderItem={({ item }) => (
             <TouchableOpacity
               onPress={() => {
-                navigation.navigate("SingleList", item);
+                navigation.navigate("SingleList", item._id);
               }}
             >
               <ListingCard

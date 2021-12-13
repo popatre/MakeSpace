@@ -7,6 +7,7 @@ import PostListingScreen from "../Screens/PostListingScreen";
 import ListSpacesScreen from "../Screens/ListSpacesScreen";
 import AllListingsMapScreen from "../Screens/AllListingsMapScreen";
 import SingleListScreen from "../Screens/SingleListScreen";
+import SingleListingMapScreen from "../Screens/SingleListingMapScreen";
 import React from "react";
 
 const Stack = createStackNavigator();
@@ -26,6 +27,10 @@ export default function MainStack() {
       <Stack.Screen name="Spaces" component={ListSpacesScreen} />
       <Stack.Screen name="SpacesOnMap" component={AllListingsMapScreen} />
       <Stack.Screen name="SingleList" component={SingleListScreen} />
+      <Stack.Screen
+        name="SingleSpaceOnMap"
+        component={SingleListingMapScreen}
+      />
     </Stack.Navigator>
   );
 }

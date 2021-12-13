@@ -1,12 +1,34 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
-import ListingMap from "../Components/ListingMap";
+import ListingMapTest from "../Components/ListingMapTest";
+import { getLocation } from "../utils/apiRequests";
 
-const AllListingsMapScreen = () => {
+const AllListingsMapScreen = ({ route }) => {
+  const [location, setLocation] = useState([]);
+  useEffect(() => {
+    let locationArr = [];
+    route.params.map((obj) => {
+      getLocation(obj.location.postcode).then((res) => {
+        const newObj = {
+          id: obj._id,
+          name: obj.title,
+          price: obj.price,
+          size: obj.size,
+          spaceRating: obj.spaceRating,
+          latitude: res.latitude,
+          longitude: res.longitude,
+        };
+        locationArr.push(newObj);
+        if (locationArr.length === route.params.length)
+          setLocation(locationArr);
+      });
+    });
+  }, []);
+
   return (
     <View>
       <Text>MapForAllListings</Text>
-      <ListingMap />
+      <ListingMapTest location={location} />
     </View>
   );
 };
