@@ -47,6 +47,10 @@ const SignUpScreen = ({ navigation }) => {
                                 emailAddress: email,
                             }).then(() => {
                                 setUser(username);
+                                console.log(
+                                    username,
+                                    "********************************"
+                                );
                                 navigation.replace("Home");
                             });
                         })

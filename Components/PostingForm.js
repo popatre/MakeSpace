@@ -83,7 +83,7 @@ export default function PostingForm() {
               indoor: false,
               outdoor: false,
               WC: false,
-              "24HourAccess": false,
+              _24HourAccess: false,
             },
             // image_uri: "",
           }}

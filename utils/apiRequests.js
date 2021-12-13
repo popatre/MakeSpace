@@ -8,6 +8,7 @@ const postcodesApi = axios.create({
     baseURL: "https://api.postcodes.io/postcodes/",
 });
 
+
 export const getAllListings = (
     sort,
     WC,
@@ -47,25 +48,35 @@ export const getAllListings = (
             params,
         })
         .then((res) => {
-            console.log();
-            // console.log(res.data.listings, "<<<res.data");
+ 
             return res.data.listings;
         });
+
+};
+
+export const getSingleListingById = (id) => {
+  return makespaceApi.get(`/listings/${id}`).then((res) => {
+    return res.data;
+  });
+};
+
+export const patchListingById = (id, updatedListing) => {
+  return makespaceApi.patch(`/listings/${id}`, updatedListing).then((res) => {
+    return res.data;
+  });
 };
 
 export const postListing = (newListing) => {
+
     return makespaceApi.post("/listings", newListing).then((res) => {
-        console.log(res.data);
         return res.data;
     });
 };
 
 export const getLocation = (postcode) => {
-    return postcodesApi.get(`/${postcode}`).then((res) => {
-        //console.log(JSON.stringify(res.data), "<<<<<<<<<<returning location data");
-        return JSON.stringify(res.data.result);
-    });
-};
+  return postcodesApi.get(`/${postcode}`).then((res) => {
+    return res.data.result;
+  });
 
 export const postUser = (newUser) => {
     return makespaceApi.post("/users", newUser).then((res) => {
@@ -86,4 +97,20 @@ export const getUserById = (userId) => {
         console.log(res.data);
         return res.data;
     });
+};
+
+export const patchUser = (update, userId) => {
+    return makespaceApi.patch(`/users/${userId}`, update).then((res) => {
+        console.log(res.data, "in the api request");
+        return res.data;
+    });
+};
+
+export const getUserByUsername = (username) => {
+    return makespaceApi.get(`/users/${username}`).then((res) => {
+        console.log(res.data, "in the apiiii");
+        return res.data;
+    });
+
+
 };
