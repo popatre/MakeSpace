@@ -1,7 +1,7 @@
 import { uploadBytesResumable, ref, getDownloadURL } from "firebase/storage";
 import { auth, storage } from "../firebase";
 
-export const handleUpload = async (url) => {
+export const handleUpload = async (url, setDownloadUrl) => {
     const response = await fetch(url);
     const blob = await response.blob();
     let name = new Date().getTime() + "-media.jpg";
@@ -36,6 +36,7 @@ export const handleUpload = async (url) => {
             () => {
                 getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
                     console.log("File available at", downloadURL);
+                    setDownloadUrl(downloadURL);
                     //set the uploaded thing here!!!
                 });
             }

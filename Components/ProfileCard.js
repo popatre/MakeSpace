@@ -67,7 +67,7 @@ const ProfileCard = () => {
                 <Image
                     style={{ width: 200, height: 200 }}
                     source={{
-                        uri: "https://sp-ao.shortpixel.ai/client/to_webp,q_glossy,ret_img/https://www.sbcc.sg/wp-content/themes/healthway/images/user-default.png",
+                        uri: userDetails.avatar,
                     }}
                 />
                 <TouchableOpacity>
@@ -79,7 +79,10 @@ const ProfileCard = () => {
                     </Text>
                 </TouchableOpacity>
                 <Modal visible={pictureModalOpen} animationType="slide">
-                    <PictureChangeModal setModal={setPictureModalOpen} />
+                    <PictureChangeModal
+                        setUserDetails={setUserDetails}
+                        setModal={setPictureModalOpen}
+                    />
                 </Modal>
             </View>
             <View>

@@ -2,12 +2,26 @@ import React, { useState } from "react";
 import { StyleSheet, Text, View, Button, Image } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
-
+import { onAuthStateChanged } from "firebase/auth";
 import { handleUpload } from "../utils/handleUpload";
+import { auth } from "../firebase";
+import { patchUser } from "../utils/apiRequests";
 
-const PictureChangeModal = ({ setModal }) => {
+const PictureChangeModal = ({ setModal, setUserDetails }) => {
     const [image, setImage] = useState(null);
+    const [downloadUrl, setDownloadUrl] = useState(null);
     const url = "data:image/jpeg;base64," + image;
+
+    const handleSubmit = () => {
+        onAuthStateChanged(auth, (user) => {
+            const uid = user.uid;
+            const update = { avatar: downloadUrl };
+            patchUser(update, uid).then((user) => {
+                setUserDetails(user);
+                setModal(false);
+            });
+        });
+    };
 
     const pickImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
@@ -47,7 +61,7 @@ const PictureChangeModal = ({ setModal }) => {
                 title="Select an image"
             />
             <Button
-                onPress={() => handleUpload(url)}
+                onPress={() => handleUpload(url, setDownloadUrl)}
                 style={{
                     width: "80%",
                     justifyContent: "center",
@@ -57,7 +71,7 @@ const PictureChangeModal = ({ setModal }) => {
                 title="Upload Selected Image"
             />
 
-            <Button title="submit" />
+            <Button title="submit" onPress={handleSubmit} />
         </View>
     );
 };
