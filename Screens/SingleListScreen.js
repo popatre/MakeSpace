@@ -209,15 +209,25 @@ const SingleListScreen = ({ route, navigation }) => {
                                 </View>
                             </View>
                             <View style={styles.mapView}>
-                                <Button
-                                    title="View on map"
+                                <TouchableOpacity
+                                    style={styles.mapButton}
                                     onPress={() => {
                                         navigation.navigate(
                                             "SingleSpaceOnMap",
                                             locationObj
                                         );
                                     }}
-                                />
+                                >
+                                    <Text style={styles.mapButtonText}>
+                                        View on map
+                                    </Text>
+
+                                    <FontAwesome5
+                                        name="map-marked-alt"
+                                        size={24}
+                                        color="white"
+                                    />
+                                </TouchableOpacity>
                             </View>
 
                             <View style={styles.bottomRow}>
@@ -362,9 +372,24 @@ const styles = StyleSheet.create({
         opacity: 1,
         backgroundColor: "white",
     },
-    mapView: {
-        marginVertical: 10,
+    mapButton: {
+        marginVertical: 20,
+        flexDirection: "row",
+
+        justifyContent: "center",
+        backgroundColor: "#0782F9",
+        width: "40%",
+        padding: 15,
+        borderRadius: 10,
+        alignItems: "center",
     },
+    mapButtonText: {
+        color: "white",
+        fontWeight: "700",
+        fontSize: 16,
+        marginRight: 10,
+    },
+    mapView: { justifyContent: "center", alignItems: "center" },
     bottomRow: {
         flexDirection: "row",
         width: "100%",
@@ -374,6 +399,8 @@ const styles = StyleSheet.create({
         // shadowOffset: { width: 1, height: 3 },
         shadowColor: "#333",
         shadowOpacity: 0.1,
+        paddingVertical: 15,
+        marginTop: 30,
     },
     deleteRow: {
         marginTop: 20,
