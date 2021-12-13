@@ -16,6 +16,12 @@ export const getAllListings = (sort) => {
     });
 };
 
+export const getSingleListingById = (id) => {
+  return makespaceApi.get(`/listings/${id}`).then((res) => {
+    return res.data;
+  });
+};
+
 export const postListing = (newListing) => {
   return makespaceApi.post("/listings", newListing).then((res) => {
     return res.data;

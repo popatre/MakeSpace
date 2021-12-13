@@ -81,7 +81,7 @@ const ListSpacesScreen = ({ navigation }) => {
           renderItem={({ item }) => (
             <TouchableOpacity
               onPress={() => {
-                navigation.navigate("SingleList", item);
+                navigation.navigate("SingleList", item._id);
               }}
             >
               <ListingCard
