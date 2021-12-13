@@ -43,7 +43,6 @@ export default function ReviewModal({ setOpenReviewModal }) {
             alert("Thanks for your feedback!");
             setOpenReviewModal(false);
             values.rating = defaultRating;
-            console.log(values, "<<<<<<<<<<<<values");
             actions.resetForm();
           }
         }}

@@ -18,7 +18,6 @@ export const getAllListings = (sort) => {
 
 export const postListing = (newListing) => {
   return makespaceApi.post("/listings", newListing).then((res) => {
-    console.log(res.data);
     return res.data;
   });
 };
