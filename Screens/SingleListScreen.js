@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
-
+import { Paragraph, Dialog, Portal, Provider } from "react-native-paper";
 import {
     View,
     Text,
     TextInput,
-    Button,
     StyleSheet,
     ScrollView,
     Image,
     TouchableOpacity,
     Modal,
+    ImageBackground,
+    Button,
 } from "react-native";
 import {
     MaterialCommunityIcons,
@@ -25,6 +26,11 @@ const SingleListScreen = ({ route, navigation }) => {
     const [openContact, setOpenContact] = useState(false);
     const [openReviewModal, setOpenReviewModal] = useState(false);
     const [listing, setListing] = useState({});
+    const [visible, setVisible] = useState(false);
+
+    const showDialog = () => setVisible(true);
+
+    const hideDialog = () => setVisible(false);
     const { id, setUserListings } = route.params;
 
     const handleOwnerRequest = () => {
@@ -61,185 +67,320 @@ const SingleListScreen = ({ route, navigation }) => {
             spaceRating: listing.spaceRating,
             postcode: listing.location.postcode,
         };
+        const image = {
+            uri: "https://www.transparenttextures.com/patterns/old-map.png",
+        };
         return (
-            <ScrollView>
-                <View>
-                    {/* <Image style={{ width: 400, height: 400 }} source={{ uri: images }} /> */}
-                </View>
-                <View>
+            <Provider>
+                <ScrollView>
                     <View>
-                        <Text>{listing.title}</Text>
+                        <Image
+                            style={{ width: "100%", height: 300 }}
+                            source={{
+                                uri: "https://cdn.britannica.com/42/91642-050-332E5C66/Keukenhof-Gardens-Lisse-Netherlands.jpg",
+                            }}
+                        />
                     </View>
-                    <View>
+                    <ImageBackground
+                        source={image}
+                        resizeMode="repeat"
+                        style={styles.image}
+                    >
                         <View>
-                            <Text>
-                                Location :{listing.location.city}{" "}
-                                {listing.location.postcode}
-                            </Text>
+                            <View>
+                                <Text style={styles.title}>
+                                    {listing.title}
+                                </Text>
+                            </View>
+                            <View>
+                                <View>
+                                    <Text style={styles.text}>
+                                        Location: {listing.location.city}{" "}
+                                        {listing.location.postcode}
+                                    </Text>
+                                </View>
+                                <View>
+                                    <Text style={styles.text}>
+                                        Space Rating: {listing.spaceRating}
+                                    </Text>
+                                </View>
+                            </View>
+                            <View>
+                                <View>
+                                    <TouchableOpacity
+                                        onPress={handleOwnerRequest}
+                                    >
+                                        <Text style={styles.text}>
+                                            Owner: {listing.owner}
+                                        </Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                            <View>
+                                <View>
+                                    <Text style={styles.text}>
+                                        Price/Hour: {listing.price}
+                                    </Text>
+                                </View>
+                                <View>
+                                    <Text style={styles.text}>
+                                        Size: {listing.size}
+                                    </Text>
+                                </View>
+
+                                <View style={styles.amens}>
+                                    <MaterialCommunityIcons
+                                        name="hours-24"
+                                        size={24}
+                                        color={
+                                            listing.amenities["_24HourAccess"]
+                                                ? "#32CD32"
+                                                : "#DCDCDC"
+                                        }
+                                    />
+                                    <MaterialIcons
+                                        name="wc"
+                                        size={24}
+                                        color={
+                                            listing.amenities.WC
+                                                ? "#32CD32"
+                                                : "#DCDCDC"
+                                        }
+                                    />
+                                    <FontAwesome
+                                        name="wheelchair"
+                                        size={24}
+                                        color={
+                                            listing.amenities.accessible
+                                                ? "#32CD32"
+                                                : "#DCDCDC"
+                                        }
+                                    />
+                                    <FontAwesome5
+                                        name="house-user"
+                                        size={24}
+                                        color={
+                                            listing.amenities.indoor
+                                                ? "#32CD32"
+                                                : "#DCDCDC"
+                                        }
+                                    />
+                                    <FontAwesome5
+                                        name="tree"
+                                        size={24}
+                                        color={
+                                            listing.amenities.outdoor
+                                                ? "#32CD32"
+                                                : "#DCDCDC"
+                                        }
+                                    />
+                                    <FontAwesome5
+                                        name="parking"
+                                        size={24}
+                                        color={
+                                            listing.amenities.parking
+                                                ? "#32CD32"
+                                                : "#DCDCDC"
+                                        }
+                                    />
+                                    <Entypo
+                                        name="power-plug"
+                                        size={24}
+                                        color={
+                                            listing.amenities.power
+                                                ? "#32CD32"
+                                                : "#DCDCDC"
+                                        }
+                                    />
+                                    <MaterialCommunityIcons
+                                        name="microwave"
+                                        size={24}
+                                        color={
+                                            listing.amenities.kitchen
+                                                ? "#32CD32"
+                                                : "#DCDCDC"
+                                        }
+                                    />
+                                </View>
+                                <View style={styles.descContainer}>
+                                    <Text style={styles.desc}>
+                                        {listing.description}
+                                    </Text>
+                                </View>
+                            </View>
+                            <View style={styles.mapView}>
+                                <Button
+                                    title="View on map"
+                                    onPress={() => {
+                                        navigation.navigate(
+                                            "SingleSpaceOnMap",
+                                            locationObj
+                                        );
+                                    }}
+                                />
+                            </View>
+
+                            <View style={styles.bottomRow}>
+                                <Button title="Reviews" />
+                                <Modal
+                                    visible={openReviewModal}
+                                    animationType="slide"
+                                >
+                                    <ReviewModal
+                                        setOpenReviewModal={setOpenReviewModal}
+                                        listing={listing}
+                                    />
+                                </Modal>
+                                <Button
+                                    title="Write a review"
+                                    onPress={() => setOpenReviewModal(true)}
+                                />
+
+                                <Button
+                                    title="Contact details"
+                                    // onPress={() => setOpenContact(!openContact)}
+                                    onPress={showDialog}
+                                />
+                            </View>
+                            <View>
+                                <Portal>
+                                    <Dialog
+                                        visible={visible}
+                                        onDismiss={hideDialog}
+                                    >
+                                        <Dialog.Title>Contact</Dialog.Title>
+                                        <Dialog.Content>
+                                            <Paragraph>
+                                                {
+                                                    listing.contactDetails
+                                                        .emailAddress
+                                                }
+                                            </Paragraph>
+                                            <Paragraph>
+                                                Tel:{" "}
+                                                {
+                                                    listing.contactDetails
+                                                        .phoneNumber
+                                                }
+                                            </Paragraph>
+                                        </Dialog.Content>
+                                        <Dialog.Actions>
+                                            <Button
+                                                title="Done"
+                                                onPress={hideDialog}
+                                            />
+                                        </Dialog.Actions>
+                                    </Dialog>
+                                </Portal>
+                            </View>
+
+                            {/* {!!openContact ? (
+                                <View
+                                    style={{
+                                        flexDirection: "column",
+                                        alignItems: "center",
+                                    }}
+                                >
+                                    <Text style={styles.text}>
+                                        {listing.contactDetails.emailAddress}
+                                    </Text>
+                                    <Text style={styles.text}>
+                                        {listing.contactDetails.phoneNumber}
+                                    </Text>
+                                </View>
+                            ) : null} */}
                         </View>
-                        <View>
-                            <Text>Space Rating: {listing.spaceRating}</Text>
-                        </View>
-                    </View>
-                    <View>
-                        <View>
-                            <TouchableOpacity onPress={handleOwnerRequest}>
-                                <Text>Owner :{listing.owner}</Text>
+                        <View style={styles.deleteRow}>
+                            <TouchableOpacity
+                                onPress={handleDelete}
+                                style={styles.deleteButton}
+                            >
+                                <Text style={styles.buttonText}>
+                                    Delete Listing
+                                </Text>
                             </TouchableOpacity>
                         </View>
-                    </View>
-                    <View>
-                        <View>
-                            <Text>Price/Hour: {listing.price}</Text>
-                        </View>
-                        <View>
-                            <Text>Size: {listing.size}</Text>
-                        </View>
-                        <View style={{ flexDirection: "row" }}>
-                            <MaterialCommunityIcons
-                                name="hours-24"
-                                size={24}
-                                color={
-                                    listing.amenities["_24HourAccess"]
-                                        ? "#32CD32"
-                                        : "#DCDCDC"
-                                }
-                            />
-                            <MaterialIcons
-                                name="wc"
-                                size={24}
-                                color={
-                                    listing.amenities.WC ? "#32CD32" : "#DCDCDC"
-                                }
-                            />
-                            <FontAwesome
-                                name="wheelchair"
-                                size={24}
-                                color={
-                                    listing.amenities.accessible
-                                        ? "#32CD32"
-                                        : "#DCDCDC"
-                                }
-                            />
-                            <FontAwesome5
-                                name="house-user"
-                                size={24}
-                                color={
-                                    listing.amenities.indoor
-                                        ? "#32CD32"
-                                        : "#DCDCDC"
-                                }
-                            />
-                            <FontAwesome5
-                                name="tree"
-                                size={24}
-                                color={
-                                    listing.amenities.outdoor
-                                        ? "#32CD32"
-                                        : "#DCDCDC"
-                                }
-                            />
-                            <FontAwesome5
-                                name="parking"
-                                size={24}
-                                color={
-                                    listing.amenities.parking
-                                        ? "#32CD32"
-                                        : "#DCDCDC"
-                                }
-                            />
-                            <Entypo
-                                name="power-plug"
-                                size={24}
-                                color={
-                                    listing.amenities.power
-                                        ? "#32CD32"
-                                        : "#DCDCDC"
-                                }
-                            />
-                            <MaterialCommunityIcons
-                                name="microwave"
-                                size={24}
-                                color={
-                                    listing.amenities.kitchen
-                                        ? "#32CD32"
-                                        : "#DCDCDC"
-                                }
-                            />
-                        </View>
-                        <View>
-                            <Text>Description: {listing.description}</Text>
-                        </View>
-                    </View>
-                    <View>
-                        <Button
-                            title="View on map"
-                            onPress={() => {
-                                navigation.navigate(
-                                    "SingleSpaceOnMap",
-                                    locationObj
-                                );
-                            }}
-                        />
-                    </View>
-                    <View
-                        style={{
-                            flexDirection: "row",
-                            width: "100%",
-                            justifyContent: "space-around",
-                        }}
-                    >
-                        <Button title="Reviews" />
-                        <Modal visible={openReviewModal} animationType="slide">
-                            <ReviewModal
-                                setOpenReviewModal={setOpenReviewModal}
-                                listing={listing}
-                            />
-                        </Modal>
-                        <Button
-                            title="Write a review"
-                            onPress={() => setOpenReviewModal(true)}
-                        />
-
-                        <Button
-                            title="Contact details"
-                            onPress={() => setOpenContact(!openContact)}
-                        />
-                    </View>
-                    {!!openContact ? (
-                        <View
-                            style={{
-                                flexDirection: "column",
-                                alignItems: "center",
-                            }}
-                        >
-                            <Text style={styles.text}>
-                                {listing.contactDetails.emailAddress}
-                            </Text>
-                            <Text style={styles.text}>
-                                {listing.contactDetails.phoneNumber}
-                            </Text>
-                        </View>
-                    ) : null}
-                </View>
-                <View>
-                    <TouchableOpacity
-                        onPress={handleDelete}
-                        style={styles.deleteButton}
-                    >
-                        <Text>Delete Listing</Text>
-                    </TouchableOpacity>
-                </View>
-            </ScrollView>
+                    </ImageBackground>
+                </ScrollView>
+            </Provider>
         );
     }
 };
 
 const styles = StyleSheet.create({
     text: {
-        fontSize: 20,
+        fontSize: 15,
+        marginVertical: 8,
+        marginHorizontal: 20,
+        fontWeight: "bold",
     },
-    deleteButton: { borderWidth: 1, width: 100 },
+    deleteButton: {
+        backgroundColor: "red",
+        width: "40%",
+        padding: 10,
+        borderRadius: 10,
+        alignItems: "center",
+    },
+    buttonText: { color: "white", fontWeight: "700", fontSize: 16 },
+    title: {
+        fontSize: 24,
+        marginVertical: 21,
+        marginHorizontal: 10,
+        width: "90%",
+        fontWeight: "bold",
+        textAlign: "center",
+    },
+    amens: {
+        width: "90%",
+        flexDirection: "row",
+        justifyContent: "space-around",
+        marginTop: 40,
+        marginLeft: 10,
+        marginBottom: 30,
+    },
+    desc: {
+        fontSize: 17,
+        lineHeight: 35,
+        textAlign: "center",
+        marginHorizontal: 12,
+        fontWeight: "600",
+    },
+    descContainer: {
+        marginBottom: 20,
+        // borderWidth: 1,
+        paddingVertical: 30,
+        backgroundColor: "white",
+        shadowOffset: { width: 1, height: 8 },
+        shadowColor: "#333",
+        shadowOpacity: 0.5,
+    },
+    image: {
+        // flex: 1,
+        justifyContent: "center",
+        // width: 500,
+        // height: 600,
+        opacity: 1,
+        backgroundColor: "white",
+    },
+    mapView: {
+        marginVertical: 10,
+    },
+    bottomRow: {
+        flexDirection: "row",
+        width: "100%",
+        justifyContent: "space-around",
+        marginVertical: 10,
+        backgroundColor: "white",
+        // shadowOffset: { width: 1, height: 3 },
+        shadowColor: "#333",
+        shadowOpacity: 0.1,
+    },
+    deleteRow: {
+        marginTop: 20,
+        marginBottom: 70,
+        justifyContent: "center",
+        alignItems: "center",
+    },
 });
 
 export default SingleListScreen;
