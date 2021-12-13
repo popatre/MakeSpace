@@ -11,6 +11,7 @@ import {
     TextInput,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
+import PictureChangeModal from "./PictureChangeModal";
 
 import { auth } from "../firebase";
 import { onAuthStateChanged, updatePassword } from "firebase/auth";
@@ -20,6 +21,7 @@ const ProfileCard = () => {
     const [userDetails, setUserDetails] = useState({});
     const [displayNameModalOpen, setDisplayNameModalOpen] = useState(false);
     const [passwordModalOpen, setPasswordModalOpen] = useState(false);
+    const [pictureModalOpen, setPictureModalOpen] = useState(false);
     const [displayName, setDisplayName] = useState("");
     const [passwordChange, setPasswordChange] = useState("");
     const { user } = useContext(UserContext);
@@ -37,6 +39,8 @@ const ProfileCard = () => {
             });
         });
     };
+
+    const handleChangePicture = () => {};
 
     const userFirebase = auth.currentUser;
     const handlePasswordSubmit = () => {
@@ -66,10 +70,25 @@ const ProfileCard = () => {
                         uri: "https://sp-ao.shortpixel.ai/client/to_webp,q_glossy,ret_img/https://www.sbcc.sg/wp-content/themes/healthway/images/user-default.png",
                     }}
                 />
+                <TouchableOpacity>
+                    <Text
+                        style={{ color: "blue" }}
+                        onPress={() => setPictureModalOpen(true)}
+                    >
+                        change profile picture
+                    </Text>
+                </TouchableOpacity>
+                <Modal visible={pictureModalOpen} animationType="slide">
+                    <PictureChangeModal setModal={setPictureModalOpen} />
+                </Modal>
             </View>
             <View>
                 <Text>Display Name:{userDetails.displayName} </Text>
-                <Button onPress={handlePress} title="edit display name" />
+                <TouchableOpacity>
+                    <Text style={{ color: "blue" }} onPress={handlePress}>
+                        edit display name
+                    </Text>
+                </TouchableOpacity>
                 <Modal visible={displayNameModalOpen} animationType="slide">
                     <AntDesign
                         style={{ marginTop: 20 }}

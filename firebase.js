@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { REACT_APP_FIREBASEAPI } from "@env";
+import { getStorage } from "firebase/storage";
 
 // https://firebase.google.com/docs/web/setup#available-libraries
 const API_KEY = REACT_APP_FIREBASEAPI;
@@ -24,5 +25,6 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 
 const auth = getAuth();
+const storage = getStorage();
 
-export { auth };
+export { auth, storage };
