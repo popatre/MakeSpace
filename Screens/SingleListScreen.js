@@ -8,6 +8,7 @@ import {
   StyleSheet,
   ScrollView,
   Image,
+  FlatList,
   TouchableOpacity,
 } from "react-native";
 import {
@@ -19,9 +20,11 @@ import {
 } from "@expo/vector-icons";
 import ReviewModal from "../Components/ReviewModal";
 import { getSingleListingById } from "../utils/apiRequests";
+import ReviewCard from "../Components/ReviewCard";
 
 const SingleListScreen = ({ route, navigation }) => {
   const [openContact, setOpenContact] = useState(false);
+  const [openReview, setOpenReview] = useState(false);
   const [openReviewModal, setOpenReviewModal] = useState(false);
   const [listing, setListing] = useState({});
   const id = route.params;
@@ -147,7 +150,12 @@ const SingleListScreen = ({ route, navigation }) => {
               justifyContent: "space-around",
             }}
           >
-            <Button title="Reviews" />
+            <Button
+              title="Reviews"
+              onPress={() => {
+                setOpenReview(!openReview);
+              }}
+            />
             <Modal visible={openReviewModal} animationType="slide">
               <ReviewModal
                 setOpenReviewModal={setOpenReviewModal}
@@ -165,12 +173,7 @@ const SingleListScreen = ({ route, navigation }) => {
             />
           </View>
           {!!openContact ? (
-            <View
-              style={{
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-            >
+            <View style={styles.hidden}>
               <Text style={styles.text}>
                 {listing.contactDetails.emailAddress}
               </Text>
@@ -179,6 +182,30 @@ const SingleListScreen = ({ route, navigation }) => {
               </Text>
             </View>
           ) : null}
+
+          <View>
+            {!openReview ? null : (
+              <View>
+                {listing.reviews.length === 0 ? (
+                  <View style={styles.hidden}>
+                    <Text style={styles.text}>
+                      No reviews yet? Leave the very first one!
+                    </Text>
+                  </View>
+                ) : (
+                  <View>
+                    {listing.reviews.map((review) => {
+                      return (
+                        <View key={review._id}>
+                          <ReviewCard review={review} />
+                        </View>
+                      );
+                    })}
+                  </View>
+                )}
+              </View>
+            )}
+          </View>
         </View>
       </ScrollView>
     );
@@ -186,6 +213,11 @@ const SingleListScreen = ({ route, navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  hidden: {
+    marginTop: 20,
+    flexDirection: "column",
+    alignItems: "center",
+  },
   text: {
     fontSize: 20,
   },
