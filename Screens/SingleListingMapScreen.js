@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
 import SingleListingMap from "../Components/ListingMapTest";
-import ListingMap from "../Components/ListingMap";
 import { getLocation } from "../utils/apiRequests";
 
 const SingleListingMapScreen = ({ route }) => {
@@ -10,7 +9,6 @@ const SingleListingMapScreen = ({ route }) => {
 
   useEffect(() => {
     getLocation(postcode).then((res) => {
-      const parsedRes = JSON.parse(res);
       setLocation([
         {
           id: id,
@@ -18,8 +16,8 @@ const SingleListingMapScreen = ({ route }) => {
           size: size,
           price: price,
           spaceRating: spaceRating,
-          latitude: parsedRes.latitude,
-          longitude: parsedRes.longitude,
+          latitude: res.latitude,
+          longitude: res.longitude,
         },
       ]);
     });
