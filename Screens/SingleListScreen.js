@@ -70,9 +70,6 @@ const SingleListScreen = ({ route, navigation }) => {
             <View>
               <Text>Owner :{listing.owner}</Text>
             </View>
-            <View>
-              <Text>Space Rating: 4.7</Text>
-            </View>
           </View>
           <View>
             <View>
@@ -146,7 +143,10 @@ const SingleListScreen = ({ route, navigation }) => {
           >
             <Button title="Reviews" />
             <Modal visible={openReviewModal} animationType="slide">
-              <ReviewModal setOpenReviewModal={setOpenReviewModal} />
+              <ReviewModal
+                setOpenReviewModal={setOpenReviewModal}
+                listing={listing}
+              />
             </Modal>
             <Button
               title="Write a review"

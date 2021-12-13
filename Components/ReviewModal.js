@@ -11,6 +11,7 @@ import {
 import { Formik } from "formik";
 import { AntDesign } from "@expo/vector-icons";
 import StarRating from "./StarRating";
+import { patchListingById } from "../utils/apiRequests";
 
 const ReviewSchema = yup.object({
   // rating: yup.string().required().min(1),
@@ -26,9 +27,34 @@ const ReviewSchema = yup.object({
   body: yup.string().required().min(10),
 });
 
-export default function ReviewModal({ setOpenReviewModal }) {
+export default function ReviewModal({ setOpenReviewModal, listing }) {
   const [value, setValue] = useState("");
   const [defaultRating, setDefaultRating] = useState(0);
+
+  const reviewHandler = ({ rating, body }) => {
+    let totalStars = 0;
+    let totalReviews = listing.reviews.length + 1;
+    listing.reviews.map((review) => {
+      totalStars += review.SpaceRating;
+    });
+
+    totalStars += rating;
+    const averageRating = totalStars / totalReviews;
+
+    const newReview = {
+      username: "ScarlettRocks!",
+      ownerRating: 5,
+      SpaceRating: rating,
+      Body: body,
+    };
+
+    const updatedReviewArr = [...listing.reviews, newReview];
+
+    patchListingById(listing._id, {
+      spaceRating: averageRating,
+      reviews: updatedReviewArr,
+    });
+  };
   return (
     <View style={styles.container}>
       <Formik
@@ -43,6 +69,7 @@ export default function ReviewModal({ setOpenReviewModal }) {
             alert("Thanks for your feedback!");
             setOpenReviewModal(false);
             values.rating = defaultRating;
+            reviewHandler(values);
             actions.resetForm();
           }
         }}

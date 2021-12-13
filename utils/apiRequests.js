@@ -22,6 +22,12 @@ export const getSingleListingById = (id) => {
   });
 };
 
+export const patchListingById = (id, updatedListing) => {
+  return makespaceApi.patch(`/listings/${id}`, updatedListing).then((res) => {
+    return res.data;
+  });
+};
+
 export const postListing = (newListing) => {
   return makespaceApi.post("/listings", newListing).then((res) => {
     return res.data;
