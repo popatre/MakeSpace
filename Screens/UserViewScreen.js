@@ -17,7 +17,7 @@ import {
     patchUser,
 } from "../utils/apiRequests";
 
-const UserViewScreen = ({ route }) => {
+const UserViewScreen = ({ route, navigation }) => {
     const { owner } = route.params;
 
     useEffect(() => {
@@ -28,6 +28,10 @@ const UserViewScreen = ({ route }) => {
 
     return (
         <View style={{ flexDirection: "row" }}>
+            <Button
+                onPress={() => navigation.navigate("MyListings")}
+                title="User listings"
+            />
             {/* <View>
                 <Image
                     style={{ width: 200, height: 200 }}
