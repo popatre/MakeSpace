@@ -25,7 +25,7 @@ const ProfileCard = () => {
             });
         });
         return unsubscribe;
-    }, []);
+    }, [user]);
     return (
         <View style={{ flexDirection: "row" }}>
             <View>
@@ -39,7 +39,9 @@ const ProfileCard = () => {
             <View>
                 <Text>Display Name:{userDetails.displayName} </Text>
                 <Text>Username: {userDetails.username}</Text>
-                <Text>Email: {userDetails.emailAddress}</Text>
+                {user === userDetails.username ? (
+                    <Text>Email: {userDetails.emailAddress}</Text>
+                ) : null}
                 <TouchableOpacity>
                     <Text style={{ color: "blue" }}>Change password</Text>
                 </TouchableOpacity>

@@ -1,11 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { View, Text, Image, TextInput, Button, StyleSheet } from "react-native";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase";
+import { UserContext } from "../context/User";
+import { getUserById } from "../utils/apiRequests";
+
 const LandingScreen = ({ navigation }) => {
+    const { setUser } = useContext(UserContext);
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
+                const uid = user.uid;
+                getUserById(uid).then((user) => {
+                    setUser(user.username);
+                });
                 navigation.navigate("Home");
             }
         });
