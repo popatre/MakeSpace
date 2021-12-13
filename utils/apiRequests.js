@@ -94,3 +94,10 @@ export const patchUser = (update, userId) => {
         return res.data;
     });
 };
+
+export const getUserByUsername = (username) => {
+    return makespaceApi.get(`/users/${username}`).then((res) => {
+        console.log(res.data, "in the apiiii");
+        return res.data;
+    });
+};

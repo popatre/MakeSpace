@@ -109,9 +109,9 @@ const ProfileCard = () => {
                     <Button title="submit" onPress={handleDisplayNameSubmit} />
                 </Modal>
                 <Text>Username: {userDetails.username}</Text>
-                {user === userDetails.username ? (
-                    <Text>Email: {userDetails.emailAddress}</Text>
-                ) : null}
+
+                <Text>Email: {userDetails.emailAddress}</Text>
+
                 <TouchableOpacity>
                     <Text
                         onPress={() => setPasswordModalOpen(true)}
