@@ -23,6 +23,7 @@ const ListSpacesScreen = ({ navigation }) => {
   const [listing, setListing] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
 
+
   const [accessibleChecked, setAccessibleChecked] = useState(undefined);
   const [wcChecked, setWcChecked] = useState(undefined);
   const [indoorChecked, setIndoorChecked] = useState(undefined);
@@ -52,7 +53,7 @@ const ListSpacesScreen = ({ navigation }) => {
       largeChecked,
       order
     ).then((res) => {
-      // console.log(res);
+      
       setListing(res);
     });
   }, [
@@ -71,7 +72,6 @@ const ListSpacesScreen = ({ navigation }) => {
     order,
   ]);
 
-  // console.log(smallChecked);
 
   return (
     <View style={styles.mainContainer}>
@@ -163,7 +163,7 @@ const ListSpacesScreen = ({ navigation }) => {
           items={[
             { label: "Ascending", value: "asc", key: "asc" },
 
-            // { label: "Descending", value: "desc", key: "desc" },
+            
           ]}
         />
       </View>
@@ -191,6 +191,7 @@ const ListSpacesScreen = ({ navigation }) => {
       </View>
     </View>
   );
+
 };
 
 export default ListSpacesScreen;

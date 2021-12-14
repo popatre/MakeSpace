@@ -26,6 +26,7 @@ const SignUpScreen = ({ navigation }) => {
   const [usernameError, setUsernameError] = useState("");
   const { setUser } = useContext(UserContext);
 
+
   const handleSignUp = () => {
     getAllUsers().then((users) => {
       const usernames = users.map((user) => user.username);
@@ -55,6 +56,7 @@ const SignUpScreen = ({ navigation }) => {
       }
     });
   };
+
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">

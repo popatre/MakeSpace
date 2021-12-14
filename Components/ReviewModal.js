@@ -1,12 +1,12 @@
 import React, { useState, useContext } from "react";
 import * as yup from "yup";
 import {
-  StyleSheet,
-  Text,
-  View,
-  Button,
-  TextInput,
-  TouchableOpacity,
+    StyleSheet,
+    Text,
+    View,
+    Button,
+    TextInput,
+    TouchableOpacity,
 } from "react-native";
 
 import { Formik } from "formik";
@@ -15,6 +15,7 @@ import StarRating from "./StarRating";
 import { patchListingById } from "../utils/apiRequests";
 
 const ReviewSchema = yup.object({
+
   body: yup.string().required().min(10),
 });
 
@@ -27,12 +28,14 @@ export default function ReviewModal({
   const [value, setValue] = useState("");
   const [defaultRating, setDefaultRating] = useState(0);
 
-  const reviewHandler = ({ rating, body }) => {
-    let totalStars = 0;
-    let totalReviews = listing.reviews.length + 1;
-    listing.reviews.map((review) => {
-      totalStars += review.SpaceRating;
-    });
+
+    const reviewHandler = ({ rating, body }) => {
+        let totalStars = 0;
+        let totalReviews = listing.reviews.length + 1;
+        listing.reviews.map((review) => {
+            totalStars += review.SpaceRating;
+        });
+
 
     totalStars += rating;
     const averageRating = (totalStars / totalReviews).toFixed(2);
@@ -44,7 +47,9 @@ export default function ReviewModal({
       Body: body,
     };
 
-    const updatedReviewArr = [...listing.reviews, newReview];
+
+        const updatedReviewArr = [...listing.reviews, newReview];
+
 
     patchListingById(listing._id, {
       spaceRating: averageRating,
@@ -103,22 +108,26 @@ export default function ReviewModal({
                 {props.touched.body && props.errors.body}
               </Text>
 
-              <TouchableOpacity
-                activeOpacity={0.7}
-                style={styles.buttonStyle}
-                onPress={props.handleSubmit}
-              >
-                <Text style={styles.buttonTextStyle}>Submit</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        )}
-      </Formik>
-    </View>
-  );
+
+                            <TouchableOpacity
+                                activeOpacity={0.7}
+                                style={styles.buttonStyle}
+                                onPress={props.handleSubmit}
+                            >
+                                <Text style={styles.buttonTextStyle}>
+                                    Submit
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                )}
+            </Formik>
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({
+
   modalClose: { marginTop: 40, alignItems: "center" },
   container: {
     justifyContent: "center",
@@ -163,4 +172,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
     textAlign: "center",
   },
+
+    
 });

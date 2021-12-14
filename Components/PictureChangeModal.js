@@ -30,7 +30,6 @@ const PictureChangeModal = ({ setModal, setUserDetails }) => {
             base64: true,
         });
         if (!result.cancelled) {
-            console.log("noowww in picker");
             setImage(result.base64);
         }
     };

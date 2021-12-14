@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -7,6 +7,7 @@ import {
   Image,
   ScrollView,
   TextInput,
+  TouchableOpacity,
 } from "react-native";
 import { RadioButton, Checkbox } from "react-native-paper";
 import { Formik } from "formik";
@@ -34,8 +35,10 @@ const ListingSchema = yup.object({
       return parseInt(val) > 0;
     }),
 });
+
 export default function PostingForm({ navigation }) {
   const [image, setImage] = useState(null);
+
   const [value, setValue] = useState("small");
   const [checked, setChecked] = useState(false);
   const [parkingChecked, setParkingChecked] = useState(false);
@@ -46,8 +49,9 @@ export default function PostingForm({ navigation }) {
   const [WCChecked, setWCChecked] = useState(false);
   const [kitchenChecked, setKitchenChecked] = useState(false);
   const [twentyFourChecked, setTwentyFourChecked] = useState(false);
-  const { user } = useContext(UserContext);
 
+  const [imageSelected, setImageSelected] = useState(false);
+  const { user } = useContext(UserContext);
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -55,7 +59,7 @@ export default function PostingForm({ navigation }) {
     });
     if (!result.cancelled) {
       setImage(result.uri);
-      console.log(result);
+     setImageSelected(true);
     }
   };
 
@@ -79,6 +83,7 @@ export default function PostingForm({ navigation }) {
               emailAddress: "",
             },
 
+
             amenities: {
               parking: false,
               power: false,
@@ -89,7 +94,7 @@ export default function PostingForm({ navigation }) {
               WC: false,
               _24HourAccess: false,
             },
-            // image_uri: "",
+            images: [],
           }}
           onSubmit={(values, actions) => {
             postListing(values);
@@ -98,7 +103,7 @@ export default function PostingForm({ navigation }) {
           }}
         >
           {(props) => (
-            <View>
+            <View style={styles.inputContainer}>
               <TextInput
                 style={styles.input}
                 placeholder="title"
@@ -106,9 +111,11 @@ export default function PostingForm({ navigation }) {
                 value={props.values.title}
                 onBlur={props.handleBlur("title")}
               />
-              <Text style={styles.errorText}>
-                {props.touched.title && props.errors.title}
-              </Text>
+              {props.errors.title ? (
+                <Text style={styles.errorText}>
+                  {props.touched.title && props.errors.title}
+                </Text>
+              ) : null}
               <TextInput
                 style={styles.input}
                 placeholder="city"
@@ -148,19 +155,25 @@ export default function PostingForm({ navigation }) {
                 onBlur={props.handleBlur("price")}
                 keyboardType="numeric"
               />
-              <Text style={styles.errorText}>
-                {props.touched.price && props.errors.price}
-              </Text>
+              {props.errors.price ? (
+                <Text style={styles.errorText}>
+                  {props.touched.price && props.errors.price}
+                </Text>
+              ) : null}
               <TextInput
-                style={styles.input}
+                multiline={true}
+                numberOfLines={100}
+                style={styles.inputDesc}
                 placeholder="Description"
                 onChangeText={props.handleChange("description")}
                 value={props.values.description}
                 onBlur={props.handleBlur("description")}
               />
-              <Text style={styles.errorText}>
-                {props.touched.description && props.errors.description}
-              </Text>
+              {props.errors.description ? (
+                <Text style={styles.errorText}>
+                  {props.touched.description && props.errors.description}
+                </Text>
+              ) : null}
 
               <TextInput
                 style={styles.input}
@@ -181,30 +194,26 @@ export default function PostingForm({ navigation }) {
                 value={props.values.contactDetails.emailAddress}
                 onBlur={props.handleBlur("contactDetails.emailAddress")}
               />
-
-              {image && (
-                <Image
-                  value={props.values.image_uri}
-                  source={{ uri: image }}
-                  style={{ width: 200, height: 200 }}
-                />
-              )}
-              <View
-                style={{
-                  backgroundColor: "crimson",
-                }}
-              >
-                <Button
-                  onPress={pickImage}
-                  style={{
-                    width: "80%",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    borderWidth: 2,
-                  }}
-                  title="Select an image"
-                />
+              <View style={styles.imageContainer}>
+                <TouchableOpacity onPress={pickImage}>
+                  {image && (
+                    <Image
+                      value={props.values.images}
+                      source={{ uri: image }}
+                      style={styles.image}
+                    />
+                  )}
+                </TouchableOpacity>
               </View>
+              {imageSelected && (
+                <View style={styles.imageButton}>
+                  <TouchableOpacity>
+                    <Text style={styles.buttonText} onPress={pickImage}>
+                      Upload image
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              )}
               <Checkbox.Item
                 label="Parking"
                 status={parkingChecked ? "checked" : "unchecked"}
@@ -275,11 +284,12 @@ export default function PostingForm({ navigation }) {
                   );
                 }}
               />
-              <Button
-                title="Submit"
-                color="maroon"
+              <TouchableOpacity
+                style={styles.subButton}
                 onPress={props.handleSubmit}
-              />
+              >
+                <Text style={styles.buttonText}>Make your Space</Text>
+              </TouchableOpacity>
             </View>
           )}
         </Formik>
@@ -290,25 +300,60 @@ export default function PostingForm({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#8A2BE2",
+    // backgroundColor: "#8A2BE2",
     alignItems: "center",
     justifyContent: "center",
     // height: 700,
   },
   input: {
-    borderWidth: 3,
-    borderColor: "#ddd",
-    padding: 20,
-    fontSize: 18,
-    borderRadius: 6,
-    width: 300,
-    margin: 10,
+    backgroundColor: "white",
+    paddingHorizontal: 15,
+    paddingVertical: 15,
+    borderRadius: 10,
+    marginVertical: 15,
   },
   errorText: {
     color: "crimson",
     fontWeight: "bold",
-    marginBottom: 10,
-    marginTop: 10,
+    marginBottom: 0,
+    marginTop: 0,
     textAlign: "center",
+  },
+  inputContainer: {
+    width: "80%",
+  },
+  inputDesc: {
+    backgroundColor: "white",
+    paddingHorizontal: 15,
+    paddingVertical: 25,
+    borderRadius: 10,
+    marginVertical: 15,
+  },
+  imageButton: {
+    backgroundColor: "#0782F9",
+    width: "100%",
+    padding: 15,
+    borderRadius: 10,
+    alignItems: "center",
+    marginVertical: 30,
+  },
+  buttonText: { color: "white", fontWeight: "700", fontSize: 16 },
+  subButton: {
+    backgroundColor: "#0782F9",
+    width: "100%",
+    padding: 15,
+    borderRadius: 10,
+    alignItems: "center",
+    marginTop: 30,
+    marginBottom: 50,
+  },
+  image: {
+    width: 190,
+    height: 190,
+  },
+  imageContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 20,
   },
 });

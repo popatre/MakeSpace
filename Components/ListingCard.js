@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "center",
         marginTop: 20,
-        borderRadius: 15,
+        borderRadius: 5,
         elevation: 10,
         backgroundColor: "#fff",
         shadowOffset: { width: 1, height: 8 },
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.8,
         marginHorizontal: 5,
         marginVertical: 10,
-        backgroundColor: "ivory",
+
         // marginHorizontal: 20,
     },
     image: { flex: 0.6, marginLeft: 6, marginVertical: 10 },
