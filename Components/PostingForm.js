@@ -65,7 +65,7 @@ export default function PostingForm({ navigation }) {
 
     return (
         <ScrollView>
-            <View>
+            <View style={styles.container}>
                 <Formik
                     validationSchema={ListingSchema}
                     initialValues={{
