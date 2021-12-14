@@ -28,9 +28,6 @@ const SignUpScreen = ({ navigation }) => {
 
   const handleSignUp = () => {
     getAllUsers().then((users) => {
-      console.log(users, "<<<<<<<<users");
-      console.log(username, "<<<<<<<<<<<<<username");
-
       const usernames = users.map((user) => user.username);
       if (usernames.includes(username)) {
         setUsernameError("Sorry, this username is already in use");

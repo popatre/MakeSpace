@@ -183,8 +183,7 @@ const ListSpacesScreen = ({ navigation }) => {
                 price={item.price}
                 rating={item.spaceRating}
                 size={item.size}
-                // images={item.images}
-                images="https://cdn.britannica.com/42/91642-050-332E5C66/Keukenhof-Gardens-Lisse-Netherlands.jpg"
+                images={item.images[0]}
               />
             </TouchableOpacity>
           )}

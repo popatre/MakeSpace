@@ -54,11 +54,15 @@ const SingleListScreen = ({ route, navigation }) => {
       price: listing.price,
       spaceRating: listing.spaceRating,
       postcode: listing.location.postcode,
+      images: listing.images,
     };
     return (
       <ScrollView>
         <View>
-          {/* <Image style={{ width: 400, height: 400 }} source={{ uri: images }} /> */}
+          <Image
+            style={{ width: 400, height: 400 }}
+            source={{ uri: listing.images[0] }}
+          />
         </View>
         <View>
           <View>
