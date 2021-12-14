@@ -6,11 +6,15 @@ import {
     Button,
     StyleSheet,
     TouchableOpacity,
+    ImageBackground,
 } from "react-native";
 import ProfileCard from "../Components/ProfileCard";
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase";
 import { Ionicons } from "@expo/vector-icons";
+const img = {
+    uri: "https://png.pngitem.com/pimgs/s/56-564988_top-backgrounds-textured-png-transparent-png.png",
+};
 const AccountScreen = ({ navigation }) => {
     const handleSignOut = () => {
         signOut(auth).then(() => {
@@ -18,42 +22,44 @@ const AccountScreen = ({ navigation }) => {
         });
     };
     return (
-        <View>
-            <ProfileCard />
-            <View style={styles.buttonContainer}>
-                <TouchableOpacity
-                    style={styles.button}
-                    onPress={() => {
-                        navigation.navigate("MyListings");
-                    }}
-                >
-                    <Text style={styles.buttonText}>My Listings</Text>
-                </TouchableOpacity>
+        <ImageBackground source={img} resizeMode="cover" style={styles.image}>
+            <View>
+                <ProfileCard />
+                <View style={styles.buttonContainer}>
+                    <TouchableOpacity
+                        style={styles.button}
+                        onPress={() => {
+                            navigation.navigate("MyListings");
+                        }}
+                    >
+                        <Text style={styles.buttonText}>My Listings</Text>
+                    </TouchableOpacity>
 
-                <TouchableOpacity
-                    style={styles.button}
-                    onPress={() => {
-                        navigation.navigate("MyBookings");
-                    }}
-                >
-                    <Text style={styles.buttonText}>My Bookings</Text>
-                </TouchableOpacity>
+                    <TouchableOpacity
+                        style={styles.button}
+                        onPress={() => {
+                            navigation.navigate("MyBookings");
+                        }}
+                    >
+                        <Text style={styles.buttonText}>My Bookings</Text>
+                    </TouchableOpacity>
 
-                <TouchableOpacity
-                    style={styles.button2}
-                    onPress={handleSignOut}
-                >
-                    <Text style={styles.buttonText2}>
-                        Sign Out{" "}
-                        <Ionicons
-                            name="exit-outline"
-                            size={22}
-                            color="#0275d8"
-                        />
-                    </Text>
-                </TouchableOpacity>
+                    <TouchableOpacity
+                        style={styles.button2}
+                        onPress={handleSignOut}
+                    >
+                        <Text style={styles.buttonText2}>
+                            Sign Out{" "}
+                            <Ionicons
+                                name="exit-outline"
+                                size={22}
+                                color="#0275d8"
+                            />
+                        </Text>
+                    </TouchableOpacity>
+                </View>
             </View>
-        </View>
+        </ImageBackground>
     );
 };
 
@@ -81,6 +87,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
     },
     buttonContainer: { justifyContent: "center", alignItems: "center" },
+    image: { flex: 1 },
 });
 
 export default AccountScreen;
