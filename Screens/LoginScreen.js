@@ -40,7 +40,6 @@ export default function LoginScreen({ navigation }) {
         signInWithEmailAndPassword(auth, email, password)
             .then((userCred) => {
                 const user = userCred.user;
-                console.log(user);
             })
             .catch((error) => alert(error.message));
     };

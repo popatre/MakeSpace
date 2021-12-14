@@ -16,7 +16,6 @@ const UserListingsScreen = ({ navigation }) => {
 
     useEffect(() => {
         getListingsByUsername(user).then((listings) => {
-            console.log(listings);
             setUserListings(listings);
         });
     }, []);

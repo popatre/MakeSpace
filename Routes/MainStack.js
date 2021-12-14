@@ -10,6 +10,7 @@ import SingleListScreen from "../Screens/SingleListScreen";
 import SingleListingMapScreen from "../Screens/SingleListingMapScreen";
 import React from "react";
 import UserViewScreen from "../Screens/UserViewScreen";
+import BookingSuccess from "../Screens/BookingSuccess";
 
 const Stack = createStackNavigator();
 
@@ -37,9 +38,8 @@ export default function MainStack() {
             />
             <Stack.Screen name="SpacesOnMap" component={AllListingsMapScreen} />
             <Stack.Screen name="SingleList" component={SingleListScreen} />
-               <Stack.Screen name="UserProfile" component={UserViewScreen} />
-              
-              
+            <Stack.Screen name="UserProfile" component={UserViewScreen} />
+            <Stack.Screen name="BookingSuccess" component={BookingSuccess} />
 
             <Stack.Screen
                 name="SingleSpaceOnMap"

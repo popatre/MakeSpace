@@ -57,7 +57,6 @@ export default function PostingForm() {
         if (!result.cancelled) {
             setImage(result.uri);
             setImageSelected(true);
-            console.log(result);
         }
     };
     return (
