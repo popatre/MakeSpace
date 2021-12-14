@@ -33,7 +33,7 @@ const ListingSchema = yup.object({
       return parseInt(val) > 0;
     }),
 });
-export default function PostingForm() {
+export default function PostingForm({ navigation }) {
   const [image, setImage] = useState(null);
   const [value, setValue] = useState("small");
   const [checked, setChecked] = useState(false);
@@ -90,6 +90,7 @@ export default function PostingForm() {
           onSubmit={(values, actions) => {
             postListing(values);
             actions.resetForm();
+            navigation.replace("Spaces");
           }}
         >
           {(props) => (

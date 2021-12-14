@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
 import PostingForm from "../Components/PostingForm";
 
-const PostListingScreen = () => {
+const PostListingScreen = ({ navigation }) => {
   return (
     <View>
-      <PostingForm />
+      <PostingForm navigation={navigation} />
     </View>
   );
 };
