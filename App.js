@@ -3,13 +3,15 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import Drawer from "./Routes/drawer";
+import AuthStack from "./Routes/AuthStack";
 import { UserProvider } from "./context/User";
 
 export default function App() {
     return (
         <UserProvider>
             <NavigationContainer>
-                <Drawer />
+                {/* <Drawer /> */}
+                <AuthStack />
             </NavigationContainer>
         </UserProvider>
     );
