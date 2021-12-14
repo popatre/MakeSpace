@@ -120,7 +120,7 @@ const SingleListScreen = ({ route, navigation }) => {
                         style={styles.image}
                     >
                         <View>
-                            <View style={}>
+                            <View>
                                 <Text style={styles.title}>
                                     {listing.title}
                                 </Text>
