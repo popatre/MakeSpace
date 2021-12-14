@@ -6,6 +6,7 @@ import {
     Button,
     Image,
     TouchableOpacity,
+    ImageBackground,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
@@ -44,37 +45,48 @@ const PictureChangeModal = ({ setModal, setUserDetails }) => {
             setImage(result.base64);
         }
     };
+    const bgimg = {
+        uri: "https://png.pngitem.com/pimgs/s/56-564988_top-backgrounds-textured-png-transparent-png.png",
+    };
     return (
-        <View>
-            <AntDesign
-                style={{ marginTop: 60, marginLeft: 20 }}
-                name="close"
-                size={24}
-                color="black"
-                onPress={() => setModal(false)}
-            />
-            <View style={styles.container}>
-                <TouchableOpacity onPress={pickImage}>
-                    <Image
-                        value={image}
-                        source={{ uri: "data:image/jpeg;base64," + image }}
-                        style={{ width: 250, height: 250 }}
-                    />
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={styles.button2}
-                    onPress={() => {
-                        handleUpload(url, setDownloadUrl, setUploadText);
+        <ImageBackground source={bgimg} resizeMode="cover" style={styles.image}>
+            <View style={{ alignItems: "center" }}>
+                <AntDesign
+                    style={{
+                        marginTop: 0,
+                        marginLeft: 20,
                     }}
-                >
-                    <Text style={styles.buttonText}>{uploadText}</Text>
-                </TouchableOpacity>
+                    name="close"
+                    size={34}
+                    color="black"
+                    onPress={() => setModal(false)}
+                />
+                <View style={styles.container}>
+                    <TouchableOpacity onPress={pickImage}>
+                        <Image
+                            value={image}
+                            source={{ uri: "data:image/jpeg;base64," + image }}
+                            style={{ width: 250, height: 250 }}
+                        />
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={styles.button2}
+                        onPress={() => {
+                            handleUpload(url, setDownloadUrl, setUploadText);
+                        }}
+                    >
+                        <Text style={styles.buttonText}>{uploadText}</Text>
+                    </TouchableOpacity>
 
-                <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-                    <Text style={styles.buttonText}>Submit</Text>
-                </TouchableOpacity>
+                    <TouchableOpacity
+                        style={styles.button}
+                        onPress={handleSubmit}
+                    >
+                        <Text style={styles.buttonText}>Submit</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
-        </View>
+        </ImageBackground>
     );
 };
 
@@ -103,4 +115,11 @@ const styles = StyleSheet.create({
         marginTop: 40,
     },
     buttonText: { color: "white", fontWeight: "700", fontSize: 16 },
+    image: {
+        flex: 1,
+        justifyContent: "center",
+        // width: 500,
+        // height: 600,
+        opacity: 0.9,
+    },
 });
