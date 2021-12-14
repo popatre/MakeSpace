@@ -307,13 +307,13 @@ const SingleListScreen = ({ route, navigation }) => {
                                 >
                                     <Dialog.Title>Contact</Dialog.Title>
                                     <Dialog.Content>
-                                        <Paragraph>
+                                        <Paragraph style={styles.details}>
                                             {
                                                 listing.contactDetails
                                                     .emailAddress
                                             }
                                         </Paragraph>
-                                        <Paragraph>
+                                        <Paragraph style={styles.details}>
                                             Tel:{" "}
                                             {listing.contactDetails.phoneNumber}
                                         </Paragraph>
@@ -462,6 +462,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     book: { justifyContent: "center", alignItems: "center" },
+    details: { fontSize: 18, marginTop: 20 },
 });
 
 export default SingleListScreen;
