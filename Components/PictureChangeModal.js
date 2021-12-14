@@ -1,15 +1,26 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, Button, Image } from "react-native";
+import {
+    StyleSheet,
+    Text,
+    View,
+    Button,
+    Image,
+    TouchableOpacity,
+} from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import { onAuthStateChanged } from "firebase/auth";
 import { handleUpload } from "../utils/handleUpload";
 import { auth } from "../firebase";
 import { patchUser } from "../utils/apiRequests";
+import { img } from "../baseimg";
+
+import { ProgressBar, Colors } from "react-native-paper";
 
 const PictureChangeModal = ({ setModal, setUserDetails }) => {
-    const [image, setImage] = useState(null);
+    const [image, setImage] = useState(img);
     const [downloadUrl, setDownloadUrl] = useState(null);
+    const [uploadText, setUploadText] = useState("Upload Image");
     const url = "data:image/jpeg;base64," + image;
 
     const handleSubmit = () => {
@@ -36,45 +47,60 @@ const PictureChangeModal = ({ setModal, setUserDetails }) => {
     return (
         <View>
             <AntDesign
-                style={{ marginTop: 20 }}
+                style={{ marginTop: 60, marginLeft: 20 }}
                 name="close"
                 size={24}
                 color="black"
                 onPress={() => setModal(false)}
             />
-            {image && (
-                <Image
-                    value={image}
-                    source={{ uri: "data:image/jpeg;base64," + image }}
-                    style={{ width: 200, height: 200 }}
-                />
-            )}
-            <Button
-                onPress={pickImage}
-                style={{
-                    width: "80%",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    borderWidth: 2,
-                }}
-                title="Select an image"
-            />
-            <Button
-                onPress={() => handleUpload(url, setDownloadUrl)}
-                style={{
-                    width: "80%",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    borderWidth: 2,
-                }}
-                title="Upload Selected Image"
-            />
+            <View style={styles.container}>
+                <TouchableOpacity onPress={pickImage}>
+                    <Image
+                        value={image}
+                        source={{ uri: "data:image/jpeg;base64," + image }}
+                        style={{ width: 250, height: 250 }}
+                    />
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={styles.button2}
+                    onPress={() => {
+                        handleUpload(url, setDownloadUrl, setUploadText);
+                    }}
+                >
+                    <Text style={styles.buttonText}>{uploadText}</Text>
+                </TouchableOpacity>
 
-            <Button title="submit" onPress={handleSubmit} />
+                <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+                    <Text style={styles.buttonText}>Submit</Text>
+                </TouchableOpacity>
+            </View>
         </View>
     );
 };
 
 export default PictureChangeModal;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+    container: {
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: 90,
+    },
+    button: {
+        backgroundColor: "#0782F9",
+        width: "50%",
+        padding: 15,
+        borderRadius: 10,
+        alignItems: "center",
+        marginTop: 40,
+    },
+    button2: {
+        backgroundColor: "#5cb85c",
+        width: "50%",
+        padding: 15,
+        borderRadius: 10,
+        alignItems: "center",
+        marginTop: 40,
+    },
+    buttonText: { color: "white", fontWeight: "700", fontSize: 16 },
+});
