@@ -21,7 +21,7 @@ import {
 } from "@expo/vector-icons";
 import ReviewModal from "../Components/ReviewModal";
 import { getSingleListingById, deleteListingById } from "../utils/apiRequests";
-
+import CalendarComp from "../Components/Calendar";
 const SingleListScreen = ({ route, navigation }) => {
     const [openContact, setOpenContact] = useState(false);
     const [openReviewModal, setOpenReviewModal] = useState(false);
@@ -229,6 +229,10 @@ const SingleListScreen = ({ route, navigation }) => {
                                     />
                                 </TouchableOpacity>
                             </View>
+                            <CalendarComp />
+                            <TouchableOpacity style={styles.mapButton}>
+                                <Text style={styles.buttonText}>Book now</Text>
+                            </TouchableOpacity>
 
                             <View style={styles.bottomRow}>
                                 <Button title="Reviews" />
