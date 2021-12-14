@@ -21,6 +21,7 @@ import {
 import ReviewModal from "../Components/ReviewModal";
 import { getSingleListingById } from "../utils/apiRequests";
 import ReviewCard from "../Components/ReviewCard";
+import ImagesSwiper from "react-native-image-swiper";
 
 const SingleListScreen = ({ route, navigation }) => {
   const [openContact, setOpenContact] = useState(false);
@@ -58,11 +59,16 @@ const SingleListScreen = ({ route, navigation }) => {
     };
     return (
       <ScrollView>
-        <View>
-          <Image
-            style={{ width: 400, height: 400 }}
-            source={{ uri: listing.images[0] }}
-          />
+        <View style={styles.container}>
+          <ScrollView style={{ flex: 1 }}>
+            <ImagesSwiper
+              images={listing.images}
+              autoplay={true}
+              autoplayTimeout={2.5}
+              showsPagination={true}
+              style={{ width: 400, height: 400 }}
+            />
+          </ScrollView>
         </View>
         <View>
           <View>
