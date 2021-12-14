@@ -67,7 +67,7 @@ export default function PostingForm({ navigation }) {
               city: "",
               postcode: "",
             },
-            size: "",
+            size: "small",
             price: "",
             description: "",
             contactDetails: {
