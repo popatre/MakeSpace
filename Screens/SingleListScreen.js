@@ -267,13 +267,16 @@ const SingleListScreen = ({ route, navigation }) => {
                                 markedDates={markedDates}
                                 setMarkedDates={setMarkedDates}
                             />
-                            <TouchableOpacity
-                                style={styles.mapButton}
-                                onPress={handleBooking}
-                            >
-                                <Text style={styles.buttonText}>Book now</Text>
-                            </TouchableOpacity>
-
+                            <View style={styles.book}>
+                                <TouchableOpacity
+                                    style={styles.mapButton}
+                                    onPress={handleBooking}
+                                >
+                                    <Text style={styles.buttonText}>
+                                        Book now
+                                    </Text>
+                                </TouchableOpacity>
+                            </View>
                             <View style={styles.bottomRow}>
                                 <Button title="Reviews" />
                                 <Modal
@@ -399,7 +402,7 @@ const styles = StyleSheet.create({
         marginBottom: 30,
     },
     desc: {
-        fontSize: 17,
+        fontSize: 16,
         lineHeight: 35,
         textAlign: "center",
         marginHorizontal: 12,
@@ -458,6 +461,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
     },
+    book: { justifyContent: "center", alignItems: "center" },
 });
 
 export default SingleListScreen;

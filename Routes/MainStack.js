@@ -37,13 +37,26 @@ export default function MainStack() {
                 options={{ title: "" }}
             />
             <Stack.Screen name="SpacesOnMap" component={AllListingsMapScreen} />
-            <Stack.Screen name="SingleList" component={SingleListScreen} />
-            <Stack.Screen name="UserProfile" component={UserViewScreen} />
-            <Stack.Screen name="BookingSuccess" component={BookingSuccess} />
+            <Stack.Screen
+                name="SingleList"
+                component={SingleListScreen}
+                options={{ title: "" }}
+            />
+            <Stack.Screen
+                name="UserProfile"
+                component={UserViewScreen}
+                options={{ title: "" }}
+            />
+            <Stack.Screen
+                name="BookingSuccess"
+                component={BookingSuccess}
+                options={{ title: "" }}
+            />
 
             <Stack.Screen
                 name="SingleSpaceOnMap"
                 component={SingleListingMapScreen}
+                options={{ title: "" }}
             />
         </Stack.Navigator>
     );
