@@ -52,7 +52,6 @@ const ListSpacesScreen = ({ navigation }) => {
             largeChecked,
             order
         ).then((res) => {
-            // console.log(res);
             setListing(res);
         });
     }, [
@@ -70,8 +69,6 @@ const ListSpacesScreen = ({ navigation }) => {
         largeChecked,
         order,
     ]);
-
-    // console.log(smallChecked);
 
     return (
         <View style={styles.mainContainer}>

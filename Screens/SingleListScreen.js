@@ -21,38 +21,60 @@ import {
   Entypo,
 } from "@expo/vector-icons";
 import ReviewModal from "../Components/ReviewModal";
-import { getSingleListingById, deleteListingById } from "../utils/apiRequests";
-
+import {
+    getSingleListingById,
+    deleteListingById,
+    patchListingById,
+} from "../utils/apiRequests";
+import CalendarComp from "../Components/Calendar";
 const SingleListScreen = ({ route, navigation }) => {
-  const [openContact, setOpenContact] = useState(false);
-  const [openReviewModal, setOpenReviewModal] = useState(false);
-  const [listing, setListing] = useState({});
-  const [visible, setVisible] = useState(false);
-  const { user } = useContext(UserContext);
+
+    const [openContact, setOpenContact] = useState(false);
+    const [openReviewModal, setOpenReviewModal] = useState(false);
+    const [listing, setListing] = useState({});
+    const [visible, setVisible] = useState(false);
+    const [markedDates, setMarkedDates] = useState({});
+    const [isBooked, setIsBooked] = useState(false);
+    const { user } = useContext(UserContext);
+
 
   const showDialog = () => setVisible(true);
 
   const hideDialog = () => setVisible(false);
   const { id, setUserListings } = route.params;
 
-  const handleOwnerRequest = () => {
-    navigation.navigate("UserProfile", { owner: listing.owner });
-  };
-  const handleDelete = () => {
-    deleteListingById(id).then(() => {
-      navigation.navigate("MyListings");
-      setUserListings((prevListings) => {
-        return prevListings.filter((listing) => listing._id !== id);
-      });
-      console.log("deleted in front");
-    });
-  };
 
-  useEffect(() => {
-    getSingleListingById(id).then((res) => {
-      setListing(res);
-    });
-  }, [id]);
+    const handleOwnerRequest = () => {
+        navigation.navigate("UserProfile", { owner: listing.owner });
+    };
+    const handleDelete = () => {
+        deleteListingById(id).then(() => {
+            navigation.navigate("MyListings");
+            setUserListings((prevListings) => {
+                return prevListings.filter((listing) => listing._id !== id);
+            });
+        });
+    };
+    const handleBooking = () => {
+        const newObj = { ...markedDates };
+
+        for (const date in newObj) {
+            newObj[date].color = "grey";
+        }
+        const updatedListing = { bookedDays: [newObj] };
+        patchListingById(id, updatedListing).then((res) => {
+            setMarkedDates(newObj);
+            navigation.replace("BookingSuccess");
+        });
+    };
+
+    useEffect(() => {
+        getSingleListingById(id).then((res) => {
+            setListing(res);
+            setMarkedDates(res.bookedDays[0]);
+        });
+    }, [id, isBooked]);
+
 
   if (Object.keys(listing).length === 0)
     return (
@@ -177,9 +199,26 @@ const SingleListScreen = ({ route, navigation }) => {
                 >
                   <Text style={styles.mapButtonText}>View on map</Text>
 
-                  <FontAwesome5 name="map-marked-alt" size={24} color="white" />
-                </TouchableOpacity>
-              </View>
+
+                                    <FontAwesome5
+                                        name="map-marked-alt"
+                                        size={24}
+                                        color="white"
+                                    />
+                                </TouchableOpacity>
+                            </View>
+                            <CalendarComp
+                                listing={listing}
+                                markedDates={markedDates}
+                                setMarkedDates={setMarkedDates}
+                            />
+                            <TouchableOpacity
+                                style={styles.mapButton}
+                                onPress={handleBooking}
+                            >
+                                <Text style={styles.buttonText}>Book now</Text>
+                            </TouchableOpacity>
+
 
               <View style={styles.bottomRow}>
                 <Button title="Reviews" />

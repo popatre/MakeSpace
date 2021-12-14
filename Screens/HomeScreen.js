@@ -7,7 +7,9 @@ import {
     StyleSheet,
     ImageBackground,
     TouchableOpacity,
+    ScrollView,
 } from "react-native";
+import CalendarComp from "../Components/Calendar";
 
 const HomeScreen = ({ navigation }) => {
     const image = {

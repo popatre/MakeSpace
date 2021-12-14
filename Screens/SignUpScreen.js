@@ -38,7 +38,6 @@ const SignUpScreen = ({ navigation }) => {
                     setUsernameError("");
                     createUserWithEmailAndPassword(auth, email, password)
                         .then((userCred) => {
-                            console.log(userCred.user);
                             const uid = userCred.user.uid;
                             postUser({
                                 _id: uid,
@@ -47,10 +46,7 @@ const SignUpScreen = ({ navigation }) => {
                                 emailAddress: email,
                             }).then(() => {
                                 setUser(username);
-                                console.log(
-                                    username,
-                                    "********************************"
-                                );
+
                                 navigation.replace("Home");
                             });
                         })

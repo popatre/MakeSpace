@@ -47,35 +47,36 @@ export default function PostingForm() {
   const [twentyFourChecked, setTwentyFourChecked] = useState(false);
   const [imageSelected, setImageSelected] = useState(false);
 
-  const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-    });
-    if (!result.cancelled) {
-      setImage(result.uri);
-      setImageSelected(true);
-      console.log(result);
-    }
-  };
-  return (
-    <ScrollView>
-      <View style={styles.container}>
-        <Formik
-          validationSchema={ListingSchema}
-          initialValues={{
-            title: "",
-            location: {
-              city: "",
-              postcode: "",
-            },
-            size: "",
-            price: "",
-            description: "",
-            contactDetails: {
-              phoneNumber: "",
-              emailAddress: "",
-            },
+
+    const pickImage = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+        });
+        if (!result.cancelled) {
+            setImage(result.uri);
+            setImageSelected(true);
+        }
+    };
+    return (
+        <ScrollView>
+            <View style={styles.container}>
+                <Formik
+                    validationSchema={ListingSchema}
+                    initialValues={{
+                        title: "",
+                        location: {
+                            city: "",
+                            postcode: "",
+                        },
+                        size: "",
+                        price: "",
+                        description: "",
+                        contactDetails: {
+                            phoneNumber: "",
+                            emailAddress: "",
+                        },
+
 
             amenities: {
               parking: false,

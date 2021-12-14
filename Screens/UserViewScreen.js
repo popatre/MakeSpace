@@ -21,9 +21,7 @@ const UserViewScreen = ({ route, navigation }) => {
     const { owner } = route.params;
 
     useEffect(() => {
-        getUserByUsername(owner).then((user) => {
-            console.log(user);
-        });
+        getUserByUsername(owner).then((user) => {});
     }, [owner]);
 
     return (
