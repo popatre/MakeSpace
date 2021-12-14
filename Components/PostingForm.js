@@ -13,7 +13,9 @@ import { RadioButton, Checkbox } from "react-native-paper";
 import { Formik } from "formik";
 import * as yup from "yup";
 import * as ImagePicker from "expo-image-picker";
+import { useState, useContext } from "react";
 import { postListing } from "../utils/apiRequests";
+import { UserContext } from "../context/User";
 const ListingSchema = yup.object({
   title: yup.string().required().min(5),
   location: yup.object().shape({
@@ -33,8 +35,10 @@ const ListingSchema = yup.object({
       return parseInt(val) > 0;
     }),
 });
-export default function PostingForm() {
-  const [image, setImage] = useState();
+
+export default function PostingForm({ navigation }) {
+  const [image, setImage] = useState(null);
+
   const [value, setValue] = useState("small");
   const [checked, setChecked] = useState(false);
   const [parkingChecked, setParkingChecked] = useState(false);
@@ -45,37 +49,39 @@ export default function PostingForm() {
   const [WCChecked, setWCChecked] = useState(false);
   const [kitchenChecked, setKitchenChecked] = useState(false);
   const [twentyFourChecked, setTwentyFourChecked] = useState(false);
+
   const [imageSelected, setImageSelected] = useState(false);
+  const { user } = useContext(UserContext);
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+    });
+    if (!result.cancelled) {
+      setImage(result.uri);
+     setImageSelected(true);
+    }
+  };
 
-
-    const pickImage = async () => {
-        let result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images,
-            allowsEditing: true,
-        });
-        if (!result.cancelled) {
-            setImage(result.uri);
-            setImageSelected(true);
-        }
-    };
-    return (
-        <ScrollView>
-            <View style={styles.container}>
-                <Formik
-                    validationSchema={ListingSchema}
-                    initialValues={{
-                        title: "",
-                        location: {
-                            city: "",
-                            postcode: "",
-                        },
-                        size: "",
-                        price: "",
-                        description: "",
-                        contactDetails: {
-                            phoneNumber: "",
-                            emailAddress: "",
-                        },
+  return (
+    <ScrollView>
+      <View>
+        <Formik
+          validationSchema={ListingSchema}
+          initialValues={{
+            title: "",
+            location: {
+              city: "",
+              postcode: "",
+            },
+            owner: user,
+            size: "small",
+            price: "",
+            description: "",
+            contactDetails: {
+              phoneNumber: "",
+              emailAddress: "",
+            },
 
 
             amenities: {
@@ -93,6 +99,7 @@ export default function PostingForm() {
           onSubmit={(values, actions) => {
             postListing(values);
             actions.resetForm();
+            navigation.replace("Spaces");
           }}
         >
           {(props) => (
