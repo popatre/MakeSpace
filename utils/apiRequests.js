@@ -23,7 +23,6 @@ export const getAllListings = (
   large,
   order
 ) => {
-
   const params = {
     sortby: sort,
     "amenities.WC": WC,
@@ -50,23 +49,21 @@ export const getAllListings = (
     .then((res) => {
       return res.data.listings;
     });
-
 };
 
 export const getSingleListingById = (id) => {
-    return makespaceApi.get(`/listings/${id}`).then((res) => {
-        return res.data;
-    });
+  return makespaceApi.get(`/listings/${id}`).then((res) => {
+    return res.data;
+  });
 };
 
 export const patchListingById = (id, updatedListing) => {
-    return makespaceApi.patch(`/listings/${id}`, updatedListing).then((res) => {
-        return res.data;
-    });
+  return makespaceApi.patch(`/listings/${id}`, updatedListing).then((res) => {
+    return res.data;
+  });
 };
 
 export const postListing = (newListing) => {
-
   return makespaceApi.post("/listings", newListing).then((res) => {
     return res.data;
   });
@@ -105,5 +102,16 @@ export const getUserByUsername = (username) => {
   return makespaceApi.get(`/users/${username}`).then((res) => {
     return res.data;
   });
+};
 
+export const getListingsByUsername = (username) => {
+  return makespaceApi.get(`/users/${username}/listings`).then((res) => {
+    return res.data;
+  });
+};
+
+export const deleteListingById = (id) => {
+  return makespaceApi.delete(`/listings/${id}`).then((res) => {
+    return res.data;
+  });
 };

@@ -13,15 +13,12 @@ import { getListingsByUsername } from "../utils/apiRequests";
 const UserListingsScreen = ({ navigation }) => {
   const { user } = useContext(UserContext);
   const [userListings, setUserListings] = useState([]);
-  console.log(user, "<<<<user");
 
-
-    useEffect(() => {
-        getListingsByUsername(user).then((listings) => {
-            setUserListings(listings);
-        });
-    }, []);
-
+  useEffect(() => {
+    getListingsByUsername(user).then((listings) => {
+      setUserListings(listings);
+    });
+  }, []);
 
   return (
     <View>
