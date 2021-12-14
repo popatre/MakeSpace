@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-
+import React, { useState, useEffect, useContext } from "react";
+import { UserContext } from "../context/User";
 import {
   View,
   Text,
@@ -27,8 +27,9 @@ const SingleListScreen = ({ route, navigation }) => {
   const [openReview, setOpenReview] = useState(false);
   const [openReviewModal, setOpenReviewModal] = useState(false);
   const [listing, setListing] = useState({});
+  const [reviewsLength, setReviewsLength] = useState(0);
+  const { user } = useContext(UserContext);
   const id = route.params;
-
   const handleOwnerRequest = () => {
     navigation.navigate("UserProfile", { owner: listing.owner });
   };
@@ -37,7 +38,7 @@ const SingleListScreen = ({ route, navigation }) => {
     getSingleListingById(id).then((res) => {
       setListing(res);
     });
-  }, [id]);
+  }, [id, reviewsLength]);
 
   if (Object.keys(listing).length === 0)
     return (
@@ -159,12 +160,16 @@ const SingleListScreen = ({ route, navigation }) => {
             <Modal visible={openReviewModal} animationType="slide">
               <ReviewModal
                 setOpenReviewModal={setOpenReviewModal}
+                setReviewsLength={setReviewsLength}
                 listing={listing}
+                username={user}
               />
             </Modal>
             <Button
               title="Write a review"
-              onPress={() => setOpenReviewModal(true)}
+              onPress={() => {
+                setOpenReviewModal(true);
+              }}
             />
 
             <Button

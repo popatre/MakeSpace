@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import * as yup from "yup";
 import {
   StyleSheet,
@@ -8,26 +8,22 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
+
 import { Formik } from "formik";
 import { AntDesign } from "@expo/vector-icons";
 import StarRating from "./StarRating";
 import { patchListingById } from "../utils/apiRequests";
 
 const ReviewSchema = yup.object({
-  // rating: yup.string().required().min(1),
-  // rating: yup.number().positive().required(),
-  // .test("isNumber", "Must be a Number from 1-5", (val) => {
-  //   const num = Number(val);
-
-  //   if (num > 0 && num <= 5) {
-  //     return num;
-  //   }
-  // }),
-
   body: yup.string().required().min(10),
 });
 
-export default function ReviewModal({ setOpenReviewModal, listing }) {
+export default function ReviewModal({
+  setOpenReviewModal,
+  setReviewsLength,
+  username,
+  listing,
+}) {
   const [value, setValue] = useState("");
   const [defaultRating, setDefaultRating] = useState(0);
 
@@ -42,7 +38,7 @@ export default function ReviewModal({ setOpenReviewModal, listing }) {
     const averageRating = totalStars / totalReviews;
 
     const newReview = {
-      username: "ScarlettRocks!",
+      username: username,
       ownerRating: 5,
       SpaceRating: rating,
       Body: body,
@@ -68,6 +64,7 @@ export default function ReviewModal({ setOpenReviewModal, listing }) {
           else {
             alert("Thanks for your feedback!");
             setOpenReviewModal(false);
+            setReviewsLength((prev) => prev + 1);
             values.rating = defaultRating;
             reviewHandler(values);
             actions.resetForm();
@@ -93,14 +90,6 @@ export default function ReviewModal({ setOpenReviewModal, listing }) {
               <Text style={styles.errorText}>
                 {props.touched.rating && props.errors.rating}
               </Text>
-              {/* <Text>Rate your stay!</Text>
-              <TextInput
-                style={styles.rating}
-                placeholder="Rating, between 1 - 5"
-                onChangeText={props.handleChange("rating")}
-                value={props.values.rating}
-                onBlur={props.handleBlur("rating")}
-              /> */}
               <Text style={styles.review}>Leave your Review</Text>
               <TextInput
                 style={styles.body}
@@ -150,7 +139,9 @@ const styles = StyleSheet.create({
     marginBottom: 50,
   },
   body: {
+    padding: 10,
     width: "80%",
+    maxWidth: "80%",
     borderWidth: 1,
     height: 120,
   },
