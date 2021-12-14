@@ -28,7 +28,11 @@ const SignUpScreen = ({ navigation }) => {
 
   const handleSignUp = () => {
     getAllUsers().then((users) => {
-      if (users.includes(username)) {
+      console.log(users, "<<<<<<<<users");
+      console.log(username, "<<<<<<<<<<<<<username");
+
+      const usernames = users.map((user) => user.username);
+      if (usernames.includes(username)) {
         setUsernameError("Sorry, this username is already in use");
       } else {
         if (password !== ConfirmPassword) {
@@ -38,7 +42,6 @@ const SignUpScreen = ({ navigation }) => {
           setUsernameError("");
           createUserWithEmailAndPassword(auth, email, password)
             .then((userCred) => {
-              console.log(userCred.user);
               const uid = userCred.user.uid;
               postUser({
                 _id: uid,
@@ -47,7 +50,6 @@ const SignUpScreen = ({ navigation }) => {
                 emailAddress: email,
               }).then(() => {
                 setUser(username);
-                console.log(username, "********************************");
                 // navigation.replace("Home");
               });
             })

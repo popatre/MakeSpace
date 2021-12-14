@@ -76,35 +76,30 @@ export const getLocation = (postcode) => {
 };
 export const postUser = (newUser) => {
   return makespaceApi.post("/users", newUser).then((res) => {
-    console.log(res.data);
     return res.data;
   });
 };
 
 export const getAllUsers = () => {
   return makespaceApi.get("/users").then((res) => {
-    console.log(res.data);
     return res.data;
   });
 };
 
 export const getUserById = (userId) => {
   return makespaceApi.get(`/users/${userId}`).then((res) => {
-    console.log(res.data);
     return res.data;
   });
 };
 
 export const patchUser = (update, userId) => {
   return makespaceApi.patch(`/users/${userId}`, update).then((res) => {
-    console.log(res.data, "in the api request");
     return res.data;
   });
 };
 
 export const getUserByUsername = (username) => {
   return makespaceApi.get(`/users/${username}`).then((res) => {
-    console.log(res.data, "in the apiiii");
     return res.data;
   });
 };
