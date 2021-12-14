@@ -35,7 +35,7 @@ export default function ReviewModal({
     });
 
     totalStars += rating;
-    const averageRating = totalStars / totalReviews;
+    const averageRating = (totalStars / totalReviews).toFixed(2);
 
     const newReview = {
       username: username,
