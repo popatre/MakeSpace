@@ -46,7 +46,6 @@ const ProfileCard = () => {
     const handlePasswordSubmit = () => {
         updatePassword(userFirebase, passwordChange)
             .then(() => {
-                // console.log("success! New password is.." + passwordChange);
                 setPasswordModalOpen(false);
                 setPasswordChange("");
             })

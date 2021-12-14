@@ -23,7 +23,6 @@ const ListSpacesScreen = ({ navigation }) => {
     const [listing, setListing] = useState([]);
     const [modalOpen, setModalOpen] = useState(false);
 
-
     const [accessibleChecked, setAccessibleChecked] = useState(undefined);
     const [wcChecked, setWcChecked] = useState(undefined);
     const [indoorChecked, setIndoorChecked] = useState(undefined);
@@ -53,7 +52,6 @@ const ListSpacesScreen = ({ navigation }) => {
             largeChecked,
             order
         ).then((res) => {
-            // console.log(res);
             setListing(res);
         });
     }, [
@@ -71,8 +69,6 @@ const ListSpacesScreen = ({ navigation }) => {
         largeChecked,
         order,
     ]);
-
-    // console.log(smallChecked);
 
     return (
         <View style={styles.mainContainer}>
@@ -179,7 +175,9 @@ const ListSpacesScreen = ({ navigation }) => {
                     renderItem={({ item }) => (
                         <TouchableOpacity
                             onPress={() => {
-                                navigation.navigate("SingleList", item._id);
+                                navigation.navigate("SingleList", {
+                                    id: item._id,
+                                });
                             }}
                         >
                             <ListingCard
@@ -197,7 +195,6 @@ const ListSpacesScreen = ({ navigation }) => {
             </View>
         </View>
     );
-
 };
 
 export default ListSpacesScreen;
