@@ -8,9 +8,9 @@ const Drawer = createDrawerNavigator();
 
 export default function Nav() {
     return (
-        <Drawer.Navigator initialRouteName="Home">
+        <Drawer.Navigator initialRouteName="Main">
             <Drawer.Screen
-                name="Home"
+                name="Spaces"
                 component={MainStack}
                 options={{
                     headerStyle: { backgroundColor: "#f0ad4e" },
