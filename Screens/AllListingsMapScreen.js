@@ -19,15 +19,16 @@ const AllListingsMapScreen = ({ route }) => {
           longitude: res.longitude,
         };
         locationArr.push(newObj);
-        if (locationArr.length === route.params.length)
-          setLocation(locationArr);
+        setLocation(locationArr);
+        // if (locationArr.length === route.params.length) {
+        //   console.log(location, "<<<<<<<<<locationARr");
+        // }
       });
     });
   }, []);
 
   return (
     <View>
-      <Text>MapForAllListings</Text>
       <ListingMapTest location={location} />
     </View>
   );
