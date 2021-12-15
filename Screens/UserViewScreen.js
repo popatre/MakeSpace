@@ -10,6 +10,7 @@ import {
     Modal,
     TextInput,
     FlatList,
+    ImageBackground,
 } from "react-native";
 
 import {
@@ -36,10 +37,13 @@ const UserViewScreen = ({ route, navigation }) => {
             setUserListings(listings);
         });
     };
+    const img = {
+        uri: "https://png.pngitem.com/pimgs/s/56-564988_top-backgrounds-textured-png-transparent-png.png",
+    };
 
     const userTitle = "View " + userProfile.displayName + "'s listings";
     return (
-        <View>
+        <ImageBackground source={img} resizeMode="cover" style={styles.image}>
             <View style={{ flexDirection: "row" }}>
                 <View style={styles.rightContainer}>
                     <Image
@@ -92,7 +96,7 @@ const UserViewScreen = ({ route, navigation }) => {
                     )}
                 />
             </View>
-        </View>
+        </ImageBackground>
     );
 };
 
@@ -103,4 +107,5 @@ const styles = StyleSheet.create({
     title: { fontSize: 15, fontWeight: "bold", marginBottom: 3 },
     leftContainer: { flex: 0.6, marginTop: 10 },
     rightContainer: { flex: 0.8, marginTop: 10 },
+    image: { flex: 1 },
 });
