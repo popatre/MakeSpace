@@ -7,6 +7,7 @@ import {
     Button,
     TextInput,
     TouchableOpacity,
+    Alert,
 } from "react-native";
 
 import { Formik } from "formik";
@@ -60,11 +61,14 @@ export default function ReviewModal({
                     body: "",
                 }}
                 onSubmit={(values, actions) => {
-                    if (defaultRating === 0) alert("please rate");
+                    if (defaultRating === 0)
+                        Alert.alert("", "Please add a rating");
                     else {
-                        alert("Thanks for your feedback!");
+                        Alert.alert("", "Thanks for your feedback!");
                         setOpenReviewModal(false);
-                        setReviewsLength((prev) => prev + 1);
+                        setTimeout(() => {
+                            setReviewsLength((prev) => prev + 1);
+                        }, 1000);
                         values.rating = defaultRating;
                         reviewHandler(values);
                         actions.resetForm();
