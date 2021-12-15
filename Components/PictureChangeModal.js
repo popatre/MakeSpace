@@ -22,16 +22,18 @@ const PictureChangeModal = ({ setModal, setUserDetails }) => {
     const [image, setImage] = useState(img);
     const [downloadUrl, setDownloadUrl] = useState(null);
     const [uploadText, setUploadText] = useState("Upload Image");
+    const [loggedInId, setLoggedInId] = useState("");
     const url = "data:image/jpeg;base64," + image;
 
+    onAuthStateChanged(auth, (user) => {
+        setLoggedInId(user.uid);
+    });
+
     const handleSubmit = () => {
-        onAuthStateChanged(auth, (user) => {
-            const uid = user.uid;
-            const update = { avatar: downloadUrl };
-            patchUser(update, uid).then((user) => {
-                setUserDetails(user);
-                setModal(false);
-            });
+        const update = { avatar: downloadUrl };
+        patchUser(update, loggedInId).then((user) => {
+            setUserDetails(user);
+            setModal(false);
         });
     };
 

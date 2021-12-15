@@ -16,7 +16,6 @@ const img = {
     uri: "https://png.pngitem.com/pimgs/s/56-564988_top-backgrounds-textured-png-transparent-png.png",
 };
 const AccountScreen = ({ navigation }) => {
-
     const handleSignOut = () => {
         signOut(auth).then(() => {
             navigation.navigate("Landing");
@@ -37,15 +36,6 @@ const AccountScreen = ({ navigation }) => {
                     </TouchableOpacity>
 
                     <TouchableOpacity
-                        style={styles.button}
-                        onPress={() => {
-                            navigation.navigate("MyBookings");
-                        }}
-                    >
-                        <Text style={styles.buttonText}>My Bookings</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity
                         style={styles.button2}
                         onPress={handleSignOut}
                     >
@@ -62,7 +52,6 @@ const AccountScreen = ({ navigation }) => {
             </View>
         </ImageBackground>
     );
-
 };
 
 const styles = StyleSheet.create({

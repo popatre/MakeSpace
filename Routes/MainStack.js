@@ -15,53 +15,53 @@ import BookingSuccess from "../Screens/BookingSuccess";
 const Stack = createStackNavigator();
 
 export default function MainStack() {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen
+    return (
+        <Stack.Navigator>
+            {/* <Stack.Screen
         options={{ headerShown: false }}
         name="Landing"
         component={LandingScreen}
       />
       <Stack.Screen name="Login" component={LoginScreen} />
-      <Stack.Screen name="SignUp" component={SignUpScreen} />
+      <Stack.Screen name="SignUp" component={SignUpScreen} /> */}
 
-      <Stack.Screen
-        name="Home"
-        component={HomeScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen name="PostListing" component={PostListingScreen} />
-      <Stack.Screen
-        name="Spaces"
-        component={ListSpacesScreen}
-        options={{ title: "" }}
-      />
-      <Stack.Screen
-        name="SpacesOnMap"
-        component={AllListingsMapScreen}
-        options={{ title: "Map View" }}
-      />
-      <Stack.Screen
-        name="SingleList"
-        component={SingleListScreen}
-        options={{ title: "" }}
-      />
-      <Stack.Screen
-        name="UserProfile"
-        component={UserViewScreen}
-        options={{ title: "" }}
-      />
-      <Stack.Screen
-        name="BookingSuccess"
-        component={BookingSuccess}
-        options={{ title: "" }}
-      />
+            <Stack.Screen
+                name="Home"
+                component={HomeScreen}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen name="PostListing" component={PostListingScreen} />
+            <Stack.Screen
+                name="Spaces"
+                component={ListSpacesScreen}
+                options={{ title: "" }}
+            />
+            <Stack.Screen
+                name="SpacesOnMap"
+                component={AllListingsMapScreen}
+                options={{ title: "Map View" }}
+            />
+            <Stack.Screen
+                name="SingleList"
+                component={SingleListScreen}
+                options={{ title: "" }}
+            />
+            <Stack.Screen
+                name="UserProfile"
+                component={UserViewScreen}
+                options={{ title: "" }}
+            />
+            <Stack.Screen
+                name="BookingSuccess"
+                component={BookingSuccess}
+                options={{ title: "" }}
+            />
 
-      <Stack.Screen
-        name="SingleSpaceOnMap"
-        component={SingleListingMapScreen}
-        options={{ title: "" }}
-      />
-    </Stack.Navigator>
-  );
+            <Stack.Screen
+                name="SingleSpaceOnMap"
+                component={SingleListingMapScreen}
+                options={{ title: "" }}
+            />
+        </Stack.Navigator>
+    );
 }
