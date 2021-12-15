@@ -21,26 +21,30 @@ const img = {
     uri: "https://png.pngitem.com/pimgs/s/56-564988_top-backgrounds-textured-png-transparent-png.png",
 };
 const ProfileCard = () => {
-    const [userDetails, setUserDetails] = useState({});
     const [displayNameModalOpen, setDisplayNameModalOpen] = useState(false);
     const [passwordModalOpen, setPasswordModalOpen] = useState(false);
     const [pictureModalOpen, setPictureModalOpen] = useState(false);
     const [displayName, setDisplayName] = useState("");
     const [passwordChange, setPasswordChange] = useState("");
     const [passwordError, setPasswordError] = useState("");
+    const [userDetails, setUserDetails] = useState({});
     const { user } = useContext(UserContext);
+    const [loggedInId, setLoggedInId] = useState("");
     const handlePress = () => {
         setDisplayNameModalOpen(true);
     };
+    onAuthStateChanged(auth, (user) => {
+        setLoggedInId(user.uid);
+    });
+
     const handleDisplayNameSubmit = () => {
-        onAuthStateChanged(auth, (user) => {
-            const uid = user.uid;
-            const update = { displayName };
-            patchUser(update, uid).then((user) => {
-                setUserDetails(user);
-                setDisplayNameModalOpen(false);
-                setDisplayName("");
-            });
+        const update = { displayName };
+
+        patchUser(update, loggedInId).then((user) => {
+            console.log(user, "in the hood");
+            setUserDetails(user);
+            setDisplayNameModalOpen(false);
+            setDisplayName("");
         });
     };
 

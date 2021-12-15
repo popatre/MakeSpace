@@ -17,7 +17,7 @@ const LandingScreen = ({ navigation }) => {
     const { setUser } = useContext(UserContext);
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
-            if (user) {
+            if (user !== null) {
                 const uid = user.uid;
                 getUserById(uid).then((user) => {
                     setUser(user.username);
