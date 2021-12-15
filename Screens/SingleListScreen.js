@@ -4,115 +4,117 @@ import { Paragraph, Dialog, Portal, Provider } from "react-native-paper";
 
 import { UserContext } from "../context/User";
 import {
-    View,
-    Text,
-    Modal,
-    Button,
-    StyleSheet,
-    ScrollView,
-    Image,
-    FlatList,
-    TouchableOpacity,
-    ImageBackground,
-    TextInput,
+  View,
+  Text,
+  Modal,
+  Button,
+  StyleSheet,
+  ScrollView,
+  Image,
+  FlatList,
+  TouchableOpacity,
+  ImageBackground,
+  TextInput,
 } from "react-native";
 import {
-    MaterialCommunityIcons,
-    MaterialIcons,
-    FontAwesome,
-    FontAwesome5,
-    Entypo,
+  MaterialCommunityIcons,
+  MaterialIcons,
+  FontAwesome,
+  FontAwesome5,
+  Entypo,
 } from "@expo/vector-icons";
 import ReviewModal from "../Components/ReviewModal";
 
 import {
-    getSingleListingById,
-    deleteListingById,
-    patchListingById,
+  getSingleListingById,
+  deleteListingById,
+  patchListingById,
 } from "../utils/apiRequests";
 import CalendarComp from "../Components/Calendar";
 import ReviewCard from "../Components/ReviewCard";
 import ImagesSwiper from "react-native-image-swiper";
 
 const SingleListScreen = ({ route, navigation }) => {
-    const [reviewsLength, setReviewsLength] = useState(0);
-    const [openContact, setOpenContact] = useState(false);
-    const [openReviewModal, setOpenReviewModal] = useState(false);
-    const [listing, setListing] = useState({});
-    const [visible, setVisible] = useState(false);
-    const [markedDates, setMarkedDates] = useState({});
-    const [isBooked, setIsBooked] = useState(false);
-    const { user } = useContext(UserContext);
+  const [reviewsLength, setReviewsLength] = useState(0);
+  const [openContact, setOpenContact] = useState(false);
+  const [openReview, setOpenReview] = useState(false);
+  const [openReviewModal, setOpenReviewModal] = useState(false);
+  const [listing, setListing] = useState({});
+  const [visible, setVisible] = useState(false);
+  const [markedDates, setMarkedDates] = useState({});
+  const [isBooked, setIsBooked] = useState(false);
+  const { user } = useContext(UserContext);
 
-    const showDialog = () => setVisible(true);
+  const showDialog = () => setVisible(true);
 
-    const hideDialog = () => setVisible(false);
-    const { id, setUserListings } = route.params;
+  const hideDialog = () => setVisible(false);
+  const { id, setUserListings } = route.params;
 
-    const handleOwnerRequest = () => {
-        navigation.navigate("UserProfile", { owner: listing.owner });
+  const handleOwnerRequest = () => {
+    navigation.navigate("UserProfile", { owner: listing.owner });
+  };
+  const handleDelete = () => {
+    deleteListingById(id).then(() => {
+      navigation.navigate("MyListings");
+      setUserListings((prevListings) => {
+        return prevListings.filter((listing) => listing._id !== id);
+      });
+    });
+  };
+  const handleBooking = () => {
+    const newObj = { ...markedDates };
+
+    for (const date in newObj) {
+      newObj[date].color = "grey";
+    }
+    const updatedListing = { bookedDays: [newObj] };
+    patchListingById(id, updatedListing).then((res) => {
+      setMarkedDates(newObj);
+      navigation.replace("BookingSuccess");
+    });
+  };
+
+  useEffect(() => {
+    getSingleListingById(id).then((res) => {
+      setListing(res);
+      setMarkedDates(res.bookedDays[0]);
+    });
+  }, [id, isBooked, reviewsLength]);
+
+  if (Object.keys(listing).length === 0)
+    return (
+      <View>
+        <Text>loading...</Text>
+      </View>
+    );
+  else {
+    const locationObj = {
+      id: listing._id,
+      name: listing.title,
+      size: listing.size,
+      price: listing.price,
+      spaceRating: listing.spaceRating,
+      postcode: listing.location.postcode,
+      images: listing.images,
     };
-    const handleDelete = () => {
-        deleteListingById(id).then(() => {
-            navigation.navigate("MyListings");
-            setUserListings((prevListings) => {
-                return prevListings.filter((listing) => listing._id !== id);
-            });
-        });
+    const image = {
+      uri: "https://www.transparenttextures.com/patterns/old-map.png",
     };
-    const handleBooking = () => {
-        const newObj = { ...markedDates };
+    return (
+      <Provider>
+        <ScrollView>
+          <View style={styles.container}>
+            <ScrollView style={{ flex: 1 }}>
+              <ImagesSwiper
+                images={listing.images}
+                autoplay={true}
+                autoplayTimeout={2.5}
+                showsPagination={true}
+                style={{ width: 400, height: 400 }}
+              />
+            </ScrollView>
+          </View>
 
-        for (const date in newObj) {
-            newObj[date].color = "grey";
-        }
-        const updatedListing = { bookedDays: [newObj] };
-        patchListingById(id, updatedListing).then((res) => {
-            setMarkedDates(newObj);
-            navigation.replace("BookingSuccess");
-        });
-    };
-
-    useEffect(() => {
-        getSingleListingById(id).then((res) => {
-            setListing(res);
-            setMarkedDates(res.bookedDays[0]);
-        });
-    }, [id, isBooked, reviewsLength]);
-
-    if (Object.keys(listing).length === 0)
-        return (
-            <View>
-                <Text>loading...</Text>
-            </View>
-        );
-    else {
-        const locationObj = {
-            id: listing._id,
-            name: listing.title,
-            size: listing.size,
-            price: listing.price,
-            spaceRating: listing.spaceRating,
-            postcode: listing.location.postcode,
-            images: listing.images,
-        };
-        const image = {
-            uri: "https://www.transparenttextures.com/patterns/old-map.png",
-        };
-        return (
-            <Provider>
-                <ScrollView>
-                    <View style={styles.container}>
-                        <ScrollView style={{ flex: 1 }}>
-                            <ImagesSwiper
-                                images={listing.images}
-                                autoplay={true}
-                                autoplayTimeout={2.5}
-                                showsPagination={true}
-                                style={{ width: 400, height: 400 }}
-                            />
-                        </ScrollView>
-                    </View>
 
                     <ImageBackground
                         source={image}
@@ -161,211 +163,200 @@ const SingleListScreen = ({ route, navigation }) => {
                                     </Text>
                                 </View>
 
-                                <View style={styles.amens}>
-                                    <MaterialCommunityIcons
-                                        name="hours-24"
-                                        size={24}
-                                        color={
-                                            listing.amenities["_24HourAccess"]
-                                                ? "#32CD32"
-                                                : "#DCDCDC"
-                                        }
-                                    />
-                                    <MaterialIcons
-                                        name="wc"
-                                        size={24}
-                                        color={
-                                            listing.amenities.WC
-                                                ? "#32CD32"
-                                                : "#DCDCDC"
-                                        }
-                                    />
-                                    <FontAwesome
-                                        name="wheelchair"
-                                        size={24}
-                                        color={
-                                            listing.amenities.accessible
-                                                ? "#32CD32"
-                                                : "#DCDCDC"
-                                        }
-                                    />
-                                    <FontAwesome5
-                                        name="house-user"
-                                        size={24}
-                                        color={
-                                            listing.amenities.indoor
-                                                ? "#32CD32"
-                                                : "#DCDCDC"
-                                        }
-                                    />
-                                    <FontAwesome5
-                                        name="tree"
-                                        size={24}
-                                        color={
-                                            listing.amenities.outdoor
-                                                ? "#32CD32"
-                                                : "#DCDCDC"
-                                        }
-                                    />
-                                    <FontAwesome5
-                                        name="parking"
-                                        size={24}
-                                        color={
-                                            listing.amenities.parking
-                                                ? "#32CD32"
-                                                : "#DCDCDC"
-                                        }
-                                    />
-                                    <Entypo
-                                        name="power-plug"
-                                        size={24}
-                                        color={
-                                            listing.amenities.power
-                                                ? "#32CD32"
-                                                : "#DCDCDC"
-                                        }
-                                    />
-                                    <MaterialCommunityIcons
-                                        name="microwave"
-                                        size={24}
-                                        color={
-                                            listing.amenities.kitchen
-                                                ? "#32CD32"
-                                                : "#DCDCDC"
-                                        }
-                                    />
-                                </View>
-                                <View style={styles.descContainer}>
-                                    <Text style={styles.desc}>
-                                        {listing.description}
-                                    </Text>
-                                </View>
-                            </View>
-                            <View style={styles.mapView}>
-                                <TouchableOpacity
-                                    style={styles.mapButton}
-                                    onPress={() => {
-                                        navigation.navigate(
-                                            "SingleSpaceOnMap",
-                                            locationObj
-                                        );
-                                    }}
-                                >
-                                    <Text style={styles.mapButtonText}>
-                                        View on map
-                                    </Text>
-
-                                    <FontAwesome5
-                                        name="map-marked-alt"
-                                        size={24}
-                                        color="white"
-                                    />
-                                </TouchableOpacity>
-                            </View>
-                            <CalendarComp
-                                listing={listing}
-                                markedDates={markedDates}
-                                setMarkedDates={setMarkedDates}
-                            />
-                            <View style={styles.book}>
-                                <TouchableOpacity
-                                    style={styles.mapButton}
-                                    onPress={handleBooking}
-                                >
-                                    <Text style={styles.buttonText}>
-                                        Book now
-                                    </Text>
-                                </TouchableOpacity>
-                            </View>
-                            <View style={styles.bottomRow}>
-                                <Button title="Reviews" />
-                                <Modal
-                                    visible={openReviewModal}
-                                    animationType="slide"
-                                >
-                                    <ReviewModal
-                                        setOpenReviewModal={setOpenReviewModal}
-                                        listing={listing}
-                                    />
-                                </Modal>
-                                {listing.owner !== user ? (
-                                    <Button
-                                        title="Write a review"
-                                        onPress={() => setOpenReviewModal(true)}
-                                    />
-                                ) : null}
-                                <Button
-                                    title="Contact details"
-                                    // onPress={() => setOpenContact(!openContact)}
-                                    onPress={showDialog}
-                                />
-                            </View>
-                            <Portal>
-                                <Dialog
-                                    visible={visible}
-                                    onDismiss={hideDialog}
-                                >
-                                    <Dialog.Title>Contact</Dialog.Title>
-                                    <Dialog.Content>
-                                        <Paragraph style={styles.details}>
-                                            {
-                                                listing.contactDetails
-                                                    .emailAddress
-                                            }
-                                        </Paragraph>
-                                        <Paragraph style={styles.details}>
-                                            Tel:{" "}
-                                            {listing.contactDetails.phoneNumber}
-                                        </Paragraph>
-                                    </Dialog.Content>
-                                    <Dialog.Actions>
-                                        <Button
-                                            title="Done"
-                                            onPress={hideDialog}
-                                        />
-                                    </Dialog.Actions>
-                                </Dialog>
-                            </Portal>
-                            {/* </View> */}
-                            {/* <View> */}
-                            {/* {!openReview ? null : (
+          <ImageBackground
+            source={image}
+            resizeMode="repeat"
+            style={styles.image}
+          >
+            <View>
               <View>
-                {listing.reviews.length === 0 ? (
-                  <View style={styles.hidden}>
-                    <Text style={styles.text}>
-                      No reviews yet? Leave the very first one!
-                    </Text>
-                  </View>
-                ) : (
-                  <View>
-                    {listing.reviews.map((review) => {
-                      return (
-                        <View key={review._id}>
-                          <ReviewCard review={review} />
-                        </View>
-                      );
-                    })}
-                  </View> */}
+                <Text style={styles.title}>{listing.title}</Text>
+              </View>
+              <View>
+                <View>
+                  <Text style={styles.text}>
+                    Location: {listing.location.city}{" "}
+                    {listing.location.postcode}
+                  </Text>
+                </View>
+                <View>
+                  <Text style={styles.text}>
+                    Space Rating: {listing.spaceRating}
+                  </Text>
+                </View>
+              </View>
+              <View>
+                <View>
+                  <TouchableOpacity onPress={handleOwnerRequest}>
+                    <Text style={styles.text}>Owner: {listing.owner}</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+              <View>
+                <View>
+                  <Text style={styles.text}>Price/Hour: {listing.price}</Text>
+                </View>
+                <View>
+                  <Text style={styles.text}>Size: {listing.size}</Text>
+                </View>
 
-                            {/* // {listing.owner === user ? (
-      //   <View style={styles.deleteRow}>
-      //     <TouchableOpacity
-      //       onPress={handleDelete}
-      //       style={styles.deleteButton}
-      //     >
-      //       <Text style={styles.buttonText}>Delete Listing</Text>
-      //     </TouchableOpacity>
-      //   </View>
-      // ) : null} */}
-                        </View>
-                    </ImageBackground>
-                </ScrollView>
-            </Provider>
-        );
-    }
+
+                <View style={styles.amens}>
+                  <MaterialCommunityIcons
+                    name="hours-24"
+                    size={24}
+                    color={
+                      listing.amenities["_24HourAccess"] ? "#32CD32" : "#DCDCDC"
+                    }
+                  />
+                  <MaterialIcons
+                    name="wc"
+                    size={24}
+                    color={listing.amenities.WC ? "#32CD32" : "#DCDCDC"}
+                  />
+                  <FontAwesome
+                    name="wheelchair"
+                    size={24}
+                    color={listing.amenities.accessible ? "#32CD32" : "#DCDCDC"}
+                  />
+                  <FontAwesome5
+                    name="house-user"
+                    size={24}
+                    color={listing.amenities.indoor ? "#32CD32" : "#DCDCDC"}
+                  />
+                  <FontAwesome5
+                    name="tree"
+                    size={24}
+                    color={listing.amenities.outdoor ? "#32CD32" : "#DCDCDC"}
+                  />
+                  <FontAwesome5
+                    name="parking"
+                    size={24}
+                    color={listing.amenities.parking ? "#32CD32" : "#DCDCDC"}
+                  />
+                  <Entypo
+                    name="power-plug"
+                    size={24}
+                    color={listing.amenities.power ? "#32CD32" : "#DCDCDC"}
+                  />
+                  <MaterialCommunityIcons
+                    name="microwave"
+                    size={24}
+                    color={listing.amenities.kitchen ? "#32CD32" : "#DCDCDC"}
+                  />
+                </View>
+                <View style={styles.descContainer}>
+                  <Text style={styles.desc}>{listing.description}</Text>
+                </View>
+              </View>
+              <View style={styles.mapView}>
+                <TouchableOpacity
+                  style={styles.mapButton}
+                  onPress={() => {
+                    navigation.navigate("SingleSpaceOnMap", locationObj);
+                  }}
+                >
+                  <Text style={styles.mapButtonText}>View on map</Text>
+
+
+                  <FontAwesome5 name="map-marked-alt" size={24} color="white" />
+                </TouchableOpacity>
+              </View>
+              <CalendarComp
+                listing={listing}
+                markedDates={markedDates}
+                setMarkedDates={setMarkedDates}
+              />
+              <TouchableOpacity
+                style={styles.mapButton}
+                onPress={handleBooking}
+              >
+                <Text style={styles.buttonText}>Book now</Text>
+              </TouchableOpacity>
+
+              <View style={styles.bottomRow}>
+                <Button
+                  title="Reviews"
+                  onPress={() => setOpenReview(!openReview)}
+                />
+                <Modal visible={openReviewModal} animationType="slide">
+                  <ReviewModal
+                    setOpenReviewModal={setOpenReviewModal}
+                    setReviewsLength={setReviewsLength}
+                    username={user}
+                    listing={listing}
+                  />
+                </Modal>
+                {listing.owner !== user ? (
+                  <Button
+                    title="Write a review"
+                    onPress={() => setOpenReviewModal(true)}
+                  />
+                ) : null}
+                <Button
+                  title="Contact details"
+                  // onPress={() => setOpenContact(!openContact)}
+                  onPress={showDialog}
+                />
+              </View>
+              <Portal>
+                <Dialog visible={visible} onDismiss={hideDialog}>
+                  <Dialog.Title>Contact</Dialog.Title>
+                  <Dialog.Content>
+                    <Paragraph>{listing.contactDetails.emailAddress}</Paragraph>
+                    <Paragraph>
+                      Tel: {listing.contactDetails.phoneNumber}
+                    </Paragraph>
+                  </Dialog.Content>
+                  <Dialog.Actions>
+                    <Button title="Done" onPress={hideDialog} />
+                  </Dialog.Actions>
+                </Dialog>
+              </Portal>
+              {/* </View> */}
+              {!openReview ? null : (
+                <View>
+                  {listing.reviews.length === 0 ? (
+                    <View style={styles.hidden}>
+                      <Text style={styles.text}>
+                        No reviews yet? Leave the very first one!
+                      </Text>
+                    </View>
+                  ) : (
+                    <View>
+                      {listing.reviews.map((review) => {
+                        return (
+                          <View key={review._id}>
+                            <ReviewCard review={review} />
+                          </View>
+                        );
+                      })}
+                    </View>
+                  )}
+                </View>
+              )}
+
+
+              {listing.owner === user ? (
+                <View style={styles.deleteRow}>
+                  <TouchableOpacity
+                    onPress={handleDelete}
+                    style={styles.deleteButton}
+                  >
+                    <Text style={styles.buttonText}>Delete Listing</Text>
+                  </TouchableOpacity>
+                </View>
+              ) : null}
+            </View>
+          </ImageBackground>
+        </ScrollView>
+      </Provider>
+    );
+  }
 };
 
 const styles = StyleSheet.create({
+
     hidden: {
         marginTop: 20,
         flexDirection: "column",
@@ -463,6 +454,7 @@ const styles = StyleSheet.create({
     },
     book: { justifyContent: "center", alignItems: "center" },
     details: { fontSize: 18, marginTop: 20 },
+
 });
 
 export default SingleListScreen;
