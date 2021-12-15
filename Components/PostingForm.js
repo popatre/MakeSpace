@@ -54,7 +54,7 @@ export default function PostingForm({ navigation }) {
   const [kitchenChecked, setKitchenChecked] = useState(false);
   const [twentyFourChecked, setTwentyFourChecked] = useState(false);
 
-  const [imageSelected, setImageSelected] = useState(false);
+  const [imageSelected, setImageSelected] = useState(true);
   const { user } = useContext(UserContext);
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -63,7 +63,7 @@ export default function PostingForm({ navigation }) {
     });
     if (!result.cancelled) {
       setImage(result.uri);
-      setImageSelected(true);
+      setImageSelected(false);
     }
   };
 
@@ -339,6 +339,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: "center",
     marginVertical: 30,
+    zIndex: 3,
   },
   buttonText: { color: "white", fontWeight: "700", fontSize: 16 },
   subButton: {
