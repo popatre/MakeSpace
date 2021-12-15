@@ -10,7 +10,6 @@ import {
     Modal,
     TextInput,
     ImageBackground,
-
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import PictureChangeModal from "./PictureChangeModal";
@@ -22,29 +21,30 @@ const img = {
     uri: "https://png.pngitem.com/pimgs/s/56-564988_top-backgrounds-textured-png-transparent-png.png",
 };
 const ProfileCard = () => {
-  const [userDetails, setUserDetails] = useState({});
-  const [displayNameModalOpen, setDisplayNameModalOpen] = useState(false);
-  const [passwordModalOpen, setPasswordModalOpen] = useState(false);
-  const [pictureModalOpen, setPictureModalOpen] = useState(false);
-  const [displayName, setDisplayName] = useState("");
-  const [passwordChange, setPasswordChange] = useState("");
-  const { user } = useContext(UserContext);
-  const handlePress = () => {
-    setDisplayNameModalOpen(true);
-  };
-  const handleDisplayNameSubmit = () => {
-    onAuthStateChanged(auth, (user) => {
-      const uid = user.uid;
-      const update = { displayName };
-      patchUser(update, uid).then((user) => {
-        setUserDetails(user);
-        setDisplayNameModalOpen(false);
-        setDisplayName("");
-      });
-    });
-  };
+    const [userDetails, setUserDetails] = useState({});
+    const [displayNameModalOpen, setDisplayNameModalOpen] = useState(false);
+    const [passwordModalOpen, setPasswordModalOpen] = useState(false);
+    const [pictureModalOpen, setPictureModalOpen] = useState(false);
+    const [displayName, setDisplayName] = useState("");
+    const [passwordChange, setPasswordChange] = useState("");
+    const [passwordError, setPasswordError] = useState("");
+    const { user } = useContext(UserContext);
+    const handlePress = () => {
+        setDisplayNameModalOpen(true);
+    };
+    const handleDisplayNameSubmit = () => {
+        onAuthStateChanged(auth, (user) => {
+            const uid = user.uid;
+            const update = { displayName };
+            patchUser(update, uid).then((user) => {
+                setUserDetails(user);
+                setDisplayNameModalOpen(false);
+                setDisplayName("");
+            });
+        });
+    };
 
-  const handleChangePicture = () => {};
+    const handleChangePicture = () => {};
 
     const userFirebase = auth.currentUser;
     const handlePasswordSubmit = () => {
@@ -53,7 +53,11 @@ const ProfileCard = () => {
                 setPasswordModalOpen(false);
                 setPasswordChange("");
             })
-            .catch((error) => {});
+            .catch((error) => {
+                setPasswordError(
+                    "Please log out, then log back in to change your password."
+                );
+            });
     };
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -167,6 +171,7 @@ const ProfileCard = () => {
                             Please type your new password
                         </Text>
                         <TextInput
+                            secureTextEntry={true}
                             style={styles.inputBox}
                             value={passwordChange}
                             onChangeText={(text) => setPasswordChange(text)}
@@ -177,6 +182,7 @@ const ProfileCard = () => {
                         >
                             <Text style={styles.buttonText2}>Submit</Text>
                         </TouchableOpacity>
+                        <Text>{passwordError}</Text>
                     </ImageBackground>
                 </Modal>
             </View>
@@ -231,7 +237,6 @@ const styles = StyleSheet.create({
         marginTop: 60,
     },
     buttonText2: { color: "white", fontWeight: "700", fontSize: 16 },
-
 });
 
 export default ProfileCard;
