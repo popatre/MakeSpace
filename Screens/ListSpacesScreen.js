@@ -54,7 +54,7 @@ const ListSpacesScreen = ({ route, navigation }) => {
       order,
       price
     ).then((res) => {
-      if (cityFilter !== "") {
+      if (cityFilter !== "" && cityFilter !== undefined) {
         const filteredListing = res.filter((obj) => {
           if (obj.location.city.includes(cityFilter)) return obj;
         });
