@@ -10,7 +10,7 @@ export default function Nav() {
     return (
         <Drawer.Navigator initialRouteName="Main">
             <Drawer.Screen
-                name="Spaces"
+                name="Browse Spaces"
                 component={MainStack}
                 options={{
                     headerStyle: { backgroundColor: "#f0ad4e" },
@@ -26,7 +26,7 @@ export default function Nav() {
                 }}
             />
             <Drawer.Screen
-                name="Account"
+                name="View Account"
                 component={AccountStack}
                 options={{
                     headerTitle: () => <Header />,
