@@ -272,13 +272,16 @@ const SingleListScreen = ({ route, navigation }) => {
                                 markedDates={markedDates}
                                 setMarkedDates={setMarkedDates}
                             />
-                            <TouchableOpacity
-                                style={styles.mapButton}
-                                onPress={handleBooking}
-                            >
-                                <Text style={styles.buttonText}>Book now</Text>
-                            </TouchableOpacity>
-
+                            <View style={styles.bookButtonContainer}>
+                                <TouchableOpacity
+                                    style={styles.mapButton}
+                                    onPress={handleBooking}
+                                >
+                                    <Text style={styles.buttonText}>
+                                        Book now
+                                    </Text>
+                                </TouchableOpacity>
+                            </View>
                             <View style={styles.bottomRow}>
                                 <Button
                                     title="Reviews"
@@ -498,6 +501,7 @@ const styles = StyleSheet.create({
 
         alignItems: "center",
     },
+    bookButtonContainer: { justifyContent: "center", alignItems: "center" },
 });
 
 export default SingleListScreen;
