@@ -61,6 +61,7 @@ const SingleListScreen = ({ route, navigation }) => {
             });
         });
     };
+    console.log(listing, "********");
     const handleBooking = () => {
         const newObj = { ...markedDates };
 
@@ -79,7 +80,7 @@ const SingleListScreen = ({ route, navigation }) => {
             setListing(res);
             setMarkedDates(res.bookedDays[0]);
         });
-    }, [id, isBooked, reviewsLength]);
+    }, [id, reviewsLength]);
 
     if (Object.keys(listing).length === 0)
         return (

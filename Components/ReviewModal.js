@@ -64,7 +64,9 @@ export default function ReviewModal({
                     else {
                         alert("Thanks for your feedback!");
                         setOpenReviewModal(false);
-                        setReviewsLength((prev) => prev + 1);
+                        setTimeout(() => {
+                            setReviewsLength((prev) => prev + 1);
+                        }, 1000);
                         values.rating = defaultRating;
                         reviewHandler(values);
                         actions.resetForm();
