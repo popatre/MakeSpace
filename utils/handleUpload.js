@@ -1,7 +1,7 @@
 import { uploadBytesResumable, ref, getDownloadURL } from "firebase/storage";
 import { auth, storage } from "../firebase";
 
-export const handleUpload = async (url, setDownloadUrl) => {
+export const handleUpload = async (url, setDownloadUrl, setText) => {
     const response = await fetch(url);
     const blob = await response.blob();
     let name = new Date().getTime() + "-media.jpg";
@@ -20,7 +20,7 @@ export const handleUpload = async (url, setDownloadUrl) => {
                 // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
                 const progress =
                     (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                console.log("Upload is " + progress + "% done");
+                setText("Uploading " + progress + " %");
                 switch (snapshot.state) {
                     case "paused":
                         console.log("Upload is paused");
@@ -37,6 +37,7 @@ export const handleUpload = async (url, setDownloadUrl) => {
                 getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
                     console.log("File available at", downloadURL);
                     setDownloadUrl(downloadURL);
+                    setText("Upload Complete!");
                     //set the uploaded thing here!!!
                 });
             }

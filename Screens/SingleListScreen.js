@@ -115,6 +115,54 @@ const SingleListScreen = ({ route, navigation }) => {
             </ScrollView>
           </View>
 
+
+                    <ImageBackground
+                        source={image}
+                        resizeMode="repeat"
+                        style={styles.image}
+                    >
+                        <View>
+                            <View>
+                                <Text style={styles.title}>
+                                    {listing.title}
+                                </Text>
+                            </View>
+                            <View>
+                                <View>
+                                    <Text style={styles.text}>
+                                        Location: {listing.location.city}{" "}
+                                        {listing.location.postcode}
+                                    </Text>
+                                </View>
+                                <View>
+                                    <Text style={styles.text}>
+                                        Space Rating: {listing.spaceRating}
+                                    </Text>
+                                </View>
+                            </View>
+                            <View>
+                                <View>
+                                    <TouchableOpacity
+                                        onPress={handleOwnerRequest}
+                                    >
+                                        <Text style={styles.text}>
+                                            Owner: {listing.owner}
+                                        </Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                            <View>
+                                <View>
+                                    <Text style={styles.text}>
+                                        Price/Hour: {listing.price}
+                                    </Text>
+                                </View>
+                                <View>
+                                    <Text style={styles.text}>
+                                        Size: {listing.size}
+                                    </Text>
+                                </View>
+
           <ImageBackground
             source={image}
             resizeMode="repeat"
@@ -151,6 +199,7 @@ const SingleListScreen = ({ route, navigation }) => {
                 <View>
                   <Text style={styles.text}>Size: {listing.size}</Text>
                 </View>
+
 
                 <View style={styles.amens}>
                   <MaterialCommunityIcons
@@ -208,6 +257,7 @@ const SingleListScreen = ({ route, navigation }) => {
                   }}
                 >
                   <Text style={styles.mapButtonText}>View on map</Text>
+
 
                   <FontAwesome5 name="map-marked-alt" size={24} color="white" />
                 </TouchableOpacity>
@@ -286,6 +336,7 @@ const SingleListScreen = ({ route, navigation }) => {
                 </View>
               )}
 
+
               {listing.owner === user ? (
                 <View style={styles.deleteRow}>
                   <TouchableOpacity
@@ -305,103 +356,105 @@ const SingleListScreen = ({ route, navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  hidden: {
-    marginTop: 20,
-    flexDirection: "column",
-    alignItems: "center",
-    zIndex: 3,
-  },
-  text: {
-    fontSize: 15,
-    marginVertical: 8,
-    marginHorizontal: 20,
-    fontWeight: "bold",
-    zIndex: 3,
-  },
-  deleteButton: {
-    backgroundColor: "red",
-    width: "40%",
-    padding: 10,
-    borderRadius: 10,
-    alignItems: "center",
-  },
-  buttonText: { color: "white", fontWeight: "700", fontSize: 16 },
-  title: {
-    fontSize: 24,
-    marginVertical: 21,
-    marginHorizontal: 10,
-    width: "90%",
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-  amens: {
-    width: "90%",
-    flexDirection: "row",
-    justifyContent: "space-around",
-    marginTop: 40,
-    marginLeft: 10,
-    marginBottom: 30,
-  },
-  desc: {
-    fontSize: 17,
-    lineHeight: 35,
-    textAlign: "center",
-    marginHorizontal: 12,
-    fontWeight: "600",
-  },
-  descContainer: {
-    marginBottom: 20,
-    // borderWidth: 1,
-    paddingVertical: 30,
-    backgroundColor: "white",
-    shadowOffset: { width: 1, height: 8 },
-    shadowColor: "#333",
-    shadowOpacity: 0.5,
-  },
-  image: {
-    // flex: 1,
-    justifyContent: "center",
-    // width: 500,
-    // height: 600,
-    opacity: 1,
-    backgroundColor: "white",
-  },
-  mapButton: {
-    marginVertical: 20,
-    flexDirection: "row",
 
-    justifyContent: "center",
-    backgroundColor: "#0782F9",
-    width: "40%",
-    padding: 15,
-    borderRadius: 10,
-    alignItems: "center",
-  },
-  mapButtonText: {
-    color: "white",
-    fontWeight: "700",
-    fontSize: 16,
-    marginRight: 10,
-  },
-  mapView: { justifyContent: "center", alignItems: "center" },
-  bottomRow: {
-    flexDirection: "row",
-    width: "100%",
-    justifyContent: "space-around",
-    marginVertical: 10,
-    backgroundColor: "white",
-    // shadowOffset: { width: 1, height: 3 },
-    shadowColor: "#333",
-    shadowOpacity: 0.1,
-    paddingVertical: 15,
-    marginTop: 30,
-  },
-  deleteRow: {
-    marginTop: 20,
-    marginBottom: 70,
-    justifyContent: "center",
-    alignItems: "center",
-  },
+    hidden: {
+        marginTop: 20,
+        flexDirection: "column",
+        alignItems: "center",
+    },
+    text: {
+        fontSize: 15,
+        marginVertical: 8,
+        marginHorizontal: 20,
+        fontWeight: "bold",
+    },
+    deleteButton: {
+        backgroundColor: "red",
+        width: "40%",
+        padding: 10,
+        borderRadius: 10,
+        alignItems: "center",
+    },
+    buttonText: { color: "white", fontWeight: "700", fontSize: 16 },
+    title: {
+        fontSize: 24,
+        marginVertical: 21,
+        marginHorizontal: 10,
+        width: "90%",
+        fontWeight: "bold",
+        textAlign: "center",
+    },
+    amens: {
+        width: "90%",
+        flexDirection: "row",
+        justifyContent: "space-around",
+        marginTop: 40,
+        marginLeft: 10,
+        marginBottom: 30,
+    },
+    desc: {
+        fontSize: 16,
+        lineHeight: 35,
+        textAlign: "center",
+        marginHorizontal: 12,
+        fontWeight: "600",
+    },
+    descContainer: {
+        marginBottom: 20,
+        // borderWidth: 1,
+        paddingVertical: 30,
+        backgroundColor: "white",
+        shadowOffset: { width: 1, height: 8 },
+        shadowColor: "#333",
+        shadowOpacity: 0.5,
+    },
+    image: {
+        // flex: 1,
+        justifyContent: "center",
+        // width: 500,
+        // height: 600,
+        opacity: 1,
+        backgroundColor: "white",
+    },
+    mapButton: {
+        marginVertical: 20,
+        flexDirection: "row",
+
+        justifyContent: "center",
+        backgroundColor: "#0782F9",
+        width: "40%",
+        padding: 15,
+        borderRadius: 10,
+        alignItems: "center",
+    },
+    mapButtonText: {
+        color: "white",
+        fontWeight: "700",
+        fontSize: 16,
+        marginRight: 10,
+    },
+    mapView: { justifyContent: "center", alignItems: "center" },
+    bottomRow: {
+        flexDirection: "row",
+        width: "100%",
+        justifyContent: "space-around",
+        marginVertical: 10,
+        backgroundColor: "white",
+        // shadowOffset: { width: 1, height: 3 },
+        shadowColor: "#333",
+        shadowOpacity: 0.1,
+        paddingVertical: 15,
+        marginTop: 30,
+    },
+    deleteRow: {
+        marginTop: 20,
+        marginBottom: 70,
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    book: { justifyContent: "center", alignItems: "center" },
+    details: { fontSize: 18, marginTop: 20 },
+
 });
 
 export default SingleListScreen;
