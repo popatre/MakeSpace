@@ -17,7 +17,11 @@ export default function AccountStack() {
                 component={AccountScreen}
                 options={{ headerShown: false }}
             />
-            <Stack.Screen name="MyListings" component={UserListingsScreen} />
+            <Stack.Screen
+                name="MyListings"
+                component={UserListingsScreen}
+                options={{ title: "My Listings" }}
+            />
             <Stack.Screen name="PostListing" component={PostListingScreen} />
             <Stack.Screen name="SingleList" component={SingleListScreen} />
             <Stack.Screen name="MyBookings" component={UserBookingsScreen} />

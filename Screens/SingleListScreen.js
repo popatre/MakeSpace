@@ -33,7 +33,7 @@ import {
 import CalendarComp from "../Components/Calendar";
 import ReviewCard from "../Components/ReviewCard";
 import ImagesSwiper from "react-native-image-swiper";
-
+import { ActivityIndicator, Colors } from "react-native-paper";
 const SingleListScreen = ({ route, navigation }) => {
     const [reviewsLength, setReviewsLength] = useState(0);
     const [openContact, setOpenContact] = useState(false);
@@ -84,8 +84,12 @@ const SingleListScreen = ({ route, navigation }) => {
 
     if (Object.keys(listing).length === 0)
         return (
-            <View>
-                <Text>loading...</Text>
+            <View style={styles.loading}>
+                <ActivityIndicator
+                    style={styles.loading}
+                    animating={true}
+                    color={Colors.red800}
+                />
             </View>
         );
     else {
@@ -502,6 +506,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     bookButtonContainer: { justifyContent: "center", alignItems: "center" },
+    loading: { flex: 0.4, justifyContent: "center", alignItems: "center" },
 });
 
 export default SingleListScreen;
