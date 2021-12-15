@@ -39,6 +39,7 @@ const ListSpacesScreen = ({ route, navigation }) => {
     const [price, setPrice] = useState(9999);
     const [isLoading, setIsLoading] = useState(true);
 
+
     useEffect(() => {
         getAllListings(
             sort,
@@ -66,6 +67,7 @@ const ListSpacesScreen = ({ route, navigation }) => {
                 setListing(res);
                 setIsLoading(false);
             }
+
         });
     }, [
         sort,
