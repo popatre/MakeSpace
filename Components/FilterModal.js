@@ -9,7 +9,7 @@ import {
 } from "@expo/vector-icons";
 
 import React, { useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, TextInput } from "react-native";
 
 const FilterModal = ({
     setModalOpen,
@@ -35,6 +35,8 @@ const FilterModal = ({
     setMediumChecked,
     largeChecked,
     setLargeChecked,
+    price,
+    setPrice,
 }) => {
     return (
         <View>
@@ -51,9 +53,7 @@ const FilterModal = ({
                     Please select your requirements
                 </Text>
             </View>
-            <View style={styles.container}>
-                <Text>Location</Text>
-            </View>
+
             <View style={styles.container}>
                 <Text>Size</Text>
                 <View style={styles.modalFilter}>
@@ -70,7 +70,22 @@ const FilterModal = ({
                                 : setSmallChecked(undefined);
                         }}
                     >
-                        S
+                        S (
+                        <FontAwesome5
+                            name="less-than"
+                            size={10}
+                            color="grey"
+                        />{" "}
+                        6m
+                        <Text
+                            style={{
+                                fontSize: 11,
+                                lineHeight: 18,
+                            }}
+                        >
+                            2
+                        </Text>
+                        )
                     </Chip>
                     <Chip
                         style={
@@ -85,7 +100,16 @@ const FilterModal = ({
                                 : setMediumChecked(undefined);
                         }}
                     >
-                        M
+                        M ( 6 - 10m
+                        <Text
+                            style={{
+                                fontSize: 11,
+                                lineHeight: 18,
+                            }}
+                        >
+                            2
+                        </Text>
+                        )
                     </Chip>
                     <Chip
                         style={
@@ -100,12 +124,33 @@ const FilterModal = ({
                                 : setLargeChecked(undefined);
                         }}
                     >
-                        L
+                        L (
+                        <FontAwesome5
+                            name="greater-than"
+                            size={10}
+                            color="grey"
+                        />{" "}
+                        10m
+                        <Text
+                            style={{
+                                fontSize: 11,
+                                lineHeight: 18,
+                            }}
+                        >
+                            2
+                        </Text>
+                        )
                     </Chip>
                 </View>
             </View>
             <View style={styles.container}>
-                <Text>Price</Text>
+                <Text>Please enter your maximum budget</Text>
+
+                <TextInput
+                    value={price}
+                    onChangeText={(text) => setPrice(text)}
+                    placeholder="Cost per hour"
+                ></TextInput>
             </View>
             <View style={styles.container}>
                 <Text>Please select your amenities</Text>
