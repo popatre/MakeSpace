@@ -54,8 +54,8 @@ const FilterModal = ({
                 </Text>
             </View>
 
-            <View style={styles.container}>
-                <Text>Size</Text>
+            <View>
+                <Text style={styles.sizeLabel}>Size</Text>
                 <View style={styles.modalFilter}>
                     <Chip
                         style={
@@ -144,16 +144,21 @@ const FilterModal = ({
                 </View>
             </View>
             <View style={styles.container}>
-                <Text>Please enter your maximum budget</Text>
+                <Text style={styles.priceLabel}>
+                    Please enter your maximum budget
+                </Text>
 
                 <TextInput
+                    style={styles.priceInput}
                     value={price}
                     onChangeText={(text) => setPrice(text)}
                     placeholder="Cost per hour"
                 ></TextInput>
             </View>
-            <View style={styles.container}>
-                <Text>Please select your amenities</Text>
+            <View>
+                <Text style={styles.priceLabel}>
+                    Please select your amenities
+                </Text>
                 <View style={styles.modalFilter}>
                     <Chip
                         style={
@@ -332,8 +337,9 @@ export default FilterModal;
 const styles = StyleSheet.create({
     modalFilter: {
         flexDirection: "row",
+        marginBottom: 30,
 
-        marginTop: 50,
+        marginTop: 20,
         justifyContent: "space-around",
         alignItems: "center",
         height: 30,
@@ -346,5 +352,15 @@ const styles = StyleSheet.create({
     },
     filterTitle: {
         fontSize: 23,
+        marginBottom: 20,
+    },
+    sizeLabel: { fontSize: 18, textAlign: "center" },
+    priceLabel: { fontSize: 18, marginBottom: 30, textAlign: "center" },
+    priceInput: {
+        borderWidth: 1,
+        padding: 10,
+        borderRadius: 10,
+        borderColor: "grey",
+        marginBottom: 20,
     },
 });
