@@ -9,6 +9,7 @@ import {
   Touchable,
   Modal,
   Text,
+  SegmentedControlIOSComponent,
 } from "react-native";
 import RNPickerSelect from "react-native-picker-select";
 import ListingCard from "../Components/ListingCard";
@@ -83,7 +84,6 @@ const ListSpacesScreen = ({ route, navigation }) => {
     order,
     price,
   ]);
-
   if (isLoading)
     return (
       <View style={styles.loading}>
