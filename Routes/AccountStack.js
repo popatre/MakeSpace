@@ -23,7 +23,11 @@ export default function AccountStack() {
                 options={{ title: "My Listings" }}
             />
             <Stack.Screen name="PostListing" component={PostListingScreen} />
-            <Stack.Screen name="SingleList" component={SingleListScreen} />
+            <Stack.Screen
+                name="SingleList"
+                component={SingleListScreen}
+                options={{ title: "" }}
+            />
             <Stack.Screen name="MyBookings" component={UserBookingsScreen} />
         </Stack.Navigator>
     );
