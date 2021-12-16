@@ -22,9 +22,10 @@ const UserListingsScreen = ({ navigation }) => {
 
     return (
         <View>
-            {!!userListings && (
+            {userListings.length === 0 ? (
                 <Text style={styles.text}>You currently have no listings.</Text>
-            )}
+            ) : null}
+
             <View style={styles.buttonContainer}>
                 <TouchableOpacity
                     style={styles.button}
@@ -54,7 +55,7 @@ const UserListingsScreen = ({ navigation }) => {
                                 price={item.price}
                                 rating={item.spaceRating}
                                 size={item.size}
-                                // images={item.images}
+                                images={item.images[0]}
                             />
                         </TouchableOpacity>
                     )}
