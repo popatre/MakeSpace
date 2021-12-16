@@ -17,6 +17,7 @@ import SingleListScreen from "./SingleListScreen";
 import spaces from "../TempData";
 import FilterModal from "../Components/FilterModal";
 import { getAllListings } from "../utils/apiRequests";
+import { ActivityIndicator, Colors } from "react-native-paper";
 
 const ListSpacesScreen = ({ route, navigation }) => {
   const cityFilter = route.params;
@@ -37,6 +38,7 @@ const ListSpacesScreen = ({ route, navigation }) => {
   const [largeChecked, setLargeChecked] = useState(undefined);
   const [order, setOrder] = useState("desc");
   const [price, setPrice] = useState(9999);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     getAllListings(
@@ -60,7 +62,11 @@ const ListSpacesScreen = ({ route, navigation }) => {
           if (obj.location.city.includes(cityFilter)) return obj;
         });
         setListing(filteredListing);
-      } else setListing(res);
+        setIsLoading(false);
+      } else {
+        setListing(res);
+        setIsLoading(false);
+      }
     });
   }, [
     sort,
@@ -78,26 +84,19 @@ const ListSpacesScreen = ({ route, navigation }) => {
     order,
     price,
   ]);
-
+  if (isLoading)
+    return (
+      <View style={styles.loading}>
+        <ActivityIndicator
+          style={styles.loading}
+          animating={true}
+          color={Colors.red800}
+        />
+      </View>
+    );
   return (
     <View style={styles.mainContainer}>
       <View style={styles.splitRow}>
-        <RNPickerSelect
-          style={{ ...pickerSelectStyles }}
-          placeholder={{
-            label: "Distance",
-            value: null,
-          }}
-          onValueChange={(value) => setDistance(value)}
-          items={[
-            { label: "1 mile", value: "1", key: 1 },
-            { label: "5 miles", value: "5", key: 5 },
-            { label: "10 miles", value: "10", key: 10 },
-            { label: "30 miles", value: "30", key: 30 },
-            { label: "50 miles", value: "50", key: 50 },
-            { label: "100 miles", value: "100", key: 100 },
-          ]}
-        />
         <Modal visible={modalOpen} animationType="slide">
           <FilterModal
             accessibleChecked={accessibleChecked}
@@ -239,6 +238,7 @@ const styles = StyleSheet.create({
   sortLabel: { fontSize: 16, marginBottom: 20 },
   listContainer: { flex: 1 },
   mainContainer: { flex: 1 },
+  loading: { flex: 0.4, justifyContent: "center", alignItems: "center" },
 });
 
 const pickerSelectStyles = StyleSheet.create({
