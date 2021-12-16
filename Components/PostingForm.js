@@ -16,6 +16,9 @@ import * as ImagePicker from "expo-image-picker";
 import { useContext } from "react";
 import { postListing } from "../utils/apiRequests";
 import { UserContext } from "../context/User";
+import { handleUpload } from "../utils/handleUpload";
+import { img } from "../baseimg";
+
 const UKPhoneNumberReg = /^(\+447|00447|07)\d{9}$/;
 const ListingSchema = yup.object({
   title: yup.string().required().min(5),
@@ -41,7 +44,7 @@ const ListingSchema = yup.object({
 });
 
 export default function PostingForm({ navigation }) {
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState(img);
 
   const [value, setValue] = useState("small");
   const [checked, setChecked] = useState(false);
@@ -53,16 +56,21 @@ export default function PostingForm({ navigation }) {
   const [WCChecked, setWCChecked] = useState(false);
   const [kitchenChecked, setKitchenChecked] = useState(false);
   const [twentyFourChecked, setTwentyFourChecked] = useState(false);
+  const [downloadUrl, setDownloadUrl] = useState(null);
+  const [uploadText, setUploadText] = useState("Upload Image");
 
   const [imageSelected, setImageSelected] = useState(true);
   const { user } = useContext(UserContext);
+
+  const url = "data:image/jpeg;base64," + image;
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
+      base64: true,
     });
     if (!result.cancelled) {
-      setImage(result.uri);
+      setImage(result.base64);
       setImageSelected(false);
     }
   };
@@ -100,7 +108,9 @@ export default function PostingForm({ navigation }) {
             images: [],
           }}
           onSubmit={(values, actions) => {
-            postListing(values);
+            const newObj = { ...values };
+            newObj.images = downloadUrl;
+            postListing(newObj);
             actions.resetForm();
             navigation.replace("Spaces");
           }}
@@ -185,11 +195,12 @@ export default function PostingForm({ navigation }) {
                 value={props.values.contactDetails.phoneNumber}
                 onBlur={props.handleBlur("contactDetails.phoneNumber")}
               />
-              {/* <Text style={styles.errorText}>
-  {props.touched.contactDetails.phoneNumber &&
-    props.errors.contactDetails.phoneNumber}
-</Text> */}
-
+              {/* {props.errors.contactDetails.phoneNumber ? (
+                <Text style={styles.errorText}>
+                  {props.touched.contactDetails.phoneNumber &&
+                    props.errors.contactDetails.phoneNumber}
+                </Text>
+              ) : null} */}
               <TextInput
                 style={styles.input}
                 placeholder="email"
@@ -199,24 +210,22 @@ export default function PostingForm({ navigation }) {
               />
               <View style={styles.imageContainer}>
                 <TouchableOpacity onPress={pickImage}>
-                  {image && (
-                    <Image
-                      value={props.values.images}
-                      source={{ uri: image }}
-                      style={styles.image}
-                    />
-                  )}
+                  <Image
+                    value={image}
+                    source={{ uri: "data:image/jpeg;base64," + image }}
+                    style={{ width: 250, height: 250 }}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.button2}
+                  onPress={() => {
+                    handleUpload(url, setDownloadUrl, setUploadText);
+                  }}
+                >
+                  <Text style={styles.buttonText}>{uploadText}</Text>
                 </TouchableOpacity>
               </View>
-              {imageSelected && (
-                <View style={styles.imageButton}>
-                  <TouchableOpacity>
-                    <Text style={styles.buttonText} onPress={pickImage}>
-                      Upload image
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              )}
+
               <Checkbox.Item
                 label="Parking"
                 status={parkingChecked ? "checked" : "unchecked"}
@@ -340,6 +349,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginVertical: 30,
     zIndex: 3,
+  },
+  button2: {
+    backgroundColor: "#5cb85c",
+    width: "50%",
+    padding: 15,
+    borderRadius: 10,
+    alignItems: "center",
+    marginTop: 40,
   },
   buttonText: { color: "white", fontWeight: "700", fontSize: 16 },
   subButton: {
