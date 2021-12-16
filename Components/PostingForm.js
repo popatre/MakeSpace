@@ -155,9 +155,12 @@ export default function PostingForm({ navigation }) {
                   }}
                   value={value}
                 >
-                  <RadioButton.Item label="Small" value="small" />
-                  <RadioButton.Item label="Medium" value="medium" />
-                  <RadioButton.Item label="Large" value="large" />
+                  <RadioButton.Item label="Small (< 6 sqm)" value="small" />
+                  <RadioButton.Item
+                    label="Medium (6 - 10 sqm)"
+                    value="medium"
+                  />
+                  <RadioButton.Item label="Large (> 10 sqm)" value="large" />
                 </RadioButton.Group>
               </View>
               <TextInput
@@ -243,7 +246,7 @@ export default function PostingForm({ navigation }) {
                 }}
               />
               <Checkbox.Item
-                label="accessible"
+                label="Accessible"
                 status={accessibleChecked ? "checked" : "unchecked"}
                 onPress={() => {
                   setAccessibleChecked(!accessibleChecked);
