@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { UserContext } from "../context/User";
+import { ActivityIndicator, Colors } from "react-native-paper";
 import {
     View,
     Text,
@@ -13,7 +14,11 @@ import {
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import PictureChangeModal from "./PictureChangeModal";
-
+import {
+    Nunito_400Regular,
+    Nunito_700Bold,
+    useFonts,
+} from "@expo-google-fonts/nunito";
 import { auth } from "../firebase";
 import { onAuthStateChanged, updatePassword } from "firebase/auth";
 import { getUserById, patchUser } from "../utils/apiRequests";
@@ -72,6 +77,19 @@ const ProfileCard = () => {
         });
         return unsubscribe;
     }, [user]);
+    let [fontsLoaded] = useFonts({
+        Nunito_400Regular,
+        Nunito_700Bold,
+    });
+    if (!fontsLoaded) {
+        return (
+            <ActivityIndicator
+                style={styles.loading}
+                animating={true}
+                color={Colors.red800}
+            />
+        );
+    }
     return (
         <View
             style={{
@@ -205,8 +223,18 @@ const styles = StyleSheet.create({
     editText: { fontSize: 12 },
     leftContainer: { flex: 0.6 },
     rightContainer: { flex: 0.5 },
-    labelText: { fontSize: 16, marginBottom: 7 },
-    title: { fontSize: 15, fontWeight: "bold", marginBottom: 3 },
+    labelText: {
+        fontSize: 16,
+        marginBottom: 7,
+        fontFamily: "Nunito_400Regular",
+        marginRight: 10,
+    },
+    title: {
+        fontSize: 15,
+        fontWeight: "bold",
+        marginBottom: 3,
+        fontFamily: "Nunito_700Bold",
+    },
     button3: {
         // backgroundColor: "#f0ad4e",
         borderWidth: 1,
@@ -220,7 +248,12 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
     },
-    buttonText: { color: "#0275d8", fontWeight: "500", fontSize: 12 },
+    buttonText: {
+        color: "#0275d8",
+        fontWeight: "500",
+        fontSize: 12,
+        fontFamily: "Nunito_400Regular",
+    },
     modalText: {
         fontSize: 20,
         textAlign: "center",

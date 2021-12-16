@@ -16,6 +16,12 @@ import {
     TextInput,
     ImageBackground,
 } from "react-native";
+import { ActivityIndicator, Colors } from "react-native-paper";
+import {
+    Nunito_400Regular,
+    Nunito_700Bold,
+    useFonts,
+} from "@expo-google-fonts/nunito";
 
 const FilterModal = ({
     setModalOpen,
@@ -47,6 +53,19 @@ const FilterModal = ({
     const bgimg = {
         uri: "https://png.pngitem.com/pimgs/s/56-564988_top-backgrounds-textured-png-transparent-png.png",
     };
+    let [fontsLoaded] = useFonts({
+        Nunito_400Regular,
+        Nunito_700Bold,
+    });
+    if (!fontsLoaded) {
+        return (
+            <ActivityIndicator
+                style={styles.loading}
+                animating={true}
+                color={Colors.red800}
+            />
+        );
+    }
     return (
         <ImageBackground source={bgimg} resizeMode="cover" style={styles.image}>
             <View>
@@ -379,16 +398,19 @@ const styles = StyleSheet.create({
         fontSize: 23,
         marginBottom: 20,
         fontWeight: "bold",
+        fontFamily: "Nunito_700Bold",
     },
     sizeLabel: {
-        fontSize: 18,
+        fontSize: 20,
         textAlign: "center",
         fontWeight: "bold",
         marginTop: 20,
+        fontFamily: "Nunito_700Bold",
     },
     priceLabel: {
-        fontSize: 18,
+        fontSize: 20,
         marginBottom: 30,
+        fontFamily: "Nunito_700Bold",
 
         textAlign: "center",
         fontWeight: "bold",

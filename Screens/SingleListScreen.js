@@ -34,6 +34,11 @@ import CalendarComp from "../Components/Calendar";
 import ReviewCard from "../Components/ReviewCard";
 import ImagesSwiper from "react-native-image-swiper";
 import { ActivityIndicator, Colors } from "react-native-paper";
+import {
+    Nunito_400Regular,
+    Nunito_700Bold,
+    useFonts,
+} from "@expo-google-fonts/nunito";
 const SingleListScreen = ({ route, navigation }) => {
     const [reviewsLength, setReviewsLength] = useState(0);
     const [openContact, setOpenContact] = useState(false);
@@ -44,6 +49,10 @@ const SingleListScreen = ({ route, navigation }) => {
     const [markedDates, setMarkedDates] = useState({});
     const [isBooked, setIsBooked] = useState(false);
     const { user } = useContext(UserContext);
+    let [fontsLoaded] = useFonts({
+        Nunito_400Regular,
+        Nunito_700Bold,
+    });
 
     const showDialog = () => setVisible(true);
 
@@ -105,6 +114,16 @@ const SingleListScreen = ({ route, navigation }) => {
         const image = {
             uri: "https://www.transparenttextures.com/patterns/old-map.png",
         };
+
+        if (!fontsLoaded) {
+            return (
+                <ActivityIndicator
+                    style={styles.loading}
+                    animating={true}
+                    color={Colors.red800}
+                />
+            );
+        }
         return (
             <Provider>
                 <ScrollView>
@@ -396,6 +415,7 @@ const styles = StyleSheet.create({
         fontSize: 15,
         marginVertical: 8,
         marginHorizontal: 20,
+        fontFamily: "Nunito_700Bold",
         fontWeight: "bold",
     },
     deleteButton: {
@@ -411,6 +431,7 @@ const styles = StyleSheet.create({
         marginVertical: 21,
         marginHorizontal: 10,
         width: "90%",
+        fontFamily: "Nunito_700Bold",
         fontWeight: "bold",
         textAlign: "center",
     },
@@ -428,6 +449,7 @@ const styles = StyleSheet.create({
         textAlign: "center",
         marginHorizontal: 12,
         fontWeight: "600",
+        fontFamily: "Nunito_700Bold",
     },
     descContainer: {
         marginBottom: 20,
@@ -491,6 +513,7 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         color: "blue",
         marginVertical: 8,
+        fontFamily: "Nunito_700Bold",
     },
     textOwner1: {
         paddingTop: 0,
@@ -499,6 +522,7 @@ const styles = StyleSheet.create({
         marginLeft: 20,
         fontWeight: "bold",
         marginRight: 5,
+        fontFamily: "Nunito_700Bold",
     },
     ownerContainer: {
         flexDirection: "row",
