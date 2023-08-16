@@ -2,6 +2,8 @@
 
 Make Space makes finding and booking available spaces easy. It provides a centralised place to view available spaces in your area, view their availability, contact their owner and easily leave reviews.
 
+See video presentation here: https://www.youtube.com/watch?v=OB-GBHw3ivY
+
 A hosted version of the app can be found here : https://expo.dev/@popatre/MakeSpace
 
 The Make Space backend github can be found: https://github.com/Kpovey115/makespace-BE
